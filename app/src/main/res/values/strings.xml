@@ -1,0 +1,81 @@
+<resources>
+    <string name="application_name" translatable="false">EspToolbox</string>
+    <string name="board_name" translatable="false">Esp</string>
+
+    <string name="btn_connect">Connect</string>
+
+    <!--  Tab Navigation Label-->
+    <string name="home_label">Home</string>
+    <string name="log_label">Log</string>
+    <string name="usb_label">Usb</string>
+    <string name="connection_label">Connection</string>
+    <string name="updater_label">Updater</string>
+    <string name="serial_label">Serial</string>
+    <string name="wifi_label">Wi-Fi</string>
+
+    <!-- HomeScreen-->
+    <string name="about_desc" translatable="false">We\'re a team of developers specialized in Native programming</string>
+    <string name="usb_desc">Connect with Usb</string>
+    <string name="wifi_desc">Connect with WiFi</string>
+    <string name="info_desc">With %s you can flash your ESP, connect it to Wi-Fi, erase it, and access many other useful features.</string>
+    <string name="get_started_desc">No alerts or snackbars will be displayed — all operation results will appear in the Log section.</string>
+    <string name="internet_req_title">Internet Status</string>
+    <string name="internet_req_body">Sure that you\'re connected to internet</string>
+    <string name="location_permission_req_title">Grant us the location permission</string>
+    <string name="location_req_title">Location Status</string>
+    <string name="location_req_body">Enable location from settings</string>
+
+
+    <!-- ConnectionActivity-->
+    <string name="permission_denied_message">You won\'t be able to use all the functionality</string>
+    
+
+    <!-- UsbConnectionScreen-->
+    <string name="usb_connection_info">Please note: if you are using a Chromebook or a device with multiple USB ports, you cannot connect more than one Esp device at the same time.</string>
+    <string name="usb_version">Version</string>
+    <string name="usb_manufacturer">Manufacturer</string>
+    <string name="usb_vendor_id">Vendor ID</string>
+    <string name="usb_product_id">Product ID</string>
+    <string name="usb_port">Port</string>
+    <string name="connection_successfully">Esp has successfully connected to Wi-Fi</string>
+    <string name="ssid_placeholder" translatable="false">SSID</string>
+    <string name="pwd_placeholder" translatable="false">Password</string>
+
+    <!-- UsbUpdaterScreen-->
+    <string name="btn_flash" translatable="false">Flash</string>
+    <string name="btn_reset" translatable="false">Reset</string>
+    <string name="flash_description">Flashing will erase all data. It will start when you dismiss this alert.</string>
+    <string name="flash_in_progress_warning">Flash already in progress</string>
+    <string name="flash_do_not_disconnect_usb">Chip detection completed,DO NOT disconnect USB or navigate away</string>
+    <string name="flash_rst">NOW PRESS THE RESET BTN !!</string>
+    <string name="invalid_file_detected">Invalid file detected</string>
+    <string name="baud_rate_title">Select BaudRate</string>
+    <string name="files_title">Select .bin files</string>
+    <string name="files_description">Select one or more .bin files to flash and set their addresses. If flashing fails, try again—some ESPs need multiple attempts.</string>
+
+
+    <!-- WifiScreen-->
+    <string name="wifi_connection_title">Note that Esp supports only 2.4GHz connections. Make sure you are connected to the correct band or configure your dual-band router to use 2.4GHz.</string>
+    <string name="wifi_pwd_hint" translatable="false">Password</string>
+    <string name="broadcast_warning">Starting local scanning, don\'t touch your ESP</string>
+    <string name="permission_required">Permission Required</string>
+    <string name="position_warning">Turn on position and RESTART %s</string>
+
+    <!-- ExceptionMessage-->
+    <string name="error_usb_connection">USB connection failed. Please check: BaudRate &amp; SerialFormat.</string>
+    <string name="error_wifi_connection">WIFI connection failed. Please check the device and permissions.</string>
+    <string name="error_generic">An error occurred. Please try again later.</string>
+    <string name="error_file_not_found">The selected file could not be found. Please check the path and try again.</string>
+    <string name="error_io_exception">There was a problem reading the file. Please try again or choose a different file.</string>
+    <string name="error_file_permission">The app does not have permission to access this file. Please check your settings.</string>
+
+    <!-- Global-->
+    <string name="github_tool" translatable="false">Github</string>
+    <string name="about_tool" translatable="false">About</string>
+    <string name="info_tool" translatable="false">Info</string>
+    <string name="get_started_tool">Get Started</string>
+    <string name="follow_tool">Follow us</string>
+    <string name="go_tool">Go</string>
+    <string name="grant_permission_tool">Grant Permission</string>
+
+</resources>

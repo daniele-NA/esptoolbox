@@ -1,0 +1,53 @@
+<resources>
+
+    <!--\\\\\\\\\\\\\\ Custom Colors (Dark) \\\\\\\\\\\\\\-->
+
+    <color name="icon_color">#FFFFFF</color>
+
+    <!--\\\\\\\\\\\\\\ Material Theme Colors (Dark) \\\\\\\\\\\\\\-->
+
+    <!-- PRIMARY -->
+    <color name="md_theme_primary">#FBCF84</color>
+    <color name="md_theme_onPrimary">#3D2C00</color>
+    <color name="md_theme_primaryContainer">#5A3F00</color>
+    <color name="md_theme_onPrimaryContainer">#FFE1B0</color>
+
+    <!-- SECONDARY -->
+    <color name="md_theme_secondary">#FFDCA8</color>
+    <color name="md_theme_onSecondary">#3A2900</color>
+    <color name="md_theme_secondaryContainer">#5A4400</color>
+    <color name="md_theme_onSecondaryContainer">#FFEBC2</color>
+
+    <!-- TERTIARY -->
+    <color name="md_theme_tertiary">#A4D0FF</color>
+    <color name="md_theme_onTertiary">#003355</color>
+    <color name="md_theme_tertiaryContainer">#004C77</color>
+    <color name="md_theme_onTertiaryContainer">#CBE6FF</color>
+
+    <!-- ERROR -->
+    <color name="md_theme_error">#FFB4A9</color>
+    <color name="md_theme_onError">#5B1A13</color>
+    <color name="md_theme_errorContainer">#932F23</color>
+    <color name="md_theme_onErrorContainer">#FFDAD6</color>
+
+    <!-- BACKGROUND / SURFACE -->
+    <color name="md_theme_background">#121C36</color>
+    <color name="md_theme_onBackground">#E4E6EC</color>
+
+    <color name="md_theme_surface">#1E355F</color>
+    <color name="md_theme_onSurface">#FFFFFF</color>
+
+    <color name="md_theme_surfaceVariant">#3A4B73</color>
+    <color name="md_theme_onSurfaceVariant">#C5CAD3</color>
+
+    <!-- OUTLINE -->
+    <color name="md_theme_outline">#8C93A1</color>
+    <color name="md_theme_outlineVariant">#5F6674</color>
+
+    <!-- ALTRO -->
+    <color name="md_theme_scrim">#000000</color>
+    <color name="md_theme_inverseSurface">#E4E6EC</color>
+    <color name="md_theme_inverseOnSurface">#1E355F</color>
+    <color name="md_theme_inversePrimary">#A86900</color>
+
+</resources>

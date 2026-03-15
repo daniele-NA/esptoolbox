@@ -1,0 +1,54 @@
+<resources>
+
+    <!--\\\\\\\\\\\\\\ Custom Colors (Light) \\\\\\\\\\\\\\-->
+
+    <color name="icon_color">#000000</color>
+    <color name="splash_bg_color">#121C36</color>
+
+    <!--\\\\\\\\\\\\\\ Material Theme Colors (Light) \\\\\\\\\\\\\\-->
+
+    <!-- PRIMARY -->
+    <color name="md_theme_primary">#FBCF84</color>
+    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primaryContainer">#FFE1B0</color>
+    <color name="md_theme_onPrimaryContainer">#2E1B00</color>
+
+    <!-- SECONDARY -->
+    <color name="md_theme_secondary">#927500</color>
+    <color name="md_theme_onSecondary">#FFFFFF</color>
+    <color name="md_theme_secondaryContainer">#FFF0B8</color>
+    <color name="md_theme_onSecondaryContainer">#2B2100</color>
+
+    <!-- TERTIARY -->
+    <color name="md_theme_tertiary">#0D4A87</color>
+    <color name="md_theme_onTertiary">#FFFFFF</color>
+    <color name="md_theme_tertiaryContainer">#CBE6FF</color>
+    <color name="md_theme_onTertiaryContainer">#002E4D</color>
+
+    <!-- ERROR -->
+    <color name="md_theme_error">#BA1A1A</color>
+    <color name="md_theme_onError">#FFFFFF</color>
+    <color name="md_theme_errorContainer">#FFDAD6</color>
+    <color name="md_theme_onErrorContainer">#410002</color>
+
+    <!-- BACKGROUND / SURFACE -->
+    <color name="md_theme_background">#FFFFFF</color>
+    <color name="md_theme_onBackground">#1E1E1E</color>
+
+    <color name="md_theme_surface">#F7F7F7</color>
+    <color name="md_theme_onSurface">#1E1E1E</color>
+
+    <color name="md_theme_surfaceVariant">#E1E2EC</color>
+    <color name="md_theme_onSurfaceVariant">#43474E</color>
+
+    <!-- OUTLINE -->
+    <color name="md_theme_outline">#757780</color>
+    <color name="md_theme_outlineVariant">#C2C5D0</color>
+
+    <!-- ALTRO -->
+    <color name="md_theme_scrim">#000000</color>
+    <color name="md_theme_inverseSurface">#2E2E2E</color>
+    <color name="md_theme_inverseOnSurface">#F7F7F7</color>
+    <color name="md_theme_inversePrimary">#7A4B00</color>
+
+</resources>

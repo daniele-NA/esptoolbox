@@ -1,0 +1,66 @@
+<resources>
+
+    <string name="btn_connect">Connetti</string>
+
+    <!--  Tab Navigation Label-->
+    <string name="home_label">Home</string>
+    <string name="log_label">Log</string>
+    <string name="usb_label">Usb</string>
+    <string name="connection_label">Connessione</string>
+    <string name="updater_label">Aggiornamento</string>
+    <string name="serial_label">Serial</string>
+    <string name="wifi_label">Wi-Fi</string>
+
+    <!-- HomeScreen-->
+    <string name="usb_desc">Collegati via USB</string>
+    <string name="wifi_desc">Collegati via Wi-Fi</string>
+    <string name="info_desc">Con %s puoi eseguire il flash del tuo ESP, connetterlo al Wi-Fi, cancellare la memoria e usare molte altre funzioni utili.</string>
+    <string name="get_started_desc">Nessun messaggio o avviso verrà mostrato — i risultati delle operazioni appariranno nella sezione Log.</string>
+    <string name="internet_req_title">Stato connessione</string>
+    <string name="internet_req_body">Assicurati di essere connesso a Internet</string>
+    <string name="location_permission_req_title">Concedi il permesso di localizzazione</string>
+    <string name="location_req_title">Stato localizzazione</string>
+    <string name="location_req_body">Abilita la localizzazione dalle impostazioni</string>
+
+    <!-- ConnectionActivity-->
+    <string name="permission_denied_message">Non potrai utilizzare tutte le funzionalità</string>
+
+    <!-- UsbConnectionScreen-->
+    <string name="usb_connection_info">Nota: se stai usando un Chromebook o un dispositivo con più porte USB, non puoi collegare più di un dispositivo ESP alla volta.</string>
+    <string name="usb_version">Versione</string>
+    <string name="usb_manufacturer">Produttore</string>
+    <string name="usb_vendor_id">ID Fornitore</string>
+    <string name="usb_product_id">ID Prodotto</string>
+    <string name="usb_port">Porta</string>
+    <string name="connection_successfully">ESP connesso al Wi-Fi con successo</string>
+
+    <!-- UsbUpdaterScreen-->
+    <string name="flash_description">Il flashing cancellerà tutti i dati. L’operazione inizierà dopo la chiusura di questo avviso.</string>
+    <string name="flash_in_progress_warning">Flashing già in corso</string>
+    <string name="flash_do_not_disconnect_usb">Rilevamento del chip completato, NON scollegare l\'USB o cambiare schermata</string>
+    <string name="flash_rst">PREMI ORA IL TASTO RESET !!</string>
+    <string name="invalid_file_detected">File non valido rilevato</string>
+    <string name="baud_rate_title">Seleziona BaudRate</string>
+    <string name="files_title">Seleziona i file .bin</string>
+    <string name="files_description">Seleziona uno o più file .bin da flashare e imposta il loro indirizzo. Se il flashing fallisce, riprova — alcuni ESP richiedono più tentativi.</string>
+
+    <!-- WifiScreen-->
+    <string name="wifi_connection_title">Attenzione: ESP supporta solo reti a 2.4GHz. Assicurati di essere connesso alla banda corretta o configura il router dual-band per usare la 2.4GHz.</string>
+    <string name="broadcast_warning">Avvio della scansione locale, non toccare l’ESP</string>
+    <string name="permission_required">Permesso richiesto</string>
+    <string name="position_warning">Attiva la localizzazione e RIAVVIA %s</string>
+
+    <!-- ExceptionMessage-->
+    <string name="error_usb_connection">Connessione USB fallita. Controlla: BaudRate e SerialFormat.</string>
+    <string name="error_wifi_connection">Connessione Wi-Fi fallita. Verifica il dispositivo e i permessi.</string>
+    <string name="error_generic">Si è verificato un errore. Riprova più tardi.</string>
+    <string name="error_file_not_found">Il file selezionato non è stato trovato. Verifica il percorso e riprova.</string>
+    <string name="error_io_exception">Si è verificato un problema durante la lettura del file. Riprova o seleziona un altro file.</string>
+    <string name="error_file_permission">L’app non ha i permessi per accedere a questo file. Controlla le impostazioni.</string>
+
+    <!-- Global-->
+    <string name="get_started_tool">Inizia subito</string>
+    <string name="follow_tool">Seguici</string>
+    <string name="go_tool">Vai</string>
+    <string name="grant_permission_tool">Concedi permesso</string>
+</resources>
