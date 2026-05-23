@@ -1,0 +1,22 @@
+workflows:
+  android-debug:
+    name: Android Debug Build
+
+    environment:
+      java: 17
+
+    scripts:
+      - name: Setup local.properties
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+
+      - name: Grant gradlew permission
+        script: |
+          chmod +x gradlew
+
+      - name: Build debug APK
+        script: |
+          ./gradlew assembleDebug
+
+    artifacts:
+      - app/build/outputs/apk/debug/*.apk
