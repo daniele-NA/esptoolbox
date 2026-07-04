@@ -3,13 +3,14 @@ package com.crescenzi.esptoolbox.presentation.navigation.physical.wifi
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.util.getMessage
-import com.crescenzi.esptoolbox.core.values.ResultState
-import com.crescenzi.esptoolbox.data.core.BaseRepo
+import com.crescenzi.esptoolbox.presentation.util.getMessage
+import com.crescenzi.esp32.LogRepo
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
-import com.crescenzi.esptoolbox.data.phone.domain.exception.WifiConnectionException
-import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
-import com.espressif.iot.esptouch.EsptouchTask
+import com.crescenzi.esp32.exception.WifiConnectionException
+import com.crescenzi.esp32.usb.model.LogLevel
+import com.crescenzi.esp32.wifi.EspTouchRepo
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 
 /**
@@ -18,11 +19,15 @@ import com.espressif.iot.esptouch.EsptouchTask
 class WifiViewModel(
     application: Application,
     private val deviceRepo: DeviceRepo,
-    val baseRepo: BaseRepo
+    val logRepo: LogRepo,
+    private val espTouchRepo: EspTouchRepo
 ) : AndroidViewModel(application = application) {
 
     val bssid = deviceRepo.bssid
     val ssid = deviceRepo.ssid
+
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
 
 
     /**
@@ -30,27 +35,25 @@ class WifiViewModel(
      * If it connects, the MAC is immediately stored in preferences
      */
     fun sendBroadcast(pwd: String) {
-        if (pwd.trim().isEmpty()) return
+        // Empty password is allowed (open networks); only SSID/BSSID are required
         if (ssid.value.isEmpty() || bssid.value.isEmpty()) return   // If empty, either permissions are missing or an error occurred
 
-        baseRepo.plusLog(line = getApplication<Application>().getString(R.string.broadcast_warning), logLevel = LogLevel.WARNING)
+        logRepo.plusLog(line = getApplication<Application>().getString(R.string.broadcast_warning), logLevel = LogLevel.WARNING)
         Thread {
-            baseRepo.notifyLoadingState(true)
+            _loading.value = true
             try {
-                val task =
-                    EsptouchTask(
-                        ssid.value,
-                        bssid.value,
-                        pwd.trim(),
-                        getApplication<Application>()
-                    )
 
                 /**
                  * Mac == null -> Connection failed
                  */
-                task.executeForResults(1)[0].bssid?.let { mac ->
-                    baseRepo.notifyLoadingState(false)
-                    baseRepo.plusLog(line = getApplication<Application>().getString(R.string.connection_successfully))
+                espTouchRepo.connect(
+                    ssid.value,
+                    bssid.value,
+                    pwd.trim(),
+                    getApplication<Application>()
+                )?.let { mac ->
+                    _loading.value = false
+                    logRepo.plusLog(line = getApplication<Application>().getString(R.string.connection_successfully))
                 } ?: run {
                     disableLoadingForException()
                 }
@@ -65,9 +68,9 @@ class WifiViewModel(
      * Disables loading and logs the exception
      */
     private fun disableLoadingForException(e: Throwable= WifiConnectionException()){
-        baseRepo.notifyLoadingState(false)
+        _loading.value = false
         getApplication<Application>().baseContext?.let { context ->
-            baseRepo.plusLog(
+            logRepo.plusLog(
                 line = getMessage(context, e)
                     .toString(), logLevel = LogLevel.ERROR
             )

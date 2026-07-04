@@ -1,7 +1,6 @@
 package com.crescenzi.esptoolbox.core.values
 
 import android.Manifest
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.BuildConfig
 
@@ -29,12 +28,10 @@ object Constants {
      * Ui
      */
 
-    val HORIZONTAL_PADDING = 18.dp
-    val TOP_PADDING = 32.dp
+    val HORIZONTAL_PADDING = 12.dp
     val CARD_CORNER = 22.dp
     val CARD_PADDING = 15.dp
 
     const val PICK_MIME_TYPE="application/octet-stream"
-    const val WIFI_ANIM="lottie/wifi_anim.json"
-    const val GITHUB_URL = "https://github.com/daniele-NA"
+    const val WIFI_ANIM="wifi_anim.json"
 }

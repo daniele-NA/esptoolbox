@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -20,19 +22,23 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.widget.LeadingTile
+import com.crescenzi.esptoolbox.presentation.widget.LeadingTile
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_PADDING
+import com.crescenzi.esptoolbox.presentation.LocalNavController
+import com.crescenzi.esptoolbox.presentation.UsbPage
 import com.crescenzi.esptoolbox.presentation.navigation.home.HomeViewModel
 
 
 /**
  * Section that handles permissions and navigation
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun GetStartedSection(
-    homeViewModel: HomeViewModel,
-    onNavToSerialSection: () -> Unit
+    homeViewModel: HomeViewModel
 ) {
+
+    val navController = LocalNavController.current
 
     val internetState = homeViewModel.deviceRepo.internet.collectAsStateWithLifecycle().value
     //SSID and BSSID detection
@@ -96,6 +102,7 @@ fun GetStartedSection(
      */
         TextButton(
             enabled = !navBtnStatus.value,
+            shapes = ButtonDefaults.shapes(),
             onClick = {
                 homeViewModel.callReqPermission()
             }) {
@@ -111,11 +118,12 @@ fun GetStartedSection(
          */
         Button(
             enabled = navBtnStatus.value,
+            shapes = ButtonDefaults.shapes(),
             onClick = {
                 /**
                  * EXTRA CHECK
                  */
-                if (navBtnStatus.value) onNavToSerialSection.invoke()
+                if (navBtnStatus.value) navController.navigate(UsbPage)
             }) {
             Text(
                 text = stringResource(R.string.go_tool),

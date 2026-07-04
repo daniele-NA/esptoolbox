@@ -5,9 +5,14 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -22,11 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_CORNER
-import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
+import com.crescenzi.esptoolbox.presentation.widget.PageHeader
+import com.crescenzi.esp32.usb.model.LogLevel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.log.util.LogScreenTopBarWidget
 
 /**
@@ -42,7 +49,7 @@ fun LogScreen(
 
 ) {
 
-    val logs by logViewModel.baseRepo.logs.collectAsStateWithLifecycle()
+    val logs by logViewModel.logRepo.logs.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
 
@@ -65,10 +72,19 @@ fun LogScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceBetween,
+            .padding(WindowInsets.systemBars.asPaddingValues())
+            .padding(16.dp)
+            .padding(bottom = 100.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        PageHeader(
+            upTitle = stringResource(R.string.log_up_title),
+            title = stringResource(R.string.log_title),
+            modifier = Modifier.align(Alignment.Start)
+        )
+        Spacer(Modifier.height(8.dp))
+        LogScreenTopBarWidget(logViewModel)
+        Spacer(Modifier.height(8.dp))
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -92,7 +108,6 @@ fun LogScreen(
                     }
                 }
             }
-            LogScreenTopBarWidget(logViewModel)
 
         }
 

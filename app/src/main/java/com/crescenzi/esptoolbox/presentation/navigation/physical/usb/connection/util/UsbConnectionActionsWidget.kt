@@ -2,6 +2,8 @@ package com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,14 +17,15 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.values.Constants.STATUS_DEF_CHAR
-import com.crescenzi.esptoolbox.data.core.params.SerialFormat
-import com.crescenzi.esptoolbox.data.usb.data.util.UsbPermission
+import com.crescenzi.esp32.params.SerialFormat
+import com.crescenzi.esp32.usb.UsbPermission
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
 
 
 /**
  * Bottom section with connect button
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UsbConnectionActionsWidget(
     modifier: Modifier,
@@ -51,6 +54,7 @@ fun UsbConnectionActionsWidget(
     Button(
         modifier = modifier
             .padding(top = 25.dp), enabled = btnEnabled.value,
+        shapes = ButtonDefaults.shapes(),
         onClick = {
             onClickConnect()
         }) {

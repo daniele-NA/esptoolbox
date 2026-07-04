@@ -1,54 +1,39 @@
 <resources>
 
-    <!--\\\\\\\\\\\\\\ Custom Colors (Light) \\\\\\\\\\\\\\-->
+    <color name="splash_bg_color">#000000</color>
 
-    <color name="icon_color">#000000</color>
-    <color name="splash_bg_color">#121C36</color>
-
-    <!--\\\\\\\\\\\\\\ Material Theme Colors (Light) \\\\\\\\\\\\\\-->
-
-    <!-- PRIMARY -->
-    <color name="md_theme_primary">#FBCF84</color>
+    <!-- PRIMARY — indigo -->
+    <color name="md_theme_primary">#6560EE</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
-    <color name="md_theme_primaryContainer">#FFE1B0</color>
-    <color name="md_theme_onPrimaryContainer">#2E1B00</color>
 
-    <!-- SECONDARY -->
-    <color name="md_theme_secondary">#927500</color>
-    <color name="md_theme_onSecondary">#FFFFFF</color>
-    <color name="md_theme_secondaryContainer">#FFF0B8</color>
-    <color name="md_theme_onSecondaryContainer">#2B2100</color>
+    <!-- SECONDARY — indigo tonale -->
+    <color name="md_theme_secondary">#A6A2FF</color>
+    <color name="md_theme_onSecondary">#1C1A5E</color>
 
-    <!-- TERTIARY -->
-    <color name="md_theme_tertiary">#0D4A87</color>
-    <color name="md_theme_onTertiary">#FFFFFF</color>
-    <color name="md_theme_tertiaryContainer">#CBE6FF</color>
-    <color name="md_theme_onTertiaryContainer">#002E4D</color>
+    <!-- TERTIARY — azzurro pastello (identità Wi-Fi) -->
+    <color name="md_theme_tertiary">#8FB6FF</color>
+    <color name="md_theme_onTertiary">#0A2246</color>
+    <color name="md_theme_tertiaryContainer">#1E3A6B</color>
+    <color name="md_theme_onTertiaryContainer">#BAD1FF</color>
 
     <!-- ERROR -->
-    <color name="md_theme_error">#BA1A1A</color>
-    <color name="md_theme_onError">#FFFFFF</color>
-    <color name="md_theme_errorContainer">#FFDAD6</color>
-    <color name="md_theme_onErrorContainer">#410002</color>
+    <color name="md_theme_error">#FFB4AB</color>
+    <color name="md_theme_onError">#5B1A13</color>
 
-    <!-- BACKGROUND / SURFACE -->
-    <color name="md_theme_background">#FFFFFF</color>
-    <color name="md_theme_onBackground">#1E1E1E</color>
+    <!-- BACKGROUND / SURFACE — lighter layered violet -->
+    <color name="md_theme_background">#1B1628</color>
+    <color name="md_theme_onBackground">#E9E3F2</color>
+    <color name="md_theme_surface">#241E35</color>
+    <color name="md_theme_onSurface">#E9E3F2</color>
+    <color name="md_theme_surfaceVariant">#332C48</color>
+    <color name="md_theme_onSurfaceVariant">#CDC6DE</color>
 
-    <color name="md_theme_surface">#F7F7F7</color>
-    <color name="md_theme_onSurface">#1E1E1E</color>
-
-    <color name="md_theme_surfaceVariant">#E1E2EC</color>
-    <color name="md_theme_onSurfaceVariant">#43474E</color>
+    <!-- Lighter violet container surfaces (cards, menus, floating bar) -->
+    <color name="md_theme_surfaceContainer">#2C2542</color>
+    <color name="md_theme_surfaceContainerHigh">#372F50</color>
+    <color name="md_theme_surfaceContainerHighest">#423A5E</color>
 
     <!-- OUTLINE -->
-    <color name="md_theme_outline">#757780</color>
-    <color name="md_theme_outlineVariant">#C2C5D0</color>
-
-    <!-- ALTRO -->
-    <color name="md_theme_scrim">#000000</color>
-    <color name="md_theme_inverseSurface">#2E2E2E</color>
-    <color name="md_theme_inverseOnSurface">#F7F7F7</color>
-    <color name="md_theme_inversePrimary">#7A4B00</color>
+    <color name="md_theme_outline">#8B84A2</color>
 
 </resources>

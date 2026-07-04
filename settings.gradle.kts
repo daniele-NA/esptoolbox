@@ -23,4 +23,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "esptoolbox"
 include(":app")
+include(":esp32")
  

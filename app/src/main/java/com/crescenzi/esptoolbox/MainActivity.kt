@@ -4,31 +4,48 @@ import android.app.PendingIntent
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.hardware.usb.UsbManager
 import android.location.LocationManager
-import android.net.Uri
+import android.net.ConnectivityManager
 import android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION
 import android.os.Bundle
-import android.provider.Settings
+import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.crescenzi.esptoolbox.core.base.BaseComponentActivity
 import com.crescenzi.esptoolbox.core.values.Constants.INTENT_ACTION_GRANT_USB
 import com.crescenzi.esptoolbox.core.values.Constants.permissions
+import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esptoolbox.presentation.MainNavigation
-import com.crescenzi.esptoolbox.xml.AppTheme
+import com.crescenzi.esptoolbox.system.GenericReceiver
+import com.crescenzi.esptoolbox.system.SsidReceiver
+import com.crescenzi.esptoolbox.system.UsbPermissionReceiver
+import com.crescenzi.esptoolbox.theme.AppTheme
+import org.koin.android.ext.android.inject
 
 /**
  * Device Connection Activity
  */
-class MainActivity : BaseComponentActivity() {
+class MainActivity : ComponentActivity() {
+
+    private val ssidReceiver = SsidReceiver()
+    private val usbPermissionReceiver = UsbPermissionReceiver()
+    private val genericReceiver = GenericReceiver()
+
+    private val deviceRepo: DeviceRepo by inject()
+    private val usbRepo: UsbRepo by inject()
 
 
     /**
@@ -41,48 +58,59 @@ class MainActivity : BaseComponentActivity() {
         val coarseGranted = permissionsMap[permissions[0]] == true
         val fineGranted = permissionsMap[permissions[1]] == true
 
-
-        /**
-         * If all location permissions are granted
-         */
         if (coarseGranted && fineGranted) {
             registerReceiver(
                 ssidReceiver,
                 IntentFilter(NETWORK_STATE_CHANGED_ACTION)
             )
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(true)
+            deviceRepo.changeLocationPermissionStatus(true)
         } else
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(false)
+            deviceRepo.changeLocationPermissionStatus(false)
     }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+
+        /**
+         * Force the app to dark at OS level (uiMode) + dark system bars
+         */
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+        )
         super.onCreate(savedInstanceState)
+
+        ContextCompat.registerReceiver(
+            this,
+            usbPermissionReceiver,
+            IntentFilter(INTENT_ACTION_GRANT_USB),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+
+        /**
+         * Handles data/Wi-Fi connection & location by updating the Repo
+         */
+        registerReceiver(genericReceiver, IntentFilter().apply {
+            addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+            addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+        })
 
         /**
          * Location init (the first value is not received)
          */
-
-        homeViewModel.deviceRepo.changeLocationStatus(
+        deviceRepo.changeLocationStatus(
             (getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
                 LocationManager.GPS_PROVIDER
             )
         )
 
-        /**
-         * Permission callback handling
-         */
-        homeViewModel.onReqPermissionCallback = {
-            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.fromParts("package", packageName, null)
-            })
-        }
-
         setContent {
             AppTheme(this) {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
+                    contentWindowInsets = WindowInsets(0, 0, 0, 0),
                     content = { safePadding ->
                         Column(
                             modifier = Modifier
@@ -90,11 +118,6 @@ class MainActivity : BaseComponentActivity() {
                                 .fillMaxSize()
                         ) {
                             MainNavigation(
-                                usbConnectionViewModel = super.usbConnectionViewModel,
-                                usbUpdaterViewModel = super.usbUpdaterViewModel,
-                                logViewModel = super.logViewModel,
-                                wifiViewModel = super.wifiViewModel,
-                                homeViewModel = super.homeViewModel,
                                 onReqUsbPermission = this@MainActivity::requestUsbPermission
                             )
                         }
@@ -102,11 +125,7 @@ class MainActivity : BaseComponentActivity() {
             }
         }
 
-
-
         requestPermissionLauncher.launch(permissions.toTypedArray())
-
-
     }
 
 
@@ -114,7 +133,7 @@ class MainActivity : BaseComponentActivity() {
      * Permission request for each different device, WORKING VERSION FOR ALL API LEVELS
      */
     fun requestUsbPermission() {
-        usbConnectionViewModel.currentDevice.value?.let {
+        usbRepo._currentDevice.value?.let {
             val usbManager = getSystemService(USB_SERVICE) as UsbManager
             val intent = Intent(INTENT_ACTION_GRANT_USB).apply {
                 setPackage(packageName)
@@ -137,13 +156,17 @@ class MainActivity : BaseComponentActivity() {
     override fun onResume() {
         super.onResume()
 
-        /**
-         * If all location permissions are granted
-         */
         if (checkPermission(permissions[0]) && checkPermission(permissions[1])) {
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(true)
+            deviceRepo.changeLocationPermissionStatus(true)
         } else
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(false)
+            deviceRepo.changeLocationPermissionStatus(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(usbPermissionReceiver)
+        unregisterReceiver(ssidReceiver)
+        unregisterReceiver(genericReceiver)
     }
 
 

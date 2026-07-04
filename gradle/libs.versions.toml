@@ -1,18 +1,25 @@
 [versions]
-agp = "8.9.1"
-kotlin = "2.0.21"
-lifecycleRuntimeKtx = "2.9.1"
-activityCompose = "1.10.1"
-composeBom = "2024.09.00"
-composeNavigation = "2.8.0-alpha08"
-serialization = "1.6.3"
-koinAndroid = "3.4.0"
-accompanist = "0.34.0"
-compose-material3 = "1.4.0-alpha14"
+agp = "9.2.0"
+kotlin = "2.4.0"
+coreKtx = "1.19.0"
+lifecycleRuntimeKtx = "2.11.0"
+activityCompose = "1.13.0"
+composeBom = "2026.06.01"
+composeNavigation = "2.9.8"
+serialization = "1.11.0"
+koinAndroid = "4.2.2"
+coreSplashscreen = "1.2.0"
+composeMaterial3 = "1.5.0-alpha23"
+usbSerial = "3.10.0"
+espTouch = "1.1.1"
+lottie = "6.7.1"
+appUpdate = "2.1.0"
+coroutines = "1.9.0"
+appcompat = "1.7.1"
 
 [libraries]
-androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version = "1.16.0" }
-junit = { group = "junit", name = "junit", version = "4.13.2" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -20,22 +27,21 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
-androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version = "1.0.1" }
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashscreen" }
 io-insert-koin-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koinAndroid" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose-material3" }
-accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist" }
-accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist" }
-usb-serial = { module = "com.github.mik3y:usb-serial-for-android", version = "3.9.0" }
-esp-touch = { module = "com.github.EspressifApp:lib-esptouch-android", version = "1.1.1" }
-lottie = { module = "com.airbnb.android:lottie-compose", version = "6.6.7" }
-app-update = { module = "com.google.android.play:app-update", version = "2.1.0" }
-app-update-ktx = { module = "com.google.android.play:app-update-ktx", version = "2.1.0" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koinAndroid" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+usb-serial = { module = "com.github.mik3y:usb-serial-for-android", version.ref = "usbSerial" }
+esp-touch = { module = "com.github.EspressifApp:lib-esptouch-android", version.ref = "espTouch" }
+lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdate" }
+app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdate" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

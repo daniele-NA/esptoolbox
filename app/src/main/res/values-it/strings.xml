@@ -3,27 +3,25 @@
     <string name="btn_connect">Connetti</string>
 
     <!--  Tab Navigation Label-->
-    <string name="home_label">Home</string>
     <string name="log_label">Log</string>
     <string name="usb_label">Usb</string>
     <string name="connection_label">Connessione</string>
-    <string name="updater_label">Aggiornamento</string>
-    <string name="serial_label">Serial</string>
+    <string name="updater_label">Flash</string>
+    <string name="btn_copy">Copia</string>
+    <string name="btn_clear">Pulisci</string>
     <string name="wifi_label">Wi-Fi</string>
 
     <!-- HomeScreen-->
     <string name="usb_desc">Collegati via USB</string>
     <string name="wifi_desc">Collegati via Wi-Fi</string>
-    <string name="info_desc">Con %s puoi eseguire il flash del tuo ESP, connetterlo al Wi-Fi, cancellare la memoria e usare molte altre funzioni utili.</string>
+    <string name="usb_subdesc">Seriale via cavo: flash e invio credenziali.</string>
+    <string name="wifi_subdesc">Provisioning ESP-Touch senza cavi.</string>
     <string name="get_started_desc">Nessun messaggio o avviso verrà mostrato — i risultati delle operazioni appariranno nella sezione Log.</string>
     <string name="internet_req_title">Stato connessione</string>
     <string name="internet_req_body">Assicurati di essere connesso a Internet</string>
     <string name="location_permission_req_title">Concedi il permesso di localizzazione</string>
     <string name="location_req_title">Stato localizzazione</string>
     <string name="location_req_body">Abilita la localizzazione dalle impostazioni</string>
-
-    <!-- ConnectionActivity-->
-    <string name="permission_denied_message">Non potrai utilizzare tutte le funzionalità</string>
 
     <!-- UsbConnectionScreen-->
     <string name="usb_connection_info">Nota: se stai usando un Chromebook o un dispositivo con più porte USB, non puoi collegare più di un dispositivo ESP alla volta.</string>
@@ -35,7 +33,6 @@
     <string name="connection_successfully">ESP connesso al Wi-Fi con successo</string>
 
     <!-- UsbUpdaterScreen-->
-    <string name="flash_description">Il flashing cancellerà tutti i dati. L’operazione inizierà dopo la chiusura di questo avviso.</string>
     <string name="flash_in_progress_warning">Flashing già in corso</string>
     <string name="flash_do_not_disconnect_usb">Rilevamento del chip completato, NON scollegare l\'USB o cambiare schermata</string>
     <string name="flash_rst">PREMI ORA IL TASTO RESET !!</string>
@@ -60,7 +57,6 @@
 
     <!-- Global-->
     <string name="get_started_tool">Inizia subito</string>
-    <string name="follow_tool">Seguici</string>
     <string name="go_tool">Vai</string>
     <string name="grant_permission_tool">Concedi permesso</string>
 </resources>
