@@ -17,9 +17,6 @@ android {
         versionCode = 3
         versionName = "2.0.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-
         /* == To avoid resource contamination, supported languages: En, It == */
         androidResources.localeFilters.add("it")
 
@@ -69,11 +66,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.compose.material3)
-    testImplementation(libs.junit)
     debugImplementation(libs.androidx.ui.tooling)
-    debugImplementation(libs.androidx.ui.test.manifest)
 
-    // == ESP32 / USB / firmware / flash logic lives in the agnostic :esp32 module == //
     implementation(project(":esp32"))
 
 

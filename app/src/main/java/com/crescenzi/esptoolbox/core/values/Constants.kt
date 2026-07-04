@@ -29,7 +29,6 @@ object Constants {
      */
 
     val HORIZONTAL_PADDING = 12.dp
-    val TOP_PADDING = 32.dp
     val CARD_CORNER = 22.dp
     val CARD_PADDING = 15.dp
 

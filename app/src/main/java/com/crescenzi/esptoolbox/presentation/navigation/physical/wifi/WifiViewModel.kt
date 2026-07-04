@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.presentation.util.getMessage
-import com.crescenzi.esptoolbox.core.values.ResultState
 import com.crescenzi.esp32.LogRepo
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esp32.exception.WifiConnectionException
