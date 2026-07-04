@@ -29,6 +29,11 @@
     <color name="md_theme_surfaceVariant">#2A2438</color>
     <color name="md_theme_onSurfaceVariant">#C9C1DB</color>
 
+    <!-- Lighter violet container surfaces (cards, menus, floating bar) -->
+    <color name="md_theme_surfaceContainer">#241E33</color>
+    <color name="md_theme_surfaceContainerHigh">#2E2740</color>
+    <color name="md_theme_surfaceContainerHighest">#382F4C</color>
+
     <!-- OUTLINE -->
     <color name="md_theme_outline">#79738C</color>
 

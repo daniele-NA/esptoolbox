@@ -68,9 +68,9 @@ fun OutlinedCardContainer(
             top = outerPadding,
             bottom = outerPadding
         ),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
         shape = RoundedCornerShape(Constants.CARD_CORNER),
-        border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.onBackground)
+        border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline)
     ) {
         Box(modifier = Modifier.padding(innerPadding))
         { content() }

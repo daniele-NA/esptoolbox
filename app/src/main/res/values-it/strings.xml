@@ -7,13 +7,17 @@
     <string name="log_label">Log</string>
     <string name="usb_label">Usb</string>
     <string name="connection_label">Connessione</string>
-    <string name="updater_label">Aggiornamento</string>
+    <string name="updater_label">Flash</string>
+    <string name="btn_copy">Copia</string>
+    <string name="btn_clear">Pulisci</string>
     <string name="serial_label">Serial</string>
     <string name="wifi_label">Wi-Fi</string>
 
     <!-- HomeScreen-->
     <string name="usb_desc">Collegati via USB</string>
     <string name="wifi_desc">Collegati via Wi-Fi</string>
+    <string name="usb_subdesc">Seriale via cavo: flash e invio credenziali.</string>
+    <string name="wifi_subdesc">Provisioning ESP-Touch senza cavi.</string>
     <string name="info_desc">Con %s puoi eseguire il flash del tuo ESP, connetterlo al Wi-Fi, cancellare la memoria e usare molte altre funzioni utili.</string>
     <string name="get_started_desc">Nessun messaggio o avviso verrà mostrato — i risultati delle operazioni appariranno nella sezione Log.</string>
     <string name="internet_req_title">Stato connessione</string>

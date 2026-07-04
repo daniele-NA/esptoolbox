@@ -10,11 +10,11 @@ import androidx.compose.ui.unit.sp
 import com.crescenzi.esptoolbox.R
 
 // Custom sizes
-val h1= 48.sp
-val h2 = 38.sp
-val h3 = 26.sp
-val h4 = 18.sp
-val h5 = 12.sp
+val h1 = 40.sp
+val h2 = 30.sp
+val h3 = 22.sp
+val h4 = 15.sp
+val h5 = 11.sp
 
 val bodiesFont = Font(R.font.roboto_flex)
 val titlesFont = Font(R.font.roboto_serif)

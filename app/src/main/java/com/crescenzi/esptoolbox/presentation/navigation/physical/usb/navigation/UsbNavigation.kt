@@ -1,50 +1,44 @@
 package com.crescenzi.esptoolbox.presentation.navigation.physical.usb.navigation
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.ToggleButton
+import androidx.compose.material3.ToggleButtonDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.LOG
+import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterViewModel
+import com.crescenzi.esptoolbox.presentation.widget.PageHeader
 import com.crescenzi.esptoolbox.theme.titlesFont
-import kotlinx.coroutines.launch
 
-/**
- * USB/Log page navigation
- */
 
-private enum class Destination(val route: String) {
-    CONNECTION("connection"),
-    UPDATER("updater");
+private enum class Destination {
+    CONNECTION, UPDATER;
 
-    /**
-     * To always have the label based on the current language
-     */
     @Composable
     fun label(): String = when (this) {
         CONNECTION -> stringResource(R.string.connection_label)
@@ -53,10 +47,6 @@ private enum class Destination(val route: String) {
 }
 
 
-
-/**
- * Navigation page management
- */
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UsbNavigation(
@@ -65,77 +55,68 @@ fun UsbNavigation(
     onReqUsbPermission: () -> Unit
 ) {
 
+    var selected by rememberSaveable { mutableIntStateOf(0) }
 
+    Column(modifier = Modifier.fillMaxSize()) {
 
-    val coroutineScope = rememberCoroutineScope()
-    val startDestination = Destination.CONNECTION
-    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
-    val pagerState = rememberPagerState(
-        initialPage = selectedDestination,
-        pageCount = { Destination.entries.size }
-    )
-
-    val usbConnectionScreen = remember {
-        @Composable
-        {
-            UsbConnectionScreen(
-                usbConnectionViewModel = usbConnectionViewModel,
-                onReqUsbPermission = onReqUsbPermission
-            )
-        }
-    }
-
-    val usbUpdaterScreen = remember {
-        @Composable
-        {
-            UsbUpdaterScreen(usbUpdaterViewModel)
-        }
-    }
-
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-
-        Row(
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            modifier = Modifier.padding(top = 12.dp)
+        /**
+         * Fixed header + Connection/Updater switch (below the status bar)
+         */
+        Column(
+            modifier = Modifier
+                .padding(WindowInsets.statusBars.asPaddingValues())
+                .padding(horizontal = HORIZONTAL_PADDING)
+                .padding(top = 12.dp)
         ) {
-            Destination.entries.forEachIndexed { index, destination ->
-                ToggleButton(
-                    checked = selectedDestination == index,
-                    onCheckedChange = {
-                        selectedDestination = index
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
-                        }
-                    }
-                ) {
-                    Text(
-                        text = destination.label(),
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = FontFamily(titlesFont)
-                        )
+
+            PageHeader(
+                upTitle = stringResource(R.string.usb_up_title),
+                title = stringResource(R.string.usb_title)
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 14.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Destination.entries.forEachIndexed { index, destination ->
+                    val isSelected = selected == index
+                    // Selected button is bigger; unselected is smaller
+                    val weight by animateFloatAsState(
+                        targetValue = if (isSelected) 1.6f else 1f,
+                        label = "toggle-weight"
                     )
+                    ToggleButton(
+                        checked = isSelected,
+                        onCheckedChange = { selected = index },
+                        modifier = Modifier.weight(weight),
+                        shapes = ToggleButtonDefaults.shapes()
+                    ) {
+                        Text(
+                            text = destination.label(),
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontFamily = FontFamily(titlesFont)
+                            )
+                        )
+                    }
                 }
             }
         }
 
-        HorizontalPager(
-            state = pagerState,
-            modifier = Modifier.fillMaxSize(),
-            beyondViewportPageCount = 1
-        ) { page ->
-            when (Destination.entries[page]) {
-                Destination.CONNECTION -> usbConnectionScreen.invoke()
-                Destination.UPDATER -> usbUpdaterScreen.invoke()
-            }
-        }
+        /**
+         * Selected page (each one scrolls on its own)
+         */
+        Box(modifier = Modifier.weight(1f)) {
+            when (Destination.entries[selected]) {
+                Destination.CONNECTION -> UsbConnectionScreen(
+                    usbConnectionViewModel = usbConnectionViewModel,
+                    onReqUsbPermission = onReqUsbPermission
+                )
 
-        // Sync tab selection with pager page
-        LaunchedEffect(pagerState.currentPage) {
-            selectedDestination = pagerState.currentPage
+                Destination.UPDATER -> UsbUpdaterScreen(usbUpdaterViewModel)
+            }
         }
     }
 }

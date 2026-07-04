@@ -10,6 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +28,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.function.getFileNameWithoutBin
 import com.crescenzi.esptoolbox.presentation.util.getMessage
-import com.crescenzi.esptoolbox.presentation.widget.CardContainer
 import com.crescenzi.esptoolbox.presentation.widget.EditText
 import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.core.values.Constants.PICK_MIME_TYPE
@@ -44,6 +44,11 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
 
     val baudRate by usbUpdaterViewModel.baudRate.collectAsStateWithLifecycle()
     val flashFiles by usbUpdaterViewModel.flashFiles.collectAsStateWithLifecycle()
+
+    // == Per-file address validity; Flash is enabled only with >=1 attached file and valid addresses == //
+    val addressValid = remember { List(flashFiles.size) { true }.toMutableStateList() }
+    val flashEnabled = flashFiles.any { it.uri != null } &&
+            flashFiles.indices.all { flashFiles[it].uri == null || addressValid[it] }
 
     /**
      * 5 Launcher
@@ -64,141 +69,142 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
 
     Box(modifier = Modifier.fillMaxSize()) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(WindowInsets.systemBars.asPaddingValues())
-            .padding(horizontal = HORIZONTAL_PADDING)
-            .padding(bottom = 110.dp)
-    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(WindowInsets.navigationBars.asPaddingValues())
+                .padding(horizontal = HORIZONTAL_PADDING)
+                .padding(top = 16.dp, bottom = 110.dp)
+        ) {
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                modifier = Modifier.padding(bottom = 8.dp),
+                text = stringResource(R.string.baud_rate_title),
+                style = MaterialTheme.typography.labelMedium.copy(
+                    color = MaterialTheme.colorScheme.inversePrimary,
+                    fontWeight = FontWeight.Bold
+                ), maxLines = 1, overflow = TextOverflow.Ellipsis
+            )
 
-        CardContainer(modifier = Modifier.padding(bottom = 10.dp)) {
-            Column {
+            UsbBaudRateWidget(
+                selectedBaudRate = baudRate,
+                onBaudRateSelected = {
+                    usbUpdaterViewModel.updateBaudRate(it)
+                }
+            )
 
-                Text(
-                    modifier = Modifier.padding(top = 13.dp, bottom = 8.dp),
-                    text = stringResource(R.string.baud_rate_title),
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        fontWeight = FontWeight.Bold
-                    ), maxLines = 1, overflow = TextOverflow.Ellipsis
-                )
+            HorizontalDivider(modifier = Modifier.padding(vertical = 18.dp))
 
-                UsbBaudRateWidget(
-                    selectedBaudRate = baudRate,
-                    onBaudRateSelected = {
-                        usbUpdaterViewModel.updateBaudRate(it)
-                    }
-                )
+            Text(
+                modifier = Modifier.padding(bottom = 12.dp),
+                text = stringResource(R.string.files_title),
+                style = MaterialTheme.typography.labelMedium.copy(
+                    color = MaterialTheme.colorScheme.inversePrimary,
+                    fontWeight = FontWeight.Bold
+                ), maxLines = 1, overflow = TextOverflow.Ellipsis
+            )
+            Text(
+                modifier = Modifier.padding(bottom = 5.dp),
+                text = stringResource(R.string.files_description),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.error,
+            )
 
-                Text(
-                    modifier = Modifier.padding(top = 35.dp, bottom = 12.dp),
-                    text = stringResource(R.string.files_title),
-                    style = MaterialTheme.typography.labelMedium.copy(
-                        color = MaterialTheme.colorScheme.inversePrimary,
-                        fontWeight = FontWeight.Bold
-                    ), maxLines = 1, overflow = TextOverflow.Ellipsis
-                )
-                Text(
-                    modifier = Modifier.padding(bottom = 5.dp),
-                    text = stringResource(R.string.files_description),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.error,
-                )
+            flashFiles.forEachIndexed { index, fileEntry ->
 
-                flashFiles.forEachIndexed { index, fileEntry ->
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
 
-                    Row(
+                    val iconRes =
+                        if (fileEntry.uri != null) R.drawable.remove_icon else R.drawable.attach_icon
+
+                    Icon(
+                        painter = painterResource(id = iconRes),
+                        contentDescription = null,
+                        tint = null,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp),
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        val iconRes =
-                            if (fileEntry.uri != null) R.drawable.remove_icon else R.drawable.attach_icon
-
-                        Icon(
-                            painter = painterResource(id = iconRes),
-                            contentDescription = null,
-                            tint = null,
-                            modifier = Modifier
-                                .size(28.dp)
-                                .clickable {
-                                    if (fileEntry.uri != null) {
-                                        // remove file reference
-                                        usbUpdaterViewModel.updateFlashFile(
-                                            index,
-                                            label = ".bin",
-                                            address = 0,
-                                            uri = null
-                                        )
-                                    } else {
-                                        // open picker
-                                        pickers[index].launch(arrayOf(PICK_MIME_TYPE))
-                                    }
+                            .size(28.dp)
+                            .clickable {
+                                if (fileEntry.uri != null) {
+                                    // remove file reference
+                                    usbUpdaterViewModel.updateFlashFile(
+                                        index,
+                                        label = ".bin",
+                                        address = 0,
+                                        uri = null
+                                    )
+                                    addressValid[index] = true
+                                } else {
+                                    // open picker
+                                    pickers[index].launch(arrayOf(PICK_MIME_TYPE))
                                 }
-                        )
-                        Spacer(modifier = Modifier.width(12.dp))
+                            }
+                    )
+                    Spacer(modifier = Modifier.width(12.dp))
 
-                        Text(
-                            text = fileEntry.label,
-                            overflow = TextOverflow.Ellipsis,
-                            style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                            modifier = Modifier.weight(1f)
-                        )
-                        Box(modifier = Modifier.weight(1f)) {
-                            key(index, fileEntry.uri) {
-                                EditText(
-                                    opt = KeyboardOptions.Default,
-                                    label = "",
-                                    initialValue = "0x${fileEntry.address.toString(16)}",
-                                    onValueChange = { newText ->
-                                        try {
-                                            val parsed = newText
-                                                .trim()
-                                                .lowercase()
-                                                .removePrefix("0x")
-                                                .toIntOrNull(16)
+                    Text(
+                        text = fileEntry.label,
+                        overflow = TextOverflow.Ellipsis,
+                        style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
+                        modifier = Modifier.weight(1f)
+                    )
+                    Box(modifier = Modifier.weight(1f)) {
+                        key(index, fileEntry.uri) {
+                            EditText(
+                                opt = KeyboardOptions.Default,
+                                label = "",
+                                initialValue = "0x${fileEntry.address.toString(16)}",
+                                onValueChange = { newText ->
+                                    try {
+                                        val parsed = newText
+                                            .trim()
+                                            .lowercase()
+                                            .removePrefix("0x")
+                                            .toIntOrNull(16)
 
-                                            if (parsed != null) {
-                                                usbUpdaterViewModel.updateFlashFile(
-                                                    index = index,
-                                                    label = fileEntry.label,
-                                                    uri = fileEntry.uri,
-                                                    address = parsed
-                                                )
-                                            }
-                                        } catch (e: Exception) {
-                                            usbUpdaterViewModel.logRepo.plusLog(
-                                                getMessage(context, e),
-                                                LogLevel.ERROR
+                                        addressValid[index] = parsed != null
+
+                                        if (parsed != null) {
+                                            usbUpdaterViewModel.updateFlashFile(
+                                                index = index,
+                                                label = fileEntry.label,
+                                                uri = fileEntry.uri,
+                                                address = parsed
                                             )
                                         }
+                                    } catch (e: Exception) {
+                                        usbUpdaterViewModel.logRepo.plusLog(
+                                            getMessage(context, e),
+                                            LogLevel.ERROR
+                                        )
                                     }
-                                )
-                            }
+                                }
+                            )
                         }
-
                     }
+
                 }
             }
-        }
 
-        UsbUpdaterButtonsWidget(
-            onReset = usbUpdaterViewModel::commandReset,
-            onFlash = {
-                /**
-                 * Takes all entries and flashes them
-                 */
-                usbUpdaterViewModel.flash(context)
-            }
-        )
-        Spacer(Modifier.padding(bottom = 15.dp))
-    }
+            Spacer(modifier = Modifier.height(16.dp))
+
+            UsbUpdaterButtonsWidget(
+                enabled = flashEnabled,
+                onReset = usbUpdaterViewModel::commandReset,
+                onFlash = {
+                    /**
+                     * Takes all entries and flashes them
+                     */
+                    usbUpdaterViewModel.flash(context)
+                }
+            )
+            Spacer(Modifier.padding(bottom = 15.dp))
+        }
 
         if (loading) {
             LoadingIndicator(modifier = Modifier.align(Alignment.Center))

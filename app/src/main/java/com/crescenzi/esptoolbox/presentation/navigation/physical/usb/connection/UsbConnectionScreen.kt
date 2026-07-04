@@ -1,19 +1,18 @@
 package com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection
 
 import android.location.LocationManager
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -26,14 +25,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.presentation.widget.CardContainer
 import com.crescenzi.esptoolbox.presentation.widget.InfoTile
 import com.crescenzi.esptoolbox.core.values.Constants
 import com.crescenzi.esp32.params.BaudRateFormat
@@ -73,100 +70,83 @@ fun UsbConnectionScreen(
     val format = remember { mutableStateOf<SerialFormat>(SerialFormat.Plain) }
 
 
-
     Box(modifier = Modifier.fillMaxSize()) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(WindowInsets.systemBars.asPaddingValues())
-            .padding(horizontal = Constants.HORIZONTAL_PADDING)
-            .padding(bottom = 110.dp),
-        horizontalAlignment = Alignment.Start
-    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(WindowInsets.navigationBars.asPaddingValues())
+                .padding(horizontal = Constants.HORIZONTAL_PADDING)
+                .padding(top = 16.dp, bottom = 110.dp),
+            horizontalAlignment = Alignment.Start
+        ) {
 
+            UsbConnectionStatusWidget(deviceSnapshot)
 
-        CardContainer(modifier = Modifier.fillMaxWidth()) {
-            Column {
-                Image(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = Constants.TOP_PADDING),
-                    painter = painterResource(R.drawable.usb_icon),
-                    contentDescription = null
+            HorizontalDivider(modifier = Modifier.padding(vertical = 18.dp))
+
+            Text(
+                modifier = Modifier.padding(bottom = 12.dp),
+                text = stringResource(R.string.board_name),
+                style = MaterialTheme.typography.labelSmall.copy(
+                    fontWeight = FontWeight.Bold
                 )
-                UsbConnectionStatusWidget(deviceSnapshot)
+            )
+
+            /**
+             * Warns that location is disabled
+             */
+            if (isLocationEnabled(LocalContext.current.getSystemService(LocationManager::class.java) as LocationManager) == false) {
                 Text(
-                    modifier = Modifier.padding(vertical = 20.dp),
-                    text = stringResource(R.string.board_name),
+                    modifier = Modifier.padding(vertical = 10.dp),
+                    text = stringResource(R.string.position_warning, stringResource(R.string.application_name)),
                     style = MaterialTheme.typography.labelSmall.copy(
                         fontWeight = FontWeight.Bold
-                    )
+                    ), color = MaterialTheme.colorScheme.error
                 )
-
-                /**
-                 * Warns that location is disabled
-                 */
-                if (isLocationEnabled(LocalContext.current.getSystemService(LocationManager::class.java) as LocationManager) == false) {
-                    Text(
-                        modifier = Modifier.padding(vertical = 10.dp),
-                        text = stringResource(R.string.position_warning, stringResource(R.string.application_name)),
-                        style = MaterialTheme.typography.labelSmall.copy(
-                            fontWeight = FontWeight.Bold
-                        ), color = MaterialTheme.colorScheme.error
-                    )
-                }
-                UsbConnectionCredentialsWidget(ssid, pwd)
-
-                Spacer(modifier = Modifier.padding(vertical = 12.dp))
-
-                UsbBaudRateWidget(
-                    selectedBaudRate = baudRate.value,
-                    onBaudRateSelected = { baudRate.value = it })
-
-
-                UsbConnectionSerialFormatWidget(
-                    selectedFormat = format.value,
-                    onFormatSelected = { format.value = it })
-
-
-
-
-                UsbConnectionActionsWidget(
-                    Modifier.align(Alignment.CenterHorizontally),
-                    usbConnectionViewModel,
-                ) {
-                    /*
-                     */
-
-                    /**
-                     * - Button onClick  -->  Send credentials or request permissions
-                     */
-                    usbConnectionViewModel.sendCredentials(
-                        UsbConnectionArgs(
-                            ssid.value,
-                            pwd.value,
-                            format.value,
-                            baudRate.value
-                        ), onReqUsbPermission
-                    )
-
-                }
-
-
             }
+
+            UsbConnectionCredentialsWidget(ssid, pwd)
+
+            Spacer(modifier = Modifier.padding(vertical = 12.dp))
+
+            UsbBaudRateWidget(
+                selectedBaudRate = baudRate.value,
+                onBaudRateSelected = { baudRate.value = it })
+
+            Spacer(modifier = Modifier.padding(vertical = 10.dp))
+
+            UsbConnectionSerialFormatWidget(
+                selectedFormat = format.value,
+                onFormatSelected = { format.value = it })
+
+
+            UsbConnectionActionsWidget(
+                Modifier.align(Alignment.CenterHorizontally),
+                usbConnectionViewModel,
+            ) {
+                /**
+                 * - Button onClick  -->  Send credentials or request permissions
+                 */
+                usbConnectionViewModel.sendCredentials(
+                    UsbConnectionArgs(
+                        ssid.value,
+                        pwd.value,
+                        format.value,
+                        baudRate.value
+                    ), onReqUsbPermission
+                )
+            }
+
+            Spacer(modifier = Modifier.padding(vertical = 12.dp))
+
+            InfoTile(text = stringResource(R.string.usb_connection_info))
+
         }
-
-
-        InfoTile(text = stringResource(R.string.usb_connection_info))
-
-    }
 
         if (loading) {
             LoadingIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
-
-
 }

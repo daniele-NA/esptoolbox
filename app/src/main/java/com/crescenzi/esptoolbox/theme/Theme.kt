@@ -36,6 +36,10 @@ private fun getColorScheme(context: Context): ColorScheme {
         surfaceVariant = Color(ContextCompat.getColor(context, R.color.md_theme_surfaceVariant)),
         onSurfaceVariant = Color(ContextCompat.getColor(context, R.color.md_theme_onSurfaceVariant)),
 
+        surfaceContainer = Color(ContextCompat.getColor(context, R.color.md_theme_surfaceContainer)),
+        surfaceContainerHigh = Color(ContextCompat.getColor(context, R.color.md_theme_surfaceContainerHigh)),
+        surfaceContainerHighest = Color(ContextCompat.getColor(context, R.color.md_theme_surfaceContainerHighest)),
+
         outline = Color(ContextCompat.getColor(context, R.color.md_theme_outline)),
 
         error = Color(ContextCompat.getColor(context, R.color.md_theme_error)),

@@ -15,18 +15,13 @@ android {
         minSdk = 27
         targetSdk = 37
         versionCode = 3
-        versionName = "v2"
+        versionName = "2.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
 
-        /* ==
-
-        To avoid resource contamination, supported languages: En, It
-
-        == */
+        /* == To avoid resource contamination, supported languages: En, It == */
         androidResources.localeFilters.add("it")
-
 
     }
 
@@ -66,6 +61,7 @@ kotlin {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
     implementation(platform(libs.androidx.compose.bom))

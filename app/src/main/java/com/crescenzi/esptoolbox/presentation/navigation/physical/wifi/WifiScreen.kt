@@ -28,6 +28,7 @@ import com.crescenzi.esptoolbox.presentation.widget.InfoTile
 import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.core.values.Constants.WIFI_ANIM
 import com.crescenzi.esptoolbox.presentation.navigation.physical.wifi.util.widget.DataSection
+import com.crescenzi.esptoolbox.presentation.widget.PageHeader
 
 /**
  * WiFi Connection Screen
@@ -53,6 +54,13 @@ fun WifiScreen(
                 .padding(bottom = 110.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
+            PageHeader(
+                upTitle = stringResource(R.string.wifi_up_title),
+                title = stringResource(R.string.wifi_title),
+                modifier = Modifier.align(Alignment.Start)
+            )
+            Spacer(Modifier.padding(top = 8.dp))
 
             LottieAnimation(
                 composition = animation,

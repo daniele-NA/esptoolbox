@@ -36,7 +36,7 @@ class WifiViewModel(
      * If it connects, the MAC is immediately stored in preferences
      */
     fun sendBroadcast(pwd: String) {
-        if (pwd.trim().isEmpty()) return
+        // Empty password is allowed (open networks); only SSID/BSSID are required
         if (ssid.value.isEmpty() || bssid.value.isEmpty()) return   // If empty, either permissions are missing or an error occurred
 
         logRepo.plusLog(line = getApplication<Application>().getString(R.string.broadcast_warning), logLevel = LogLevel.WARNING)

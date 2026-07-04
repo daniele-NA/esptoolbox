@@ -28,7 +28,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.platform.LocalDensity
@@ -47,8 +49,12 @@ internal fun EditText(
     label: String,
     initialValue: String = "",
     singleLine: Boolean = true,
-    enabled: Boolean = true
+    enabled: Boolean = true,
+    readOnly: Boolean = false
 ) {
+    // == readOnly: non-editable but NOT dimmed (e.g. dropdown anchors). disabled: dimmed == //
+    val fieldEnabled = enabled && !readOnly
+    val dimmed = !enabled
     var text by rememberSaveable { mutableStateOf(initialValue) }
     val interactionSource = remember { MutableInteractionSource() }
     val isFocused by interactionSource.collectIsFocusedAsState()
@@ -76,8 +82,10 @@ internal fun EditText(
         label = "dash_phase"
     )
 
-    val borderColor = colorScheme.scrim
-    val cornerRadiusPx = 30.0f
+    // == Dim text + dashes only when actually disabled == //
+    val borderColor = if (dimmed) Color.White.copy(alpha = 0.3f) else Color.White
+    val textColor = if (dimmed) colorScheme.onSurface.copy(alpha = 0.4f) else colorScheme.onSurface
+    val cornerRadiusPx = 48.0f
     val borderWidthPx = borderWidth.dpToPx()
 
     Box(
@@ -108,11 +116,12 @@ internal fun EditText(
                 text = it
                 onValueChange(it)
             },
-            enabled = enabled,
+            enabled = fieldEnabled,
             modifier = Modifier.fillMaxWidth(),
             textStyle = MaterialTheme.typography.bodyLarge.copy(
-                color = colorScheme.onSurface
+                color = textColor
             ),
+            cursorBrush = SolidColor(colorScheme.primary),
             keyboardOptions = opt,
             keyboardActions = actions,
             singleLine = singleLine,

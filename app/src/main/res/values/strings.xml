@@ -9,7 +9,7 @@
     <string name="log_label">Log</string>
     <string name="usb_label">Usb</string>
     <string name="connection_label">Connection</string>
-    <string name="updater_label">Updater</string>
+    <string name="updater_label">Flash</string>
     <string name="serial_label">Serial</string>
     <string name="wifi_label">Wi-Fi</string>
 
@@ -17,6 +17,8 @@
     <string name="about_desc" translatable="false">We\'re a team of developers specialized in Native programming</string>
     <string name="usb_desc">Connect with Usb</string>
     <string name="wifi_desc">Connect with WiFi</string>
+    <string name="usb_subdesc">Wired serial: flash &amp; send credentials.</string>
+    <string name="wifi_subdesc">Cable-free ESP-Touch provisioning.</string>
     <string name="info_desc">With %s you can flash your ESP, connect it to Wi-Fi, erase it, and access many other useful features.</string>
     <string name="get_started_desc">No alerts or snackbars will be displayed — all operation results will appear in the Log section.</string>
     <string name="internet_req_title">Internet Status</string>
@@ -73,6 +75,15 @@
     <string name="github_tool" translatable="false">Github</string>
     <string name="about_tool" translatable="false">About</string>
     <string name="info_tool" translatable="false">Info</string>
+
+    <string name="usb_up_title" translatable="false">USB · SERIAL</string>
+    <string name="usb_title" translatable="false">Cabled</string>
+    <string name="btn_copy">Copy</string>
+    <string name="btn_clear">Clear</string>
+    <string name="log_up_title" translatable="false">CONSOLE</string>
+    <string name="log_title" translatable="false">Log</string>
+    <string name="wifi_up_title" translatable="false">WIRELESS</string>
+    <string name="wifi_title" translatable="false">Wi-Fi Setup</string>
     <string name="get_started_tool">Get Started</string>
     <string name="follow_tool">Follow us</string>
     <string name="go_tool">Go</string>
