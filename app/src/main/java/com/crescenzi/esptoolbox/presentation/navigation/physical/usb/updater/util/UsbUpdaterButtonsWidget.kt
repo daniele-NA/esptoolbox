@@ -36,7 +36,6 @@ fun UsbUpdaterButtonsWidget(enabled: Boolean, onReset: () -> Unit, onFlash: () -
          * Reset btn
          */
         TextButton(
-            enabled = enabled,
             shapes = ButtonDefaults.shapes(),
             onClick = {
                 onReset()
@@ -44,8 +43,7 @@ fun UsbUpdaterButtonsWidget(enabled: Boolean, onReset: () -> Unit, onFlash: () -
             Text(
                 text = stringResource(R.string.btn_reset),
                 style = MaterialTheme.typography.labelMedium,
-                color = if (enabled) MaterialTheme.colorScheme.error
-                else MaterialTheme.colorScheme.error.copy(alpha = 0.38f)
+                color = MaterialTheme.colorScheme.error
             )
         }
 
