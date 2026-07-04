@@ -22,6 +22,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.presentation.widget.LeadingTile
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_PADDING
+import com.crescenzi.esptoolbox.presentation.LocalNavController
+import com.crescenzi.esptoolbox.presentation.UsbPage
 import com.crescenzi.esptoolbox.presentation.navigation.home.HomeViewModel
 
 
@@ -30,9 +32,10 @@ import com.crescenzi.esptoolbox.presentation.navigation.home.HomeViewModel
  */
 @Composable
 fun GetStartedSection(
-    homeViewModel: HomeViewModel,
-    onNavToSerialSection: () -> Unit
+    homeViewModel: HomeViewModel
 ) {
+
+    val navController = LocalNavController.current
 
     val internetState = homeViewModel.deviceRepo.internet.collectAsStateWithLifecycle().value
     //SSID and BSSID detection
@@ -115,7 +118,7 @@ fun GetStartedSection(
                 /**
                  * EXTRA CHECK
                  */
-                if (navBtnStatus.value) onNavToSerialSection.invoke()
+                if (navBtnStatus.value) navController.navigate(UsbPage)
             }) {
             Text(
                 text = stringResource(R.string.go_tool),

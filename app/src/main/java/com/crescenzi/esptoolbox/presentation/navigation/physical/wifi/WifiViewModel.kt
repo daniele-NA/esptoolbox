@@ -7,7 +7,7 @@ import com.crescenzi.esptoolbox.core.presentation.util.getMessage
 import com.crescenzi.esptoolbox.core.values.ResultState
 import com.crescenzi.esptoolbox.data.core.BaseRepo
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
-import com.crescenzi.esptoolbox.data.phone.domain.exception.WifiConnectionException
+import com.crescenzi.esptoolbox.data.core.exception.WifiConnectionException
 import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
 import com.espressif.iot.esptouch.EsptouchTask
 

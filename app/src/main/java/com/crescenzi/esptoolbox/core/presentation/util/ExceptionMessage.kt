@@ -2,8 +2,8 @@ package com.crescenzi.esptoolbox.core.presentation.util
 
 import android.content.Context
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.data.usb.domain.exception.UsbConnectionException
-import com.crescenzi.esptoolbox.data.phone.domain.exception.WifiConnectionException
+import com.crescenzi.esptoolbox.data.core.exception.UsbConnectionException
+import com.crescenzi.esptoolbox.data.core.exception.WifiConnectionException
 
 
 /**

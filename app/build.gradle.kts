@@ -84,6 +84,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.io.insert.koin.koin.android) // == Dependency Injection == //
+    implementation(libs.koin.androidx.compose)
     implementation(libs.usb.serial)
     implementation(libs.esp.touch)
     implementation(libs.lottie)

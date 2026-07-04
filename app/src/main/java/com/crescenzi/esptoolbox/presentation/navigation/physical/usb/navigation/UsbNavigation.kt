@@ -28,9 +28,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.debug.LOG
-import com.crescenzi.esptoolbox.presentation.navigation.physical.navigation.PhysicalNavigationParams
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionScreen
+import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterScreen
+import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterViewModel
 import com.crescenzi.esptoolbox.xml.titlesFont
 import kotlinx.coroutines.launch
 
@@ -59,7 +60,9 @@ private enum class Destination(val route: String) {
  */
 @Composable
 fun UsbNavigation(
-    physicalNavigationParams: PhysicalNavigationParams
+    usbConnectionViewModel: UsbConnectionViewModel,
+    usbUpdaterViewModel: UsbUpdaterViewModel,
+    onReqUsbPermission: () -> Unit
 ) {
 
 
@@ -76,8 +79,8 @@ fun UsbNavigation(
         @Composable
         {
             UsbConnectionScreen(
-                usbConnectionViewModel = physicalNavigationParams.usbConnectionViewModel,
-                onReqUsbPermission = physicalNavigationParams.onReqUsbPermission
+                usbConnectionViewModel = usbConnectionViewModel,
+                onReqUsbPermission = onReqUsbPermission
             )
         }
     }
@@ -85,7 +88,7 @@ fun UsbNavigation(
     val usbUpdaterScreen = remember {
         @Composable
         {
-            UsbUpdaterScreen(physicalNavigationParams.usbUpdaterViewModel)
+            UsbUpdaterScreen(usbUpdaterViewModel)
         }
     }
 

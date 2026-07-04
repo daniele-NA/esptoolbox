@@ -1,5 +1,8 @@
 package com.crescenzi.esptoolbox.presentation.navigation.home
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import androidx.activity.compose.LocalActivity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.core.device.checkStoreUpdate
@@ -22,14 +26,25 @@ import com.crescenzi.esptoolbox.presentation.navigation.home.util.InfoSection
  */
 @Composable
 fun HomeScreen(
-    homeViewModel: HomeViewModel,
-    onNavToSerialSection: () -> Unit
+    homeViewModel: HomeViewModel
 ) {
+
+    val activity = LocalActivity.current
 
     /**
      * Update check
      */
-    LocalActivity.current?.checkStoreUpdate()
+    activity?.checkStoreUpdate()
+
+    LaunchedEffect(activity) {
+        homeViewModel.onReqPermissionCallback = {
+            activity?.startActivity(
+                Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+                    data = Uri.fromParts("package", activity.packageName, null)
+                }
+            )
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -42,7 +57,7 @@ fun HomeScreen(
         Spacer(Modifier.padding(top = 60.dp))
         InfoSection()
         Spacer(Modifier.padding(top = 25.dp))
-        GetStartedSection(homeViewModel, onNavToSerialSection)
+        GetStartedSection(homeViewModel)
         AboutSection()
 
 

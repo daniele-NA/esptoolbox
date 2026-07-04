@@ -152,5 +152,10 @@ class UsbConnectionViewModel(
         usbRepo.disconnect()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        clearAll()
+    }
+
 
 }

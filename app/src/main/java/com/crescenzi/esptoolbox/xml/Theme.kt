@@ -41,21 +41,11 @@ private fun getColorScheme(context: Context): ColorScheme {
         onSurfaceVariant = Color(ContextCompat.getColor(context, R.color.md_theme_onSurfaceVariant)),
 
         outline = Color(ContextCompat.getColor(context, R.color.md_theme_outline)),
-        outlineVariant = Color(ContextCompat.getColor(context, R.color.md_theme_outlineVariant)),
 
         error = Color(ContextCompat.getColor(context, R.color.md_theme_error)),
         onError = Color(ContextCompat.getColor(context, R.color.md_theme_onError)),
         errorContainer = Color(ContextCompat.getColor(context, R.color.md_theme_errorContainer)),
         onErrorContainer = Color(ContextCompat.getColor(context, R.color.md_theme_onErrorContainer)),
-
-        inverseSurface = Color(ContextCompat.getColor(context, R.color.md_theme_inverseSurface)),
-        inverseOnSurface = Color(ContextCompat.getColor(context, R.color.md_theme_inverseOnSurface)),
-        inversePrimary = Color(ContextCompat.getColor(context, R.color.md_theme_inversePrimary)),
-
-        /*
-        Overlay color
-         */
-        scrim = Color(ContextCompat.getColor(context, R.color.md_theme_scrim))
     )
 
 

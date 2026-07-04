@@ -6,10 +6,8 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.hardware.usb.UsbManager
 import android.location.LocationManager
-import android.net.Uri
 import android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION
 import android.os.Bundle
-import android.provider.Settings
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
@@ -22,13 +20,19 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.crescenzi.esptoolbox.core.base.BaseComponentActivity
 import com.crescenzi.esptoolbox.core.values.Constants.INTENT_ACTION_GRANT_USB
 import com.crescenzi.esptoolbox.core.values.Constants.permissions
+import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.data.usb.data.UsbRepo
 import com.crescenzi.esptoolbox.presentation.MainNavigation
 import com.crescenzi.esptoolbox.xml.AppTheme
+import org.koin.android.ext.android.inject
 
 /**
  * Device Connection Activity
  */
 class MainActivity : BaseComponentActivity() {
+
+    private val deviceRepo: DeviceRepo by inject()
+    private val usbRepo: UsbRepo by inject()
 
 
     /**
@@ -50,9 +54,9 @@ class MainActivity : BaseComponentActivity() {
                 ssidReceiver,
                 IntentFilter(NETWORK_STATE_CHANGED_ACTION)
             )
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(true)
+            deviceRepo.changeLocationPermissionStatus(true)
         } else
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(false)
+            deviceRepo.changeLocationPermissionStatus(false)
     }
 
 
@@ -64,20 +68,11 @@ class MainActivity : BaseComponentActivity() {
          * Location init (the first value is not received)
          */
 
-        homeViewModel.deviceRepo.changeLocationStatus(
+        deviceRepo.changeLocationStatus(
             (getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
                 LocationManager.GPS_PROVIDER
             )
         )
-
-        /**
-         * Permission callback handling
-         */
-        homeViewModel.onReqPermissionCallback = {
-            startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
-                data = Uri.fromParts("package", packageName, null)
-            })
-        }
 
         setContent {
             AppTheme(this) {
@@ -90,11 +85,6 @@ class MainActivity : BaseComponentActivity() {
                                 .fillMaxSize()
                         ) {
                             MainNavigation(
-                                usbConnectionViewModel = super.usbConnectionViewModel,
-                                usbUpdaterViewModel = super.usbUpdaterViewModel,
-                                logViewModel = super.logViewModel,
-                                wifiViewModel = super.wifiViewModel,
-                                homeViewModel = super.homeViewModel,
                                 onReqUsbPermission = this@MainActivity::requestUsbPermission
                             )
                         }
@@ -114,7 +104,7 @@ class MainActivity : BaseComponentActivity() {
      * Permission request for each different device, WORKING VERSION FOR ALL API LEVELS
      */
     fun requestUsbPermission() {
-        usbConnectionViewModel.currentDevice.value?.let {
+        usbRepo._currentDevice.value?.let {
             val usbManager = getSystemService(USB_SERVICE) as UsbManager
             val intent = Intent(INTENT_ACTION_GRANT_USB).apply {
                 setPackage(packageName)
@@ -141,9 +131,9 @@ class MainActivity : BaseComponentActivity() {
          * If all location permissions are granted
          */
         if (checkPermission(permissions[0]) && checkPermission(permissions[1])) {
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(true)
+            deviceRepo.changeLocationPermissionStatus(true)
         } else
-            homeViewModel.deviceRepo.changeLocationPermissionStatus(false)
+            deviceRepo.changeLocationPermissionStatus(false)
     }
 
 

@@ -14,7 +14,7 @@ import com.crescenzi.esptoolbox.data.usb.data.model.UsbConnectionArgs
 import com.crescenzi.esptoolbox.data.usb.data.model.UsbStatus
 import com.crescenzi.esptoolbox.data.usb.data.util.UsbPermission
 import com.crescenzi.esptoolbox.data.usb.data.util.getCustomProber
-import com.crescenzi.esptoolbox.data.usb.domain.exception.UsbConnectionException
+import com.crescenzi.esptoolbox.data.core.exception.UsbConnectionException
 import com.hoho.android.usbserial.driver.UsbSerialDriver
 import com.hoho.android.usbserial.driver.UsbSerialPort
 import com.hoho.android.usbserial.driver.UsbSerialProber
