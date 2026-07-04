@@ -1,10 +1,10 @@
-package com.crescenzi.esptoolbox.system.receiver
+package com.crescenzi.esptoolbox.system
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.hardware.usb.UsbManager
-import com.crescenzi.esptoolbox.core.debug.LOG
+import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.core.values.Constants
 import com.crescenzi.esptoolbox.data.usb.data.util.UsbPermission
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel

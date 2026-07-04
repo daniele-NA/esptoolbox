@@ -18,13 +18,9 @@ private fun getColorScheme(context: Context): ColorScheme {
     return baseScheme.copy(
         primary = Color(ContextCompat.getColor(context, R.color.md_theme_primary)),
         onPrimary = Color(ContextCompat.getColor(context, R.color.md_theme_onPrimary)),
-        primaryContainer = Color(ContextCompat.getColor(context, R.color.md_theme_primaryContainer)),
-        onPrimaryContainer = Color(ContextCompat.getColor(context, R.color.md_theme_onPrimaryContainer)),
 
         secondary = Color(ContextCompat.getColor(context, R.color.md_theme_secondary)),
         onSecondary = Color(ContextCompat.getColor(context, R.color.md_theme_onSecondary)),
-        secondaryContainer = Color(ContextCompat.getColor(context, R.color.md_theme_secondaryContainer)),
-        onSecondaryContainer = Color(ContextCompat.getColor(context, R.color.md_theme_onSecondaryContainer)),
 
         tertiary = Color(ContextCompat.getColor(context, R.color.md_theme_tertiary)),
         onTertiary = Color(ContextCompat.getColor(context, R.color.md_theme_onTertiary)),
@@ -44,8 +40,6 @@ private fun getColorScheme(context: Context): ColorScheme {
 
         error = Color(ContextCompat.getColor(context, R.color.md_theme_error)),
         onError = Color(ContextCompat.getColor(context, R.color.md_theme_onError)),
-        errorContainer = Color(ContextCompat.getColor(context, R.color.md_theme_errorContainer)),
-        onErrorContainer = Color(ContextCompat.getColor(context, R.color.md_theme_onErrorContainer)),
     )
 
 

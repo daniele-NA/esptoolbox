@@ -3,12 +3,11 @@ package com.crescenzi.esptoolbox.data.usb.data
 import android.content.Context
 import android.hardware.usb.UsbDeviceConnection
 import android.hardware.usb.UsbManager
-import com.crescenzi.esptoolbox.core.debug.LOG
+import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.core.function.safeLet
 import com.crescenzi.esptoolbox.core.values.Constants.WRITE_WAIT_MILLIS
 import com.crescenzi.esptoolbox.data.core.BaseRepo
 import com.crescenzi.esptoolbox.data.core.params.BaudRateFormat
-import com.crescenzi.esptoolbox.data.core.params.SerialFormat
 import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
 import com.crescenzi.esptoolbox.data.usb.data.model.UsbConnectionArgs
 import com.crescenzi.esptoolbox.data.usb.data.model.UsbStatus

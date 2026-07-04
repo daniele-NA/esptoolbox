@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -20,6 +22,7 @@ import com.crescenzi.esptoolbox.core.presentation.widget.OutlinedCardContainer
 /**
  * RESET and FLASH section
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UsbUpdaterButtonsWidget(onReset: () -> Unit, onFlash: () -> Unit) {
 
@@ -39,6 +42,7 @@ fun UsbUpdaterButtonsWidget(onReset: () -> Unit, onFlash: () -> Unit) {
                  * Reset btn
                  */
                 TextButton(
+                    shapes = ButtonDefaults.shapes(),
                     onClick = {
                         onReset()
                     }) {
@@ -54,6 +58,7 @@ fun UsbUpdaterButtonsWidget(onReset: () -> Unit, onFlash: () -> Unit) {
                 Flash Btn
                  */
                 Button(
+                    shapes = ButtonDefaults.shapes(),
                     onClick = {
                         onFlash()
                     }) {

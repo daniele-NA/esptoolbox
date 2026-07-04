@@ -16,23 +16,12 @@ class BaseRepo {
     val logs = _logs.asStateFlow()
 
 
-    /**
-     * Global app state
-     */
-    private val _loadingState = MutableStateFlow(false)
-    val loadingState = _loadingState.asStateFlow()
-
-
     fun plusLog(line: String, logLevel: LogLevel = LogLevel.INFO) {
         _logs.value = _logs.value + LogStatus(line.trim(), logLevel)
     }
 
     fun cleanLog() {
         _logs.value = emptyList()
-    }
-
-    fun notifyLoadingState(loading: Boolean) {
-        _loadingState.value = loading
     }
 
     /**

@@ -19,7 +19,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.base.BaseComponentActivity.Companion.APP_NAME
 import com.crescenzi.esptoolbox.core.presentation.widget.CardContainer
 import com.crescenzi.esptoolbox.core.presentation.widget.InfoTile
 
@@ -96,7 +95,7 @@ fun InfoSection() {
             }
         }
 
-        InfoTile(stringResource(R.string.info_desc, APP_NAME))
+        InfoTile(stringResource(R.string.info_desc, stringResource(R.string.application_name)))
 
     }
 

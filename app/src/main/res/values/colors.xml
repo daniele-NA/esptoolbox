@@ -1,19 +1,15 @@
 <resources>
 
     <color name="icon_color">#FFFFFF</color>
-    <color name="splash_bg_color">#0E1420</color>
+    <color name="splash_bg_color">#000000</color>
 
     <!-- PRIMARY — indigo -->
     <color name="md_theme_primary">#6560EE</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
-    <color name="md_theme_primaryContainer">#35348C</color>
-    <color name="md_theme_onPrimaryContainer">#C7C4FF</color>
 
-    <!-- SECONDARY — indigo tonale (nav indicator, chip/bottoni tonali) -->
+    <!-- SECONDARY — indigo tonale -->
     <color name="md_theme_secondary">#A6A2FF</color>
     <color name="md_theme_onSecondary">#1C1A5E</color>
-    <color name="md_theme_secondaryContainer">#35348C</color>
-    <color name="md_theme_onSecondaryContainer">#C7C4FF</color>
 
     <!-- TERTIARY — azzurro pastello (identità Wi-Fi) -->
     <color name="md_theme_tertiary">#8FB6FF</color>
@@ -24,18 +20,16 @@
     <!-- ERROR -->
     <color name="md_theme_error">#FFB4AB</color>
     <color name="md_theme_onError">#5B1A13</color>
-    <color name="md_theme_errorContainer">#7A2A20</color>
-    <color name="md_theme_onErrorContainer">#FFDAD6</color>
 
-    <!-- BACKGROUND / SURFACE -->
-    <color name="md_theme_background">#0E1420</color>
-    <color name="md_theme_onBackground">#E4E9F4</color>
-    <color name="md_theme_surface">#1A2130</color>
-    <color name="md_theme_onSurface">#E4E9F4</color>
-    <color name="md_theme_surfaceVariant">#232B3C</color>
-    <color name="md_theme_onSurfaceVariant">#A9B4CC</color>
+    <!-- BACKGROUND / SURFACE — violet -->
+    <color name="md_theme_background">#141019</color>
+    <color name="md_theme_onBackground">#E7E0F0</color>
+    <color name="md_theme_surface">#1C1726</color>
+    <color name="md_theme_onSurface">#E7E0F0</color>
+    <color name="md_theme_surfaceVariant">#2A2438</color>
+    <color name="md_theme_onSurfaceVariant">#C9C1DB</color>
 
     <!-- OUTLINE -->
-    <color name="md_theme_outline">#6E7893</color>
+    <color name="md_theme_outline">#79738C</color>
 
 </resources>

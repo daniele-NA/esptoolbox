@@ -6,30 +6,40 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.hardware.usb.UsbManager
 import android.location.LocationManager
+import android.net.ConnectivityManager
 import android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.crescenzi.esptoolbox.core.base.BaseComponentActivity
 import com.crescenzi.esptoolbox.core.values.Constants.INTENT_ACTION_GRANT_USB
 import com.crescenzi.esptoolbox.core.values.Constants.permissions
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esptoolbox.data.usb.data.UsbRepo
 import com.crescenzi.esptoolbox.presentation.MainNavigation
+import com.crescenzi.esptoolbox.system.GenericReceiver
+import com.crescenzi.esptoolbox.system.SsidReceiver
+import com.crescenzi.esptoolbox.system.UsbPermissionReceiver
 import com.crescenzi.esptoolbox.xml.AppTheme
 import org.koin.android.ext.android.inject
 
 /**
  * Device Connection Activity
  */
-class MainActivity : BaseComponentActivity() {
+class MainActivity : ComponentActivity() {
+
+    private val ssidReceiver = SsidReceiver()
+    private val usbPermissionReceiver = UsbPermissionReceiver()
+    private val genericReceiver = GenericReceiver()
 
     private val deviceRepo: DeviceRepo by inject()
     private val usbRepo: UsbRepo by inject()
@@ -45,10 +55,6 @@ class MainActivity : BaseComponentActivity() {
         val coarseGranted = permissionsMap[permissions[0]] == true
         val fineGranted = permissionsMap[permissions[1]] == true
 
-
-        /**
-         * If all location permissions are granted
-         */
         if (coarseGranted && fineGranted) {
             registerReceiver(
                 ssidReceiver,
@@ -62,12 +68,27 @@ class MainActivity : BaseComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        ContextCompat.registerReceiver(
+            this,
+            usbPermissionReceiver,
+            IntentFilter(INTENT_ACTION_GRANT_USB),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
+
+        /**
+         * Handles data/Wi-Fi connection & location by updating the Repo
+         */
+        registerReceiver(genericReceiver, IntentFilter().apply {
+            addAction(ConnectivityManager.CONNECTIVITY_ACTION)
+            addAction(LocationManager.PROVIDERS_CHANGED_ACTION)
+        })
 
         /**
          * Location init (the first value is not received)
          */
-
         deviceRepo.changeLocationStatus(
             (getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
                 LocationManager.GPS_PROVIDER
@@ -78,6 +99,7 @@ class MainActivity : BaseComponentActivity() {
             AppTheme(this) {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
+                    contentWindowInsets = WindowInsets(0, 0, 0, 0),
                     content = { safePadding ->
                         Column(
                             modifier = Modifier
@@ -92,11 +114,7 @@ class MainActivity : BaseComponentActivity() {
             }
         }
 
-
-
         requestPermissionLauncher.launch(permissions.toTypedArray())
-
-
     }
 
 
@@ -127,13 +145,17 @@ class MainActivity : BaseComponentActivity() {
     override fun onResume() {
         super.onResume()
 
-        /**
-         * If all location permissions are granted
-         */
         if (checkPermission(permissions[0]) && checkPermission(permissions[1])) {
             deviceRepo.changeLocationPermissionStatus(true)
         } else
             deviceRepo.changeLocationPermissionStatus(false)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(usbPermissionReceiver)
+        unregisterReceiver(ssidReceiver)
+        unregisterReceiver(genericReceiver)
     }
 
 

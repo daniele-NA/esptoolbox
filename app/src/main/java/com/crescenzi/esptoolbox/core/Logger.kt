@@ -1,4 +1,4 @@
-package com.crescenzi.esptoolbox.core.debug
+package com.crescenzi.esptoolbox.core
 
 import android.util.Log
 import com.crescenzi.esptoolbox.BuildConfig

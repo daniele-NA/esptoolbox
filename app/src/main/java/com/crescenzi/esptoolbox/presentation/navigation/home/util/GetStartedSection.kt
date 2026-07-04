@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -30,6 +32,7 @@ import com.crescenzi.esptoolbox.presentation.navigation.home.HomeViewModel
 /**
  * Section that handles permissions and navigation
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun GetStartedSection(
     homeViewModel: HomeViewModel
@@ -99,6 +102,7 @@ fun GetStartedSection(
      */
         TextButton(
             enabled = !navBtnStatus.value,
+            shapes = ButtonDefaults.shapes(),
             onClick = {
                 homeViewModel.callReqPermission()
             }) {
@@ -114,6 +118,7 @@ fun GetStartedSection(
          */
         Button(
             enabled = navBtnStatus.value,
+            shapes = ButtonDefaults.shapes(),
             onClick = {
                 /**
                  * EXTRA CHECK

@@ -10,6 +10,8 @@ import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esptoolbox.data.core.exception.WifiConnectionException
 import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
 import com.espressif.iot.esptouch.EsptouchTask
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 
 /**
@@ -24,6 +26,9 @@ class WifiViewModel(
     val bssid = deviceRepo.bssid
     val ssid = deviceRepo.ssid
 
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
+
 
     /**
      *
@@ -35,7 +40,7 @@ class WifiViewModel(
 
         baseRepo.plusLog(line = getApplication<Application>().getString(R.string.broadcast_warning), logLevel = LogLevel.WARNING)
         Thread {
-            baseRepo.notifyLoadingState(true)
+            _loading.value = true
             try {
                 val task =
                     EsptouchTask(
@@ -49,7 +54,7 @@ class WifiViewModel(
                  * Mac == null -> Connection failed
                  */
                 task.executeForResults(1)[0].bssid?.let { mac ->
-                    baseRepo.notifyLoadingState(false)
+                    _loading.value = false
                     baseRepo.plusLog(line = getApplication<Application>().getString(R.string.connection_successfully))
                 } ?: run {
                     disableLoadingForException()
@@ -65,7 +70,7 @@ class WifiViewModel(
      * Disables loading and logs the exception
      */
     private fun disableLoadingForException(e: Throwable= WifiConnectionException()){
-        baseRepo.notifyLoadingState(false)
+        _loading.value = false
         getApplication<Application>().baseContext?.let { context ->
             baseRepo.plusLog(
                 line = getMessage(context, e)

@@ -1,7 +1,6 @@
 package com.crescenzi.esptoolbox.core.values
 
 import android.Manifest
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.BuildConfig
 
@@ -35,6 +34,5 @@ object Constants {
     val CARD_PADDING = 15.dp
 
     const val PICK_MIME_TYPE="application/octet-stream"
-    const val WIFI_ANIM="lottie/wifi_anim.json"
-    const val GITHUB_URL = "https://github.com/daniele-NA"
+    const val WIFI_ANIM="wifi_anim.json"
 }

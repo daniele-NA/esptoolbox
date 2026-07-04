@@ -17,7 +17,6 @@ import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -34,8 +33,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.widget.WavyProgress
-import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.data.core.BaseRepo
 import com.crescenzi.esptoolbox.presentation.navigation.home.HomeScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.log.LogScreen
@@ -101,12 +98,6 @@ fun MainNavigation(
 
     val baseRepo = koinInject<BaseRepo>()
 
-    val progressBarManager = rememberSaveable { mutableStateOf(false) }
-    val loadingState by baseRepo.loadingState.collectAsState()
-    LaunchedEffect(loadingState) {
-        progressBarManager.value = baseRepo.loadingState.value
-    }
-
     val showBadge = rememberSaveable { mutableStateOf(false) }
     val logs by baseRepo.logs.collectAsStateWithLifecycle()
 
@@ -126,45 +117,43 @@ fun MainNavigation(
     }
 
     CompositionLocalProvider(LocalNavController provides navController) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
 
-            if (currentWorkspace != null) {
-                WavyProgress(
-                    isVisible = progressBarManager,
-                    modifier = Modifier.padding(horizontal = HORIZONTAL_PADDING)
-                )
-            }
-
-            NavHost(
-                navController = navController,
-                startDestination = HomePage,
-                modifier = Modifier.weight(1f)
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                composable<HomePage> {
-                    HomeScreen(koinViewModel(viewModelStoreOwner = it))
-                }
-                composable<UsbPage> {
-                    UsbNavigation(
-                        usbConnectionViewModel = koinViewModel(viewModelStoreOwner = it),
-                        usbUpdaterViewModel = koinViewModel(viewModelStoreOwner = it),
-                        onReqUsbPermission = onReqUsbPermission
-                    )
-                }
-                composable<LogPage> {
-                    LogScreen(koinViewModel(viewModelStoreOwner = it))
-                }
-                composable<WifiPage> {
-                    WifiScreen(koinViewModel(viewModelStoreOwner = it))
+
+                NavHost(
+                    navController = navController,
+                    startDestination = HomePage,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    composable<HomePage> {
+                        HomeScreen(koinViewModel(viewModelStoreOwner = it))
+                    }
+                    composable<UsbPage> {
+                        UsbNavigation(
+                            usbConnectionViewModel = koinViewModel(viewModelStoreOwner = it),
+                            usbUpdaterViewModel = koinViewModel(viewModelStoreOwner = it),
+                            onReqUsbPermission = onReqUsbPermission
+                        )
+                    }
+                    composable<LogPage> {
+                        LogScreen(koinViewModel(viewModelStoreOwner = it))
+                    }
+                    composable<WifiPage> {
+                        WifiScreen(koinViewModel(viewModelStoreOwner = it))
+                    }
                 }
             }
 
             if (currentWorkspace != null) {
                 HorizontalFloatingToolbar(
                     expanded = true,
-                    modifier = Modifier.padding(bottom = 16.dp)
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 24.dp)
                 ) {
                     Workspace.entries.forEach { workspace ->
                         ToggleButton(

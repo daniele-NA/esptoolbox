@@ -1,19 +1,24 @@
 package com.crescenzi.esptoolbox.presentation.navigation.physical.wifi
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -27,38 +32,46 @@ import com.crescenzi.esptoolbox.presentation.navigation.physical.wifi.util.widge
 /**
  * WiFi Connection Screen
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun WifiScreen(
-     wifiViewModel: WifiViewModel
+    wifiViewModel: WifiViewModel
 ) {
 
-
     val animation by rememberLottieComposition(LottieCompositionSpec.Asset(WIFI_ANIM))
-    val playAnimation = remember { mutableStateOf(false) }
+    val loading by wifiViewModel.loading.collectAsStateWithLifecycle()
 
 
+    Box(modifier = Modifier.fillMaxSize()) {
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = HORIZONTAL_PADDING)
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(WindowInsets.systemBars.asPaddingValues())
+                .padding(horizontal = HORIZONTAL_PADDING)
+                .padding(bottom = 110.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
 
-        LottieAnimation(
-            composition = animation,
-            isPlaying = playAnimation.value,
-            iterations = LottieConstants.IterateForever
-        )
+            LottieAnimation(
+                composition = animation,
+                isPlaying = loading,
+                iterations = LottieConstants.IterateForever
+            )
 
-        InfoTile(stringResource(R.string.wifi_connection_title))
-        Spacer(Modifier.padding(vertical = 15.dp))
+            InfoTile(stringResource(R.string.wifi_connection_title))
+            Spacer(Modifier.padding(vertical = 15.dp))
 
 
-        DataSection(
-            wifiViewModel, onButtonClick = wifiViewModel::sendBroadcast
-        )
+            DataSection(
+                wifiViewModel, onButtonClick = wifiViewModel::sendBroadcast
+            )
 
+        }
+
+        if (loading) {
+            LoadingIndicator(modifier = Modifier.align(Alignment.Center))
+        }
     }
 }

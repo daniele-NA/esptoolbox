@@ -2,13 +2,19 @@ package com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection
 
 import android.location.LocationManager
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -27,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.base.BaseComponentActivity.Companion.APP_NAME
 import com.crescenzi.esptoolbox.core.presentation.widget.CardContainer
 import com.crescenzi.esptoolbox.core.presentation.widget.InfoTile
 import com.crescenzi.esptoolbox.core.values.Constants
@@ -43,12 +48,14 @@ import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.core.UsbBau
 /**
  * There will always be only one device connected via USB
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UsbConnectionScreen(
     usbConnectionViewModel: UsbConnectionViewModel,
     onReqUsbPermission: () -> Unit
 ) {
     val context = LocalContext.current
+    val loading by usbConnectionViewModel.loading.collectAsStateWithLifecycle()
 
     /**
      * Only at startup
@@ -67,13 +74,15 @@ fun UsbConnectionScreen(
 
 
 
+    Box(modifier = Modifier.fillMaxSize()) {
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(
-                horizontal = Constants.HORIZONTAL_PADDING
-            ),
+            .padding(WindowInsets.systemBars.asPaddingValues())
+            .padding(horizontal = Constants.HORIZONTAL_PADDING)
+            .padding(bottom = 110.dp),
         horizontalAlignment = Alignment.Start
     ) {
 
@@ -102,7 +111,7 @@ fun UsbConnectionScreen(
                 if (isLocationEnabled(LocalContext.current.getSystemService(LocationManager::class.java) as LocationManager) == false) {
                     Text(
                         modifier = Modifier.padding(vertical = 10.dp),
-                        text = stringResource(R.string.position_warning, APP_NAME),
+                        text = stringResource(R.string.position_warning, stringResource(R.string.application_name)),
                         style = MaterialTheme.typography.labelSmall.copy(
                             fontWeight = FontWeight.Bold
                         ), color = MaterialTheme.colorScheme.error
@@ -152,6 +161,11 @@ fun UsbConnectionScreen(
 
         InfoTile(text = stringResource(R.string.usb_connection_info))
 
+    }
+
+        if (loading) {
+            LoadingIndicator(modifier = Modifier.align(Alignment.Center))
+        }
     }
 
 

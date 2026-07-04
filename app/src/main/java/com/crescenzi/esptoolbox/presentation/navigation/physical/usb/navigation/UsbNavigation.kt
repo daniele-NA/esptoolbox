@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.AssistChip
-import androidx.compose.material3.AssistChipDefaults
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.ToggleButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,13 +21,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.debug.LOG
+import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterScreen
@@ -58,6 +57,7 @@ private enum class Destination(val route: String) {
 /**
  * Navigation page management
  */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UsbNavigation(
     usbConnectionViewModel: UsbConnectionViewModel,
@@ -97,39 +97,28 @@ fun UsbNavigation(
         verticalArrangement = Arrangement.Center
     ) {
 
-        // Replaces TabRow with a row of AssistChips
         Row(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             modifier = Modifier.padding(top = 12.dp)
         ) {
             Destination.entries.forEachIndexed { index, destination ->
-                AssistChip(
-                    onClick = {
+                ToggleButton(
+                    checked = selectedDestination == index,
+                    onCheckedChange = {
                         selectedDestination = index
                         coroutineScope.launch {
                             pagerState.animateScrollToPage(index)
                         }
-                    },
-                    label = {
-                        Text(
-                            text = destination.label(),
-                            style = MaterialTheme.typography.labelMedium.copy(
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = FontFamily(titlesFont)
-                            )
+                    }
+                ) {
+                    Text(
+                        text = destination.label(),
+                        style = MaterialTheme.typography.labelMedium.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = FontFamily(titlesFont)
                         )
-                    },
-                    colors = AssistChipDefaults.assistChipColors(
-                        containerColor = if (selectedDestination == index)
-                            MaterialTheme.colorScheme.tertiaryContainer
-                        else
-                            Color.Transparent,
-                        labelColor = if (selectedDestination == index)
-                            MaterialTheme.colorScheme.onTertiaryContainer
-                        else
-                            MaterialTheme.colorScheme.onBackground
                     )
-                )
+                }
             }
         }
 

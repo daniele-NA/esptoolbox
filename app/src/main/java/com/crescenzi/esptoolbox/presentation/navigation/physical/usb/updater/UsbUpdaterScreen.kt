@@ -8,10 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LoadingIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,17 +28,19 @@ import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.function.getFileNameWithoutBin
 import com.crescenzi.esptoolbox.core.presentation.util.getMessage
 import com.crescenzi.esptoolbox.core.presentation.widget.CardContainer
+import com.crescenzi.esptoolbox.core.presentation.widget.EditText
 import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.core.values.Constants.PICK_MIME_TYPE
 import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.core.UsbBaudRateWidget
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.util.UsbUpdaterButtonsWidget
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
 
     val context = LocalContext.current
+    val loading by usbUpdaterViewModel.loading.collectAsStateWithLifecycle()
 
     val baudRate by usbUpdaterViewModel.baudRate.collectAsStateWithLifecycle()
     val flashFiles by usbUpdaterViewModel.flashFiles.collectAsStateWithLifecycle()
@@ -58,10 +62,15 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
         }
     }
 
+    Box(modifier = Modifier.fillMaxSize()) {
+
     Column(
         modifier = Modifier
-            .padding(horizontal = HORIZONTAL_PADDING)
+            .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .padding(WindowInsets.systemBars.asPaddingValues())
+            .padding(horizontal = HORIZONTAL_PADDING)
+            .padding(bottom = 110.dp)
     ) {
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -101,9 +110,6 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
                 )
 
                 flashFiles.forEachIndexed { index, fileEntry ->
-                    val addressState = remember(fileEntry.address) {
-                        mutableStateOf("0x${fileEntry.address.toString(16)}")
-                    }
 
                     Row(
                         modifier = Modifier
@@ -144,34 +150,38 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
                             style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
                             modifier = Modifier.weight(1f)
                         )
-                        TextField(
-                            value = addressState.value,
-                            onValueChange = { newText ->
-                                try {
-                                    addressState.value = newText
-                                    val parsed = newText
-                                        .trim()
-                                        .lowercase()
-                                        .removePrefix("0x")
-                                        .toIntOrNull(16)
+                        Box(modifier = Modifier.weight(1f)) {
+                            key(index, fileEntry.uri) {
+                                EditText(
+                                    opt = KeyboardOptions.Default,
+                                    label = "",
+                                    initialValue = "0x${fileEntry.address.toString(16)}",
+                                    onValueChange = { newText ->
+                                        try {
+                                            val parsed = newText
+                                                .trim()
+                                                .lowercase()
+                                                .removePrefix("0x")
+                                                .toIntOrNull(16)
 
-                                    if (parsed != null) {
-                                        usbUpdaterViewModel.updateFlashFile(
-                                            index = index,
-                                            label = fileEntry.label,
-                                            uri = fileEntry.uri,
-                                            address = parsed
-                                        )
+                                            if (parsed != null) {
+                                                usbUpdaterViewModel.updateFlashFile(
+                                                    index = index,
+                                                    label = fileEntry.label,
+                                                    uri = fileEntry.uri,
+                                                    address = parsed
+                                                )
+                                            }
+                                        } catch (e: Exception) {
+                                            usbUpdaterViewModel.baseRepo.plusLog(
+                                                getMessage(context, e),
+                                                LogLevel.ERROR
+                                            )
+                                        }
                                     }
-                                } catch (e: Exception) {
-                                    usbUpdaterViewModel.baseRepo.plusLog(
-                                        getMessage(context, e),
-                                        LogLevel.ERROR
-                                    )
-                                }
-                            },
-                            modifier = Modifier.weight(1f)
-                        )
+                                )
+                            }
+                        }
 
                     }
                 }
@@ -188,5 +198,10 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
             }
         )
         Spacer(Modifier.padding(bottom = 15.dp))
+    }
+
+        if (loading) {
+            LoadingIndicator(modifier = Modifier.align(Alignment.Center))
+        }
     }
 }

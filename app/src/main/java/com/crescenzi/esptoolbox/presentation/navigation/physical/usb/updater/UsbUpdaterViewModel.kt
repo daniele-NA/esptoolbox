@@ -4,7 +4,7 @@ import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.debug.LOG
+import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.core.presentation.util.getMessage
 import com.crescenzi.esptoolbox.data.core.BaseRepo
 import com.crescenzi.esptoolbox.data.core.params.BaudRateFormat
@@ -44,6 +44,9 @@ class UsbUpdaterViewModel(
         )
     )
     val flashFiles = _flashFiles.asStateFlow()
+
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
 
     fun updateFlashFile(index: Int, label: String, address: Int=0, uri: Uri?) {
         val current = _flashFiles.value.toMutableList()
@@ -97,7 +100,7 @@ class UsbUpdaterViewModel(
                     return@Thread
                 }
 
-                baseRepo.notifyLoadingState(true)
+                _loading.value = true
 
                 espRepo.setBaudRateCallback { _baudRate.value }
 
@@ -131,15 +134,15 @@ class UsbUpdaterViewModel(
                     baseRepo.plusLog(
                         context.getString(R.string.flash_rst), LogLevel.WARNING
                     )
-                    baseRepo.notifyLoadingState(false)
+                    _loading.value = false
 
                 } else {
                     espRepo.reqPermission()
-                    baseRepo.notifyLoadingState(false)
+                    _loading.value = false
                 }
 
             } catch (e: Exception) {
-                baseRepo.notifyLoadingState(false)
+                _loading.value = false
                 baseRepo.plusLog(getMessage(context, e), LogLevel.ERROR)
             } finally {
                 if (acquired) {

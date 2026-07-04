@@ -1,4 +1,4 @@
-package com.crescenzi.esptoolbox.system.receiver
+package com.crescenzi.esptoolbox.system
 
 import android.content.BroadcastReceiver
 import android.content.Context

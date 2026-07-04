@@ -6,11 +6,10 @@ import android.hardware.usb.UsbManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.debug.LOG
+import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.core.presentation.util.getMessage
 import com.crescenzi.esptoolbox.core.values.Constants
 import com.crescenzi.esptoolbox.data.core.BaseRepo
-import com.crescenzi.esptoolbox.data.core.params.SerialFormat
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esptoolbox.data.usb.data.UsbRepo
 import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
@@ -23,6 +22,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -57,6 +57,9 @@ class UsbConnectionViewModel(
     private var observeJob: Job? = null
 
     var usbPermission = usbRepo._usbPermission.asStateFlow()
+
+    private val _loading = MutableStateFlow(false)
+    val loading = _loading.asStateFlow()
 
 
     /**
@@ -124,15 +127,15 @@ class UsbConnectionViewModel(
             } else {
 
                 if (usbConnectionArgs.ssid.trim().isEmpty() || usbConnectionArgs.pwd.trim().isEmpty()) return@launch
-                baseRepo.notifyLoadingState(true)
+                _loading.value = true
                 usbRepo.writeCredentials(usbConnectionArgs).onSuccess {
-                    baseRepo.notifyLoadingState(false)
+                    _loading.value = false
                     baseRepo.plusLog(
                         line = application.baseContext?.getString(R.string.connection_successfully)
                             .toString()
                     )
                 }.onFailure { exception ->
-                    baseRepo.notifyLoadingState(false)
+                    _loading.value = false
                     application.baseContext?.let { context ->
                         baseRepo.plusLog(
                             line = getMessage(context, exception)

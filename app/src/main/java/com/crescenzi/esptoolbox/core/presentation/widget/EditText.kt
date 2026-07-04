@@ -46,7 +46,8 @@ internal fun EditText(
     onValueChange: (String) -> Unit,
     label: String,
     initialValue: String = "",
-    singleLine: Boolean = true
+    singleLine: Boolean = true,
+    enabled: Boolean = true
 ) {
     var text by rememberSaveable { mutableStateOf(initialValue) }
     val interactionSource = remember { MutableInteractionSource() }
@@ -107,6 +108,7 @@ internal fun EditText(
                 text = it
                 onValueChange(it)
             },
+            enabled = enabled,
             modifier = Modifier.fillMaxWidth(),
             textStyle = MaterialTheme.typography.bodyLarge.copy(
                 color = colorScheme.onSurface
