@@ -1,7 +1,4 @@
-package com.crescenzi.esptoolbox.data.usb.domain.exception;
+package com.crescenzi.esptoolbox.data.usb.domain.exception
 
-/**
- * Eccezione nella connessione Usb
- */
-public class UsbConnectionException extends RuntimeException {
-}
+// == Exception thrown on USB connection failure == //
+class UsbConnectionException : RuntimeException()

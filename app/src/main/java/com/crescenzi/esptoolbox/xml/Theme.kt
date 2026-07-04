@@ -1,21 +1,19 @@
 package com.crescenzi.esptoolbox.xml
 
 import android.content.Context
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.MaterialExpressiveTheme
+import androidx.compose.material3.MotionScheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
 import com.crescenzi.esptoolbox.R
 
-/**
- * Configured the same way for both themes
- */
-private fun getColorScheme(context: Context, darkTheme: Boolean): ColorScheme {
-    val baseScheme = if (darkTheme) darkColorScheme() else lightColorScheme()
+// == The app ships with a single (night) theme; colors always come from XML == //
+private fun getColorScheme(context: Context): ColorScheme {
+    val baseScheme = darkColorScheme()
 
     return baseScheme.copy(
         primary = Color(ContextCompat.getColor(context, R.color.md_theme_primary)),
@@ -65,22 +63,22 @@ private fun getColorScheme(context: Context, darkTheme: Boolean): ColorScheme {
 }
 
 
-/**
- * Theme color management via XML, all colors come from XML,
- * it handles the colors -> colors-night switch
- */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun AppTheme(
     context: Context,
     content: @Composable () -> Unit
 ) {
-    /*
-    Must be initialized first to avoid color issues in Type.kt
-     */
-    val customColorScheme = getColorScheme(context, isSystemInDarkTheme())
+    /* ==
 
-    MaterialTheme(
+    Must be initialized first to avoid color issues in Type.kt
+
+    == */
+    val customColorScheme = getColorScheme(context)
+
+    MaterialExpressiveTheme(
         colorScheme = customColorScheme,
+        motionScheme = MotionScheme.expressive(),
         typography = getTypography(customColorScheme),
         content = content
     )

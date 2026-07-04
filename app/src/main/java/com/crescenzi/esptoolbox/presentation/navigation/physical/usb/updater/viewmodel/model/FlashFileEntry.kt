@@ -10,7 +10,7 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class FlashFileEntry(
-    val label: String=".bin",       // es: "Bootloader", "Firmware", ecc.
-    val address: Int, // es: 0x1000
+    val label: String=".bin",       // == e.g. "Bootloader", "Firmware", etc. == //
+    val address: Int, // == e.g. 0x1000 == //
     var uri: Uri?=null
 ): Parcelable

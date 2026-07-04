@@ -2,11 +2,6 @@
 
 Manage your **ESP32** and **ESP8266** boards directly from your Android smartphone, hassle-free! Everything you need to program, configure, and diagnose your devices, all in one app.
 
-<div align="center" style="margin-top: 100px">
-<img src="ASSETS/collage.png" height="600" />
-
-</div>
-
 ## 🔹 Key Features
 
 * **Easy Wi-Fi** – Configure your board’s network in just a few taps.

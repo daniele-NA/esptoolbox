@@ -1,6 +1,4 @@
-<!--
-Icona leggermente più grande delle altre social_icon
--->
+<!-- == Icon slightly larger than the other social icons == -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="44dp"
     android:height="44dp"
