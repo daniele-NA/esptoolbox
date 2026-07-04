@@ -6,7 +6,7 @@ import android.content.Intent
 import android.hardware.usb.UsbManager
 import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.core.values.Constants
-import com.crescenzi.esptoolbox.data.usb.data.util.UsbPermission
+import com.crescenzi.esp32.usb.UsbPermission
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
 import org.koin.java.KoinJavaComponent
 

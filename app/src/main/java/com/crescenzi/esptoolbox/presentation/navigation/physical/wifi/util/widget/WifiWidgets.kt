@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.widget.EditText
+import com.crescenzi.esptoolbox.presentation.widget.EditText
 import com.crescenzi.esptoolbox.presentation.navigation.physical.wifi.WifiViewModel
 
 

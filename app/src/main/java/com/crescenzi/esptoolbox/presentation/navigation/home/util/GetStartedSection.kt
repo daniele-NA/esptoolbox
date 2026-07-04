@@ -22,7 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.widget.LeadingTile
+import com.crescenzi.esptoolbox.presentation.widget.LeadingTile
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_PADDING
 import com.crescenzi.esptoolbox.presentation.LocalNavController
 import com.crescenzi.esptoolbox.presentation.UsbPage

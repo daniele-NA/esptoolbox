@@ -19,8 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.widget.CardContainer
-import com.crescenzi.esptoolbox.core.presentation.widget.InfoTile
+import com.crescenzi.esptoolbox.presentation.widget.CardContainer
+import com.crescenzi.esptoolbox.presentation.widget.InfoTile
 
 @Composable
 fun InfoSection() {

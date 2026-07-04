@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.data.usb.data.model.UsbStatus.SnapshotUsb
+import com.crescenzi.esp32.usb.model.UsbStatus.SnapshotUsb
 
 /**
  * Shows some of the board characteristics via USB

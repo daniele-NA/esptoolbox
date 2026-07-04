@@ -15,6 +15,7 @@ usbSerial = "3.10.0"
 espTouch = "1.1.1"
 lottie = "6.7.1"
 appUpdate = "2.1.0"
+coroutines = "1.9.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -33,6 +34,7 @@ androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscree
 io-insert-koin-koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koinAndroid" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-compose", version.ref = "koinAndroid" }
 compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "composeMaterial3" }
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 usb-serial = { module = "com.github.mik3y:usb-serial-for-android", version.ref = "usbSerial" }
 esp-touch = { module = "com.github.EspressifApp:lib-esptouch-android", version.ref = "espTouch" }
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
@@ -41,6 +43,7 @@ app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.re
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

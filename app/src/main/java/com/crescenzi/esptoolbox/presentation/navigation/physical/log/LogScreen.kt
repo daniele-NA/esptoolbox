@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_CORNER
-import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
+import com.crescenzi.esp32.usb.model.LogLevel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.log.util.LogScreenTopBarWidget
 
 /**
@@ -45,7 +45,7 @@ fun LogScreen(
 
 ) {
 
-    val logs by logViewModel.baseRepo.logs.collectAsStateWithLifecycle()
+    val logs by logViewModel.logRepo.logs.collectAsStateWithLifecycle()
     val listState = rememberLazyListState()
 
 

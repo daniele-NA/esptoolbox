@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.function.getFileNameWithoutBin
-import com.crescenzi.esptoolbox.core.presentation.util.getMessage
-import com.crescenzi.esptoolbox.core.presentation.widget.CardContainer
-import com.crescenzi.esptoolbox.core.presentation.widget.EditText
+import com.crescenzi.esptoolbox.presentation.util.getMessage
+import com.crescenzi.esptoolbox.presentation.widget.CardContainer
+import com.crescenzi.esptoolbox.presentation.widget.EditText
 import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.core.values.Constants.PICK_MIME_TYPE
-import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
+import com.crescenzi.esp32.usb.model.LogLevel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.core.UsbBaudRateWidget
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.util.UsbUpdaterButtonsWidget
 
@@ -173,7 +173,7 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
                                                 )
                                             }
                                         } catch (e: Exception) {
-                                            usbUpdaterViewModel.baseRepo.plusLog(
+                                            usbUpdaterViewModel.logRepo.plusLog(
                                                 getMessage(context, e),
                                                 LogLevel.ERROR
                                             )

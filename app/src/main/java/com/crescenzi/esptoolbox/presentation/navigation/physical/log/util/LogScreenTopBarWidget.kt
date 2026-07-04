@@ -56,7 +56,7 @@ fun LogScreenTopBarWidget(logViewModel: LogViewModel) {
 
         IconButton(
             onClick = {
-                logViewModel.baseRepo.cleanLog()
+                logViewModel.logRepo.cleanLog()
             }
         ) {
             Icon(

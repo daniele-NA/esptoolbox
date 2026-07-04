@@ -77,7 +77,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(files("libs/physical_oid.aar"))
+    // == ESP32 / USB / firmware / flash logic lives in the agnostic :esp32 module == //
+    implementation(project(":esp32"))
 
 
     implementation(libs.navigation.compose)
@@ -85,8 +86,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.io.insert.koin.koin.android) // == Dependency Injection == //
     implementation(libs.koin.androidx.compose)
-    implementation(libs.usb.serial)
-    implementation(libs.esp.touch)
     implementation(libs.lottie)
     implementation(libs.app.update)
     implementation(libs.app.update.ktx)

@@ -31,7 +31,7 @@ import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterViewModel
-import com.crescenzi.esptoolbox.xml.titlesFont
+import com.crescenzi.esptoolbox.theme.titlesFont
 import kotlinx.coroutines.launch
 
 /**

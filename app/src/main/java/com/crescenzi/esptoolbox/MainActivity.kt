@@ -24,12 +24,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.crescenzi.esptoolbox.core.values.Constants.INTENT_ACTION_GRANT_USB
 import com.crescenzi.esptoolbox.core.values.Constants.permissions
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
-import com.crescenzi.esptoolbox.data.usb.data.UsbRepo
+import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esptoolbox.presentation.MainNavigation
 import com.crescenzi.esptoolbox.system.GenericReceiver
 import com.crescenzi.esptoolbox.system.SsidReceiver
 import com.crescenzi.esptoolbox.system.UsbPermissionReceiver
-import com.crescenzi.esptoolbox.xml.AppTheme
+import com.crescenzi.esptoolbox.theme.AppTheme
 import org.koin.android.ext.android.inject
 
 /**

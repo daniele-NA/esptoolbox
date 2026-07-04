@@ -24,7 +24,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.widget.InfoTile
+import com.crescenzi.esptoolbox.presentation.widget.InfoTile
 import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.core.values.Constants.WIFI_ANIM
 import com.crescenzi.esptoolbox.presentation.navigation.physical.wifi.util.widget.DataSection

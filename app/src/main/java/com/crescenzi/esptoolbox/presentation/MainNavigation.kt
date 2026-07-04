@@ -33,7 +33,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.data.core.BaseRepo
+import com.crescenzi.esp32.LogRepo
 import com.crescenzi.esptoolbox.presentation.navigation.home.HomeScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.log.LogScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.navigation.UsbNavigation
@@ -96,10 +96,10 @@ fun MainNavigation(
         }
     }
 
-    val baseRepo = koinInject<BaseRepo>()
+    val logRepo = koinInject<LogRepo>()
 
     val showBadge = rememberSaveable { mutableStateOf(false) }
-    val logs by baseRepo.logs.collectAsStateWithLifecycle()
+    val logs by logRepo.logs.collectAsStateWithLifecycle()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val destination = backStackEntry?.destination

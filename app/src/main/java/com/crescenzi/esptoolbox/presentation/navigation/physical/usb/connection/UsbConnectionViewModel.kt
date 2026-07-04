@@ -7,16 +7,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.LOG
-import com.crescenzi.esptoolbox.core.presentation.util.getMessage
+import com.crescenzi.esptoolbox.presentation.util.getMessage
 import com.crescenzi.esptoolbox.core.values.Constants
-import com.crescenzi.esptoolbox.data.core.BaseRepo
+import com.crescenzi.esp32.LogRepo
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
-import com.crescenzi.esptoolbox.data.usb.data.UsbRepo
-import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
-import com.crescenzi.esptoolbox.data.usb.data.model.UsbConnectionArgs
-import com.crescenzi.esptoolbox.data.usb.data.model.UsbStatus
-import com.crescenzi.esptoolbox.data.usb.data.util.UsbPermission
-import com.crescenzi.esptoolbox.data.usb.data.util.getCustomProber
+import com.crescenzi.esp32.usb.UsbRepo
+import com.crescenzi.esp32.usb.model.LogLevel
+import com.crescenzi.esp32.usb.model.UsbConnectionArgs
+import com.crescenzi.esp32.usb.model.UsbStatus
+import com.crescenzi.esp32.usb.UsbPermission
+import com.crescenzi.esp32.usb.getCustomProber
 import com.hoho.android.usbserial.driver.UsbSerialProber
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -38,7 +38,7 @@ class UsbConnectionViewModel(
     private val application: Application,
     private val usbRepo: UsbRepo,
     private val deviceRepo: DeviceRepo,
-    val baseRepo: BaseRepo
+    val logRepo: LogRepo
 ) : ViewModel() {
 
     val currentDeviceSnapshot: StateFlow<UsbStatus.SnapshotUsb> = usbRepo._currentDevice
@@ -130,14 +130,14 @@ class UsbConnectionViewModel(
                 _loading.value = true
                 usbRepo.writeCredentials(usbConnectionArgs).onSuccess {
                     _loading.value = false
-                    baseRepo.plusLog(
+                    logRepo.plusLog(
                         line = application.baseContext?.getString(R.string.connection_successfully)
                             .toString()
                     )
                 }.onFailure { exception ->
                     _loading.value = false
                     application.baseContext?.let { context ->
-                        baseRepo.plusLog(
+                        logRepo.plusLog(
                             line = getMessage(context, exception)
                                 .toString(), logLevel = LogLevel.ERROR
                         )

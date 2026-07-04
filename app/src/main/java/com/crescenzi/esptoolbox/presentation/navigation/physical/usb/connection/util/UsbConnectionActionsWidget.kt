@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.values.Constants.STATUS_DEF_CHAR
-import com.crescenzi.esptoolbox.data.core.params.SerialFormat
-import com.crescenzi.esptoolbox.data.usb.data.util.UsbPermission
+import com.crescenzi.esp32.params.SerialFormat
+import com.crescenzi.esp32.usb.UsbPermission
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
 
 

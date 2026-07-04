@@ -16,7 +16,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_CORNER
-import com.crescenzi.esptoolbox.data.core.params.SerialFormat
+import com.crescenzi.esp32.params.SerialFormat
 
 
 /**

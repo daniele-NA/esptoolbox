@@ -5,14 +5,14 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.LOG
-import com.crescenzi.esptoolbox.core.presentation.util.getMessage
-import com.crescenzi.esptoolbox.data.core.BaseRepo
-import com.crescenzi.esptoolbox.data.core.params.BaudRateFormat
-import com.crescenzi.esptoolbox.data.usb.data.UsbRepo
-import com.crescenzi.esptoolbox.data.usb.data.model.LogLevel
-import com.crescenzi.esptoolbox.data.usb.firmware.data.repository.EspRepo
-import com.crescenzi.esptoolbox.data.usb.firmware.domain.EspCallback
-import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.viewmodel.model.FlashFileEntry
+import com.crescenzi.esptoolbox.presentation.util.getMessage
+import com.crescenzi.esp32.LogRepo
+import com.crescenzi.esp32.params.BaudRateFormat
+import com.crescenzi.esp32.usb.UsbRepo
+import com.crescenzi.esp32.usb.model.LogLevel
+import com.crescenzi.esp32.firmware.EspRepo
+import com.crescenzi.esp32.firmware.EspCallback
+import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.FlashFileEntry
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.io.InputStream
@@ -24,7 +24,7 @@ import java.util.concurrent.locks.ReentrantLock
 class UsbUpdaterViewModel(
     private val usbRepo: UsbRepo,
     private val espRepo: EspRepo,
-    val baseRepo: BaseRepo
+    val logRepo: LogRepo
 ) : ViewModel() {
 
     private val _baudRate = MutableStateFlow(BaudRateFormat.B115200)
@@ -60,17 +60,17 @@ class UsbUpdaterViewModel(
         espRepo.setEspCallback(espCallback = object : EspCallback {
             override fun onInfo(line: String) {
                 LOG("On Info $line")
-                baseRepo.plusLog(line, LogLevel.INFO)
+                logRepo.plusLog(line, LogLevel.INFO)
             }
 
 
             override fun onFlashLoading(percentage: Int) {
-                baseRepo.plusLog("$percentage %", LogLevel.INFO)
+                logRepo.plusLog("$percentage %", LogLevel.INFO)
             }
 
             override fun onError(e: Throwable) {
                 LOG("Exception ${e.message.toString()}")
-                baseRepo.plusLog(e.message.toString(), LogLevel.ERROR)
+                logRepo.plusLog(e.message.toString(), LogLevel.ERROR)
             }
 
         })
@@ -93,7 +93,7 @@ class UsbUpdaterViewModel(
             try {
                 acquired = flashLock.tryLock()
                 if (!acquired) {
-                    baseRepo.plusLog(
+                    logRepo.plusLog(
                         context.getString(R.string.flash_in_progress_warning),
                         LogLevel.WARNING
                     )
@@ -106,7 +106,7 @@ class UsbUpdaterViewModel(
 
                 if (espRepo.chipValidation()) {
                     for (item in _flashFiles.value) {
-                        baseRepo.plusLog(
+                        logRepo.plusLog(
                             context.getString(R.string.flash_do_not_disconnect_usb),
                             LogLevel.WARNING
                         )
@@ -125,13 +125,13 @@ class UsbUpdaterViewModel(
                                 }
                             }
                         } ?: run {
-                            baseRepo.plusLog(
+                            logRepo.plusLog(
                                 context.getString(R.string.invalid_file_detected),
                                 LogLevel.WARNING
                             )
                         }
                     }
-                    baseRepo.plusLog(
+                    logRepo.plusLog(
                         context.getString(R.string.flash_rst), LogLevel.WARNING
                     )
                     _loading.value = false
@@ -143,7 +143,7 @@ class UsbUpdaterViewModel(
 
             } catch (e: Exception) {
                 _loading.value = false
-                baseRepo.plusLog(getMessage(context, e), LogLevel.ERROR)
+                logRepo.plusLog(getMessage(context, e), LogLevel.ERROR)
             } finally {
                 if (acquired) {
                     flashLock.unlock()

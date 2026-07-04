@@ -33,12 +33,12 @@ import androidx.compose.ui.unit.dp
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.presentation.widget.CardContainer
-import com.crescenzi.esptoolbox.core.presentation.widget.InfoTile
+import com.crescenzi.esptoolbox.presentation.widget.CardContainer
+import com.crescenzi.esptoolbox.presentation.widget.InfoTile
 import com.crescenzi.esptoolbox.core.values.Constants
-import com.crescenzi.esptoolbox.data.core.params.BaudRateFormat
-import com.crescenzi.esptoolbox.data.core.params.SerialFormat
-import com.crescenzi.esptoolbox.data.usb.data.model.UsbConnectionArgs
+import com.crescenzi.esp32.params.BaudRateFormat
+import com.crescenzi.esp32.params.SerialFormat
+import com.crescenzi.esp32.usb.model.UsbConnectionArgs
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.util.UsbConnectionStatusWidget
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.util.UsbConnectionCredentialsWidget
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.util.UsbConnectionActionsWidget
