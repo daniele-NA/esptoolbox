@@ -51,6 +51,7 @@ fun WifiScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(WindowInsets.systemBars.asPaddingValues())
                 .padding(horizontal = HORIZONTAL_PADDING)
+                .padding(top = HORIZONTAL_PADDING)
                 .padding(bottom = 110.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

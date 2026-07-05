@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_CORNER
+import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.presentation.widget.PageHeader
 import com.crescenzi.esp32.usb.model.LogLevel
 import com.crescenzi.esptoolbox.presentation.navigation.physical.log.util.LogScreenTopBarWidget
@@ -84,7 +85,8 @@ fun LogScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(WindowInsets.systemBars.asPaddingValues())
-            .padding(16.dp)
+            .padding(horizontal = HORIZONTAL_PADDING)
+            .padding(top = HORIZONTAL_PADDING)
             .padding(bottom = 100.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

@@ -69,7 +69,7 @@ fun UsbNavigation(
             modifier = Modifier
                 .padding(WindowInsets.statusBars.asPaddingValues())
                 .padding(horizontal = HORIZONTAL_PADDING)
-                .padding(top = 12.dp)
+                .padding(top = HORIZONTAL_PADDING)
         ) {
 
             PageHeader(
