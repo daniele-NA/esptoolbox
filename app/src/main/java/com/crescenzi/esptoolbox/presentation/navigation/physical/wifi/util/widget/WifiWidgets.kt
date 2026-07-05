@@ -1,8 +1,12 @@
 package com.crescenzi.esptoolbox.presentation.navigation.physical.wifi.util.widget
 
 import android.location.LocationManager
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -10,11 +14,16 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,6 +44,7 @@ fun DataSection(wifiViewModel: WifiViewModel, onButtonClick: (pwd: String) -> Un
 
     val ssid = wifiViewModel.ssid.collectAsStateWithLifecycle()
     val bssid = wifiViewModel.bssid.collectAsStateWithLifecycle()
+    val haptic = LocalHapticFeedback.current
 
     /**
      * SSID
@@ -99,10 +109,21 @@ fun DataSection(wifiViewModel: WifiViewModel, onButtonClick: (pwd: String) -> Un
     /**
      * Start connection
      */
+    val connectInteractionSource = remember { MutableInteractionSource() }
+    val connectPressed by connectInteractionSource.collectIsPressedAsState()
+    val connectScale by animateFloatAsState(
+        targetValue = if (connectPressed) 0.95f else 1f,
+        label = "wifi_connect_btn_scale"
+    )
+
     Button(
-        modifier = Modifier.padding(bottom = 10.dp),
-        shapes = ButtonDefaults.shapes(),
+        modifier = Modifier
+            .padding(bottom = 10.dp)
+            .scale(connectScale),
+        shape = RoundedCornerShape(24.dp),
+        interactionSource = connectInteractionSource,
         onClick = {
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             onButtonClick.invoke(pwdState.value)
         }) {
         Text(

@@ -10,6 +10,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.core.values.Constants
 
@@ -24,7 +25,8 @@ import com.crescenzi.esptoolbox.core.values.Constants
 @Composable
 fun CardContainer(
     modifier: Modifier = Modifier,
-    cardColors: CardColors = CardDefaults.cardColors(),
+    shape: androidx.compose.ui.graphics.Shape = RoundedCornerShape(Constants.CARD_CORNER),
+    cardColors: CardColors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow),
     applyOuterPadding: Boolean=true,
     applyInnerPadding: Boolean=true,
     content: @Composable () -> Unit
@@ -36,12 +38,12 @@ fun CardContainer(
 
 
     Card(
-        elevation = CardDefaults.cardElevation(defaultElevation = 18.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
         modifier = modifier.padding(
             top = outerPadding,
             bottom = outerPadding
         ),
-        shape = RoundedCornerShape(Constants.CARD_CORNER),
+        shape = shape,
         colors = cardColors
     ) {
 
@@ -54,6 +56,7 @@ fun CardContainer(
 @Composable
 fun OutlinedCardContainer(
     modifier: Modifier = Modifier,
+    shape: androidx.compose.ui.graphics.Shape = RoundedCornerShape(Constants.CARD_CORNER),
     applyOuterPadding: Boolean=true,
     applyInnerPadding: Boolean=true,
     content: @Composable () -> Unit,
@@ -63,17 +66,24 @@ fun OutlinedCardContainer(
 
 
     Card(
-        elevation = CardDefaults.cardElevation(defaultElevation = 18.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         modifier = modifier.padding(
             top = outerPadding,
             bottom = outerPadding
         ),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainer),
-        shape = RoundedCornerShape(Constants.CARD_CORNER),
-        border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline)
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.65f)),
+        shape = shape,
+        border = BorderStroke(
+            width = 1.dp,
+            brush = Brush.linearGradient(
+                colors = listOf(
+                    MaterialTheme.colorScheme.primary.copy(alpha = 0.5f),
+                    MaterialTheme.colorScheme.secondary.copy(alpha = 0.2f)
+                )
+            )
+        )
     ) {
         Box(modifier = Modifier.padding(innerPadding))
         { content() }
     }
 }
-

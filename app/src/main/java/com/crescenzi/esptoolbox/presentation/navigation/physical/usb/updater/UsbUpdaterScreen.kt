@@ -3,9 +3,16 @@ package com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -18,7 +25,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -49,6 +59,8 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
     val addressValid = remember { List(flashFiles.size) { true }.toMutableStateList() }
     val flashEnabled = flashFiles.any { it.uri != null } &&
             flashFiles.indices.all { flashFiles[it].uri == null || addressValid[it] }
+
+    val haptic = LocalHapticFeedback.current
 
     /**
      * 5 Launcher
@@ -105,7 +117,7 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
                 ), maxLines = 1, overflow = TextOverflow.Ellipsis
             )
             Text(
-                modifier = Modifier.padding(bottom = 5.dp),
+                modifier = Modifier.padding(bottom = 8.dp),
                 text = stringResource(R.string.files_description),
                 style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.error,
@@ -123,13 +135,34 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
                     val iconRes =
                         if (fileEntry.uri != null) R.drawable.remove_icon else R.drawable.attach_icon
 
-                    Icon(
-                        painter = painterResource(id = iconRes),
-                        contentDescription = null,
-                        tint = null,
+                    val iconBgColor = if (fileEntry.uri != null) {
+                        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.35f)
+                    } else {
+                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+                    }
+                    val iconBorderStroke = if (fileEntry.uri != null) {
+                        BorderStroke(1.dp, MaterialTheme.colorScheme.error.copy(alpha = 0.4f))
+                    } else {
+                        BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f))
+                    }
+
+                    val attachInteractionSource = remember { MutableInteractionSource() }
+                    val attachPressed by attachInteractionSource.collectIsPressedAsState()
+                    val attachScale by animateFloatAsState(
+                        targetValue = if (attachPressed) 0.88f else 1f,
+                        label = "attach_scale"
+                    )
+
+                    Box(
                         modifier = Modifier
-                            .size(28.dp)
-                            .clickable {
+                            .scale(attachScale)
+                            .background(iconBgColor, shape = CircleShape)
+                            .border(iconBorderStroke, shape = CircleShape)
+                            .clickable(
+                                interactionSource = attachInteractionSource,
+                                indication = null
+                            ) {
+                                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                 if (fileEntry.uri != null) {
                                     // remove file reference
                                     usbUpdaterViewModel.updateFlashFile(
@@ -144,14 +177,23 @@ fun UsbUpdaterScreen(usbUpdaterViewModel: UsbUpdaterViewModel) {
                                     pickers[index].launch(arrayOf(PICK_MIME_TYPE))
                                 }
                             }
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
+                            .padding(10.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(id = iconRes),
+                            contentDescription = null,
+                            tint = if (fileEntry.uri != null) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
 
                     Text(
                         text = fileEntry.label,
                         overflow = TextOverflow.Ellipsis,
                         style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1.3f)
                     )
                     Box(modifier = Modifier.weight(1f)) {
                         key(index, fileEntry.uri) {

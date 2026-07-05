@@ -26,7 +26,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import com.crescenzi.esptoolbox.R
+import androidx.compose.foundation.shape.RoundedCornerShape
 import com.crescenzi.esptoolbox.core.values.Constants.HORIZONTAL_PADDING
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionScreen
 import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
@@ -74,6 +77,8 @@ fun UsbNavigation(
                 title = stringResource(R.string.usb_title)
             )
 
+            val haptic = LocalHapticFeedback.current
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -83,13 +88,20 @@ fun UsbNavigation(
                 Destination.entries.forEachIndexed { index, destination ->
                     val isSelected = selected == index
                     // Selected button is bigger; unselected is smaller
-                    val weight by animateFloatAsState(
+                    val weight by androidx.compose.animation.core.animateFloatAsState(
                         targetValue = if (isSelected) 1.6f else 1f,
+                        animationSpec = androidx.compose.animation.core.tween(
+                            durationMillis = 400,
+                            easing = androidx.compose.animation.core.CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f)
+                        ),
                         label = "toggle-weight"
                     )
                     ToggleButton(
                         checked = isSelected,
-                        onCheckedChange = { selected = index },
+                        onCheckedChange = {
+                            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                            selected = index
+                        },
                         modifier = Modifier.weight(weight),
                         shapes = ToggleButtonDefaults.shapes()
                     ) {

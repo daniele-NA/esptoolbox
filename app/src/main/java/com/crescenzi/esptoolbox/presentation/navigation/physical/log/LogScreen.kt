@@ -1,5 +1,11 @@
 package com.crescenzi.esptoolbox.presentation.navigation.physical.log
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
@@ -23,10 +29,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -66,7 +74,10 @@ fun LogScreen(
         }
     }
 
-
+    var contentVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        contentVisible = true
+    }
 
 
     Column(
@@ -82,47 +93,61 @@ fun LogScreen(
             title = stringResource(R.string.log_title),
             modifier = Modifier.align(Alignment.Start)
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(12.dp))
         LogScreenTopBarWidget(logViewModel)
-        Spacer(Modifier.height(8.dp))
-        Box(
+        Spacer(Modifier.height(12.dp))
+        
+        AnimatedVisibility(
+            visible = contentVisible,
             modifier = Modifier
                 .weight(1f)
-                .fillMaxWidth()
-                .border(1.dp, Color.Gray, RoundedCornerShape(CARD_CORNER))
+                .fillMaxWidth(),
+            enter = fadeIn(
+                animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
+            ) + slideInVertically(
+                initialOffsetY = { it / 4 },
+                animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
+            )
         ) {
-            LazyColumn(
-                state = listState,
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(8.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        shape = RoundedCornerShape(CARD_CORNER)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f),
+                        shape = RoundedCornerShape(CARD_CORNER)
+                    )
             ) {
-                itemsIndexed(logs) { _, log ->
-                    SelectionContainer {
-                        Text(
-                            text = log.line,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = getLogColor(log.logLevel),
-                            modifier = Modifier.padding(vertical = 2.dp)
-                        )
+                LazyColumn(
+                    state = listState,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(12.dp)
+                ) {
+                    itemsIndexed(logs) { _, log ->
+                        SelectionContainer {
+                            Text(
+                                text = log.line,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = getLogColor(log.logLevel),
+                                modifier = Modifier.padding(vertical = 2.dp)
+                            )
+                        }
                     }
                 }
             }
-
         }
-
     }
-
-
 }
 
 @Composable
 fun getLogColor(logLevel: LogLevel): Color =
     when (logLevel) {
-        LogLevel.INFO -> if (isSystemInDarkTheme()) Color(0xFF00FF00) else Color(
-            0xFF006400
-        )
-
-        LogLevel.ERROR -> colorResource(R.color.md_theme_error)
-        LogLevel.WARNING -> if (isSystemInDarkTheme()) Color(0xFFFFD54F) else Color(0xFFFFA000)
+        LogLevel.INFO -> if (isSystemInDarkTheme()) Color(0xFF78E2A0) else Color(0xFF008542)
+        LogLevel.ERROR -> MaterialTheme.colorScheme.error
+        LogLevel.WARNING -> if (isSystemInDarkTheme()) Color(0xFFFFD778) else Color(0xFFB57F00)
     }

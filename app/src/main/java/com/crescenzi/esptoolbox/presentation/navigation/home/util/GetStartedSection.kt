@@ -1,10 +1,14 @@
 package com.crescenzi.esptoolbox.presentation.navigation.home.util
 
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
@@ -13,13 +17,20 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.presentation.widget.LeadingTile
@@ -27,6 +38,7 @@ import com.crescenzi.esptoolbox.core.values.Constants.CARD_PADDING
 import com.crescenzi.esptoolbox.presentation.LocalNavController
 import com.crescenzi.esptoolbox.presentation.UsbPage
 import com.crescenzi.esptoolbox.presentation.navigation.home.HomeViewModel
+import com.crescenzi.esptoolbox.theme.titlesFont
 
 
 /**
@@ -56,9 +68,15 @@ fun GetStartedSection(
         navBtnStatus.value = locationPermissionState
     }
 
+    val haptic = LocalHapticFeedback.current
+
     Text(
         text = stringResource(R.string.get_started_tool),
-        style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+        style = MaterialTheme.typography.titleLarge.copy(
+            fontSize = 26.sp,
+            fontWeight = FontWeight.Black,
+            fontFamily = FontFamily(titlesFont)
+        ),
         color = MaterialTheme.colorScheme.primary
     )
     Spacer(Modifier.padding(top = CARD_PADDING))
@@ -100,10 +118,20 @@ fun GetStartedSection(
         /*
     Permission Btn
      */
+        val permissionInteractionSource = remember { MutableInteractionSource() }
+        val permissionPressed by permissionInteractionSource.collectIsPressedAsState()
+        val permissionScale by animateFloatAsState(
+            targetValue = if (permissionPressed) 0.95f else 1f,
+            label = "permission_btn_scale"
+        )
+
         TextButton(
             enabled = !navBtnStatus.value,
-            shapes = ButtonDefaults.shapes(),
+            shape = RoundedCornerShape(24.dp),
+            interactionSource = permissionInteractionSource,
+            modifier = Modifier.scale(permissionScale),
             onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 homeViewModel.callReqPermission()
             }) {
             Text(
@@ -116,10 +144,20 @@ fun GetStartedSection(
         /**
          * If everything is active, navigate to the next screen
          */
+        val goInteractionSource = remember { MutableInteractionSource() }
+        val goPressed by goInteractionSource.collectIsPressedAsState()
+        val goScale by animateFloatAsState(
+            targetValue = if (goPressed) 0.95f else 1f,
+            label = "go_btn_scale"
+        )
+
         Button(
             enabled = navBtnStatus.value,
-            shapes = ButtonDefaults.shapes(),
+            shape = RoundedCornerShape(24.dp),
+            interactionSource = goInteractionSource,
+            modifier = Modifier.scale(goScale),
             onClick = {
+                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 /**
                  * EXTRA CHECK
                  */

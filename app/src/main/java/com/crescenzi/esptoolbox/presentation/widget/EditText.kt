@@ -1,8 +1,10 @@
 package com.crescenzi.esptoolbox.presentation.widget
 
-
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
@@ -27,18 +29,22 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-// == App Common TextField with animated dashed border == //
+// == comment == //
+// == App Common TextField with animated dashed border and M3 Expressive premium visuals == //
 @Composable
 internal fun EditText(
     modifier: Modifier = Modifier,
@@ -82,28 +88,76 @@ internal fun EditText(
         label = "dash_phase"
     )
 
-    // == Dim text + dashes only when actually disabled == //
-    val borderColor = if (dimmed) Color.White.copy(alpha = 0.3f) else Color.White
+    // == Emphasized Easing visual animations == //
+    val animatedBorderColor by animateColorAsState(
+        targetValue = when {
+            dimmed -> colorScheme.outline.copy(alpha = 0.2f)
+            isFocused -> colorScheme.primary
+            else -> colorScheme.outline.copy(alpha = 0.4f)
+        },
+        animationSpec = tween(
+            durationMillis = 400,
+            easing = CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f)
+        ),
+        label = "border_color"
+    )
+
+    val containerColor by animateColorAsState(
+        targetValue = when {
+            dimmed -> colorScheme.surfaceContainerLow.copy(alpha = 0.5f)
+            isFocused -> colorScheme.surfaceContainerHigh
+            else -> colorScheme.surfaceContainerLow
+        },
+        animationSpec = tween(
+            durationMillis = 400,
+            easing = CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f)
+        ),
+        label = "container_color"
+    )
+
+    val scale by animateFloatAsState(
+        targetValue = if (isFocused) 1.015f else 1.0f,
+        animationSpec = tween(
+            durationMillis = 400,
+            easing = CubicBezierEasing(0.2f, 0.0f, 0.0f, 1.0f)
+        ),
+        label = "scale"
+    )
+
     val textColor = if (dimmed) colorScheme.onSurface.copy(alpha = 0.4f) else colorScheme.onSurface
-    val cornerRadiusPx = 48.0f
+    val cornerRadiusPx = 24.dp.dpToPx()
     val borderWidthPx = borderWidth.dpToPx()
 
     Box(
         modifier = modifier
             .fillMaxWidth()
             .bringIntoViewRequester(bringIntoViewRequester)
+            .scale(scale)
             .drawBehind {
-                val phase = if(isFocused) dashPhase.value else 0f
-                val stroke = Stroke(
-                    width = borderWidthPx,
-                    cap = StrokeCap.Round,
-                    pathEffect = PathEffect.dashPathEffect(
-                        floatArrayOf(dashInterval, dashInterval),
-                        phase
-                    ),
-                )
+                val phase = if (isFocused) dashPhase.value else 0f
+                val stroke = if (isFocused) {
+                    Stroke(
+                        width = borderWidthPx,
+                        cap = StrokeCap.Round,
+                        pathEffect = PathEffect.dashPathEffect(
+                            floatArrayOf(dashInterval, dashInterval),
+                            phase
+                        ),
+                    )
+                } else {
+                    Stroke(
+                        width = 1.dp.toPx(),
+                        cap = StrokeCap.Round
+                    )
+                }
+                // == Draw filled container background == //
                 drawRoundRect(
-                    color = borderColor,
+                    color = containerColor,
+                    cornerRadius = CornerRadius(cornerRadiusPx, cornerRadiusPx),
+                )
+                // == Draw animated border == //
+                drawRoundRect(
+                    color = animatedBorderColor,
                     style = stroke,
                     cornerRadius = CornerRadius(cornerRadiusPx, cornerRadiusPx),
                 )

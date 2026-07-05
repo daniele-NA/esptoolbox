@@ -1,5 +1,6 @@
 package com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.util
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +19,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.core.values.Constants.CARD_CORNER
 import com.crescenzi.esptoolbox.presentation.widget.EditText
@@ -33,6 +37,7 @@ fun UsbConnectionSerialFormatWidget(
     onFormatSelected: (SerialFormat) -> Unit
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
+    val haptic = LocalHapticFeedback.current
 
     val serialFormats = listOf(
         SerialFormat.Plain,
@@ -43,12 +48,20 @@ fun UsbConnectionSerialFormatWidget(
         SerialFormat.Custom
     )
 
+    val arrowRotation by animateFloatAsState(
+        targetValue = if (expanded) 180f else 0f,
+        label = "arrow_rotation"
+    )
+
     Box(modifier = Modifier.fillMaxWidth()) {
 
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .clickable { expanded = true }
+                .clickable {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+                    expanded = true
+                }
         ) {
             key(selectedFormat) {
                 EditText(
@@ -61,19 +74,20 @@ fun UsbConnectionSerialFormatWidget(
                 )
             }
             Text(
-                text = "▾",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.onBackground,
+                text = "▼",
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .align(Alignment.CenterEnd)
                     .padding(end = 26.dp)
+                    .rotate(arrowRotation)
             )
         }
 
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
-            containerColor = MaterialTheme.colorScheme.tertiaryContainer,
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
             shape = RoundedCornerShape(CARD_CORNER)
         ) {
             serialFormats.forEach { format ->
@@ -85,6 +99,7 @@ fun UsbConnectionSerialFormatWidget(
                         )
                     },
                     onClick = {
+                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         onFormatSelected(format)
                         expanded = false
                     }

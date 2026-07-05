@@ -28,9 +28,9 @@ object Constants {
      * Ui
      */
 
-    val HORIZONTAL_PADDING = 12.dp
-    val CARD_CORNER = 22.dp
-    val CARD_PADDING = 15.dp
+    val HORIZONTAL_PADDING = 16.dp
+    val CARD_CORNER = 28.dp
+    val CARD_PADDING = 20.dp
 
     const val PICK_MIME_TYPE="application/octet-stream"
     const val WIFI_ANIM="wifi_anim.json"
