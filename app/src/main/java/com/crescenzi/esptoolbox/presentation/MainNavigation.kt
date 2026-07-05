@@ -1,5 +1,6 @@
 package com.crescenzi.esptoolbox.presentation
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
@@ -155,16 +158,24 @@ fun MainNavigation(
             }
 
             if (currentWorkspace != null) {
+                val toolbarShape = RoundedCornerShape(topStart = 28.dp, topEnd = 8.dp, bottomStart = 8.dp, bottomEnd = 28.dp)
                 HorizontalFloatingToolbar(
                     expanded = true,
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .navigationBarsPadding()
                         .padding(bottom = 24.dp)
+                        .clip(toolbarShape)
                 ) {
                     Workspace.entries.forEach { workspace ->
+                        val isSelected = currentWorkspace == workspace
+                        val btnShape = if (isSelected) {
+                            RoundedCornerShape(topStart = 16.dp, topEnd = 4.dp, bottomStart = 4.dp, bottomEnd = 16.dp)
+                        } else {
+                            RoundedCornerShape(12.dp)
+                        }
                         ToggleButton(
-                            checked = currentWorkspace == workspace,
+                            checked = isSelected,
                             onCheckedChange = {
                                 haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                 if (currentWorkspace != workspace) {
@@ -177,7 +188,10 @@ fun MainNavigation(
                                 if (workspace == Workspace.LOG) {
                                     showBadge.value = false
                                 }
-                            }
+                            },
+                            modifier = Modifier
+                                .padding(horizontal = 4.dp)
+                                .clip(btnShape)
                         ) {
                             Text(
                                 text = workspace.label(),

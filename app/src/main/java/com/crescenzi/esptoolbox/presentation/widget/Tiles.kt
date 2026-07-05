@@ -43,45 +43,37 @@ fun LeadingTile(
 ) {
     val iconRes = if (currentValue) R.drawable.check_icon else R.drawable.error_icon
     val iconBgColor = if (currentValue) {
-        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.35f)
+        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.95f)
     } else {
-        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.35f)
+        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.95f)
     }
     
     val borderStroke = if (currentValue) {
-        BorderStroke(1.dp, MaterialTheme.colorScheme.primary.copy(alpha = 0.4f))
+        BorderStroke(1.5.dp, MaterialTheme.colorScheme.primary)
     } else {
-        BorderStroke(1.dp, MaterialTheme.colorScheme.error.copy(alpha = 0.4f))
+        BorderStroke(1.5.dp, MaterialTheme.colorScheme.error)
     }
 
-    // == Card wrapper for the leading tile to make it a neat, expressive row item == //
-    Card(
-        shape = RoundedCornerShape(20.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceContainerLow
-        ),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.15f)),
-        modifier = modifier.fillMaxWidth()
+    // == Layered overlap container: badge floats on the left edge == //
+    Box(
+        modifier = modifier.fillMaxWidth().padding(vertical = 4.dp),
+        contentAlignment = Alignment.CenterStart
     ) {
-        Row(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
-            verticalAlignment = Alignment.CenterVertically
+        // == Main Card, indented on the left == //
+        Card(
+            shape = RoundedCornerShape(topStart = 32.dp, topEnd = 8.dp, bottomStart = 8.dp, bottomEnd = 32.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceContainerLow.copy(alpha = 0.85f)
+            ),
+            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.15f)),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 22.dp)
         ) {
-            Box(
+            Column(
                 modifier = Modifier
-                    .padding(end = 14.dp)
-                    .background(iconBgColor, shape = CircleShape)
-                    .border(borderStroke, shape = CircleShape)
-                    .padding(8.dp)
+                    .padding(start = 34.dp, end = 16.dp, top = 16.dp, bottom = 16.dp)
             ) {
-                Icon(
-                    painter = painterResource(iconRes),
-                    contentDescription = null,
-                    tint = Color.Unspecified,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-            Column(modifier = Modifier.weight(1f)) {
                 Text(
                     modifier = Modifier.padding(bottom = 2.dp),
                     text = stringResource(titleRes),
@@ -97,6 +89,23 @@ fun LeadingTile(
                 }
             }
         }
+
+        // == Floating Overlapping circular Status Badge == //
+        Box(
+            modifier = Modifier
+                .padding(start = 2.dp)
+                .size(42.dp)
+                .background(iconBgColor, shape = CircleShape)
+                .border(borderStroke, shape = CircleShape)
+                .padding(9.dp)
+        ) {
+            Icon(
+                painter = painterResource(iconRes),
+                contentDescription = null,
+                tint = Color.Unspecified,
+                modifier = Modifier.size(22.dp)
+            )
+        }
     }
 }
 
@@ -106,6 +115,7 @@ fun LeadingTile(
 @Composable
 fun InfoTile(text: String) {
     CardContainer(
+        shape = RoundedCornerShape(topStart = 8.dp, topEnd = 32.dp, bottomStart = 32.dp, bottomEnd = 8.dp),
         cardColors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.tertiaryContainer),
         content = {
             Row(

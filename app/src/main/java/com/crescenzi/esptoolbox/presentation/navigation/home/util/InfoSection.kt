@@ -30,6 +30,10 @@ import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.presentation.widget.OutlinedCardContainer
 import com.crescenzi.esptoolbox.theme.titlesFont
 
+import androidx.compose.foundation.Canvas
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.foundation.layout.fillMaxSize
+
 @Composable
 fun InfoSection() {
 
@@ -91,31 +95,66 @@ private fun InfoCard(
     title: String,
     subtitle: String
 ) {
+    val primaryColor = MaterialTheme.colorScheme.primary
+    val secondaryColor = MaterialTheme.colorScheme.secondary
+
     OutlinedCardContainer(modifier = modifier, shape = shape) {
-        Column(horizontalAlignment = Alignment.Start) {
-            Box(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f), shape = CircleShape)
-                    .padding(8.dp)
-            ) {
-                Image(
-                    painter = painterResource(icon),
-                    contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+        Box(modifier = Modifier.fillMaxWidth()) {
+            // == Dynamic background Canvas blueprints pattern == //
+            Canvas(modifier = Modifier.matchParentSize()) {
+                val pathColor = primaryColor.copy(alpha = 0.05f)
+                val lineColor = secondaryColor.copy(alpha = 0.03f)
+                
+                // Draw decorative intersecting circles
+                drawCircle(
+                    color = pathColor,
+                    radius = size.minDimension / 1.3f,
+                    center = androidx.compose.ui.geometry.Offset(size.width * 0.95f, size.height * 0.15f),
+                    style = Stroke(width = 1.5.dp.toPx())
+                )
+                drawCircle(
+                    color = pathColor,
+                    radius = size.minDimension / 2.0f,
+                    center = androidx.compose.ui.geometry.Offset(size.width * 0.95f, size.height * 0.15f),
+                    style = Stroke(width = 1.dp.toPx())
+                )
+                // Draw technical grid line
+                drawLine(
+                    color = lineColor,
+                    start = androidx.compose.ui.geometry.Offset(0f, size.height * 0.7f),
+                    end = androidx.compose.ui.geometry.Offset(size.width, size.height * 0.3f),
+                    strokeWidth = 1.dp.toPx()
                 )
             }
-            Spacer(Modifier.padding(top = 14.dp))
-            Text(
-                text = title,
-                style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
-                color = MaterialTheme.colorScheme.onBackground
-            )
-            Spacer(Modifier.padding(top = 6.dp))
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+
+            Column(
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Box(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f), shape = CircleShape)
+                        .padding(8.dp)
+                ) {
+                    Image(
+                        painter = painterResource(icon),
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
+                Spacer(Modifier.padding(top = 14.dp))
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Bold),
+                    color = MaterialTheme.colorScheme.onBackground
+                )
+                Spacer(Modifier.padding(top = 6.dp))
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }
