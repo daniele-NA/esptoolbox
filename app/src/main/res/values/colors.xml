@@ -1,39 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="splash_bg_color">#000000</color>
+    <color name="splash_bg_color">#181115</color>
 
-    <!-- PRIMARY — indigo -->
-    <color name="md_theme_primary">#6560EE</color>
+    <!-- PRIMARY — vibrant violet -->
+    <color name="md_theme_primary">#9252FF</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>
 
-    <!-- SECONDARY — indigo tonale -->
-    <color name="md_theme_secondary">#A6A2FF</color>
-    <color name="md_theme_onSecondary">#1C1A5E</color>
+    <!-- SECONDARY — lighter violet -->
+    <color name="md_theme_secondary">#C5A3FF</color>
+    <color name="md_theme_onSecondary">#320070</color>
 
-    <!-- TERTIARY — azzurro pastello (identità Wi-Fi) -->
-    <color name="md_theme_tertiary">#8FB6FF</color>
-    <color name="md_theme_onTertiary">#0A2246</color>
-    <color name="md_theme_tertiaryContainer">#1E3A6B</color>
-    <color name="md_theme_onTertiaryContainer">#BAD1FF</color>
+    <!-- TERTIARY — light blue-indigo (Wi-Fi) -->
+    <color name="md_theme_tertiary">#AEC6FF</color>
+    <color name="md_theme_onTertiary">#002E66</color>
+    <color name="md_theme_tertiaryContainer">#2B447A</color>
+    <color name="md_theme_onTertiaryContainer">#D8E2FF</color>
 
     <!-- ERROR -->
     <color name="md_theme_error">#FFB4AB</color>
-    <color name="md_theme_onError">#5B1A13</color>
+    <color name="md_theme_onError">#690005</color>
 
-    <!-- BACKGROUND / SURFACE — lighter layered violet -->
-    <color name="md_theme_background">#1B1628</color>
-    <color name="md_theme_onBackground">#E9E3F2</color>
-    <color name="md_theme_surface">#241E35</color>
-    <color name="md_theme_onSurface">#E9E3F2</color>
-    <color name="md_theme_surfaceVariant">#332C48</color>
-    <color name="md_theme_onSurfaceVariant">#CDC6DE</color>
+    <!-- BACKGROUND / SURFACE — deep slate-violet -->
+    <color name="md_theme_background">#181115</color>
+    <color name="md_theme_onBackground">#F2EDFA</color>
+    <color name="md_theme_surface">#161126</color>
+    <color name="md_theme_onSurface">#F2EDFA</color>
+    <color name="md_theme_surfaceVariant">#2C243D</color>
+    <color name="md_theme_onSurfaceVariant">#CDC3DE</color>
 
     <!-- Lighter violet container surfaces (cards, menus, floating bar) -->
-    <color name="md_theme_surfaceContainer">#2C2542</color>
-    <color name="md_theme_surfaceContainerHigh">#372F50</color>
-    <color name="md_theme_surfaceContainerHighest">#423A5E</color>
+    <color name="md_theme_surfaceContainer">#201930</color>
+    <color name="md_theme_surfaceContainerHigh">#2B2240</color>
+    <color name="md_theme_surfaceContainerHighest">#362C4F</color>
 
     <!-- OUTLINE -->
-    <color name="md_theme_outline">#8B84A2</color>
+    <color name="md_theme_outline">#978EB2</color>
 
 </resources>
