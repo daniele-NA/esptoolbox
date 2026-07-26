@@ -7,16 +7,10 @@
     <!--  Tab Navigation Label-->
     <string name="log_label">Log</string>
     <string name="usb_label">Usb</string>
-    <string name="connection_label">Connection</string>
     <string name="updater_label">Flash</string>
     <string name="wifi_label">Wi-Fi</string>
 
     <!-- HomeScreen-->
-    <string name="usb_desc">Connect with Usb</string>
-    <string name="wifi_desc">Connect with WiFi</string>
-    <string name="usb_subdesc">Wired serial: flash &amp; send credentials.</string>
-    <string name="wifi_subdesc">Cable-free ESP-Touch provisioning.</string>
-    <string name="get_started_desc">No alerts or snackbars will be displayed — all operation results will appear in the Log section.</string>
     <string name="internet_req_title">Internet Status</string>
     <string name="internet_req_body">Sure that you\'re connected to internet</string>
     <string name="location_permission_req_title">Grant us the location permission</string>
@@ -42,8 +36,6 @@
     <string name="flash_do_not_disconnect_usb">Chip detection completed,DO NOT disconnect USB or navigate away</string>
     <string name="flash_rst">NOW PRESS THE RESET BTN !!</string>
     <string name="invalid_file_detected">Invalid file detected</string>
-    <string name="baud_rate_title">Select BaudRate</string>
-    <string name="files_title">Select .bin files</string>
     <string name="files_description">Select one or more .bin files to flash and set their addresses. If flashing fails, try again—some ESPs need multiple attempts.</string>
 
 
@@ -52,7 +44,9 @@
     <string name="wifi_pwd_hint" translatable="false">Password</string>
     <string name="broadcast_warning">Starting local scanning, don\'t touch your ESP</string>
     <string name="permission_required">Permission Required</string>
-    <string name="position_warning">Turn on position and RESTART %s</string>
+    <string name="location_lost_title">Location required</string>
+    <string name="location_lost_desc">Location has been turned off. Turn it back on and restart the app to continue.</string>
+    <string name="permission_lost_desc">The location permission has been revoked. Grant it again and restart the app to continue.</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">USB connection failed. Please check: BaudRate &amp; SerialFormat.</string>
@@ -64,14 +58,14 @@
 
     <!-- Global-->
     <string name="usb_up_title" translatable="false">USB · SERIAL</string>
-    <string name="usb_title" translatable="false">Cabled</string>
     <string name="btn_copy">Copy</string>
     <string name="btn_clear">Clear</string>
-    <string name="log_up_title" translatable="false">CONSOLE</string>
-    <string name="log_title" translatable="false">Log</string>
-    <string name="wifi_up_title" translatable="false">WIRELESS</string>
+    <string name="usb_title" translatable="false">Usb Setup</string>
+    <string name="flash_title" translatable="false">Firmware Flash</string>
+    <string name="log_title" translatable="false">Logs</string>
     <string name="wifi_title" translatable="false">Wi-Fi Setup</string>
     <string name="get_started_tool">Get Started</string>
+    <string name="get_started_subtitle">Before you start, make sure every requirement below is met. No alerts or snackbars will be displayed — all operation results will appear in the Log section.</string>
     <string name="go_tool">Go</string>
     <string name="grant_permission_tool">Grant Permission</string>
 

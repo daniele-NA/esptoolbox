@@ -1,0 +1,57 @@
+<resources>
+
+    <string name="btn_connect">कनेक्ट करें</string>
+
+    <!--  Tab Navigation Label-->
+    <string name="log_label">Log</string>
+    <string name="usb_label">Usb</string>
+    <string name="updater_label">Flash</string>
+    <string name="btn_copy">कॉपी करें</string>
+    <string name="btn_clear">साफ़ करें</string>
+    <string name="wifi_label">Wi-Fi</string>
+
+    <!-- EntryScreen-->
+    <string name="internet_req_title">इंटरनेट स्थिति</string>
+    <string name="internet_req_body">सुनिश्चित करें कि आप इंटरनेट से जुड़े हैं</string>
+    <string name="location_permission_req_title">लोकेशन की अनुमति दें</string>
+    <string name="location_req_title">लोकेशन स्थिति</string>
+    <string name="location_req_body">सेटिंग्स से लोकेशन चालू करें</string>
+
+    <!-- USBConnectionScreen-->
+    <string name="usb_connection_info">ध्यान दें: यदि आप Chromebook या कई USB पोर्ट वाला डिवाइस उपयोग कर रहे हैं, तो एक समय में एक से अधिक ESP डिवाइस कनेक्ट नहीं कर सकते।</string>
+    <string name="usb_version">संस्करण</string>
+    <string name="usb_manufacturer">निर्माता</string>
+    <string name="usb_vendor_id">वेंडर ID</string>
+    <string name="usb_product_id">प्रोडक्ट ID</string>
+    <string name="usb_port">पोर्ट</string>
+    <string name="connection_successfully">ESP सफलतापूर्वक Wi-Fi से कनेक्ट हो गया है</string>
+
+    <!-- USBFlashScreen-->
+    <string name="flash_in_progress_warning">फ़्लैश पहले से चल रहा है</string>
+    <string name="flash_do_not_disconnect_usb">चिप की पहचान पूरी हुई, USB न निकालें और स्क्रीन न बदलें</string>
+    <string name="flash_rst">अब RESET बटन दबाएँ !!</string>
+    <string name="invalid_file_detected">अमान्य फ़ाइल मिली</string>
+    <string name="files_description">फ़्लैश करने के लिए एक या अधिक .bin फ़ाइलें चुनें और उनका पता सेट करें। यदि फ़्लैश विफल हो जाए, तो फिर से प्रयास करें — कुछ ESP को कई प्रयासों की आवश्यकता होती है।</string>
+
+    <!-- WIFIConnectionScreen-->
+    <string name="wifi_connection_title">ध्यान दें कि ESP केवल 2.4GHz नेटवर्क का समर्थन करता है। सुनिश्चित करें कि आप सही बैंड से जुड़े हैं या अपने डुअल-बैंड राउटर को 2.4GHz पर सेट करें।</string>
+    <string name="broadcast_warning">लोकल स्कैन शुरू हो रहा है, अपने ESP को न छुएँ</string>
+    <string name="permission_required">अनुमति आवश्यक</string>
+    <string name="location_lost_title">लोकेशन आवश्यक</string>
+    <string name="location_lost_desc">लोकेशन बंद कर दी गई है। इसे फिर से चालू करें और जारी रखने के लिए ऐप को पुनः प्रारंभ करें।</string>
+    <string name="permission_lost_desc">लोकेशन की अनुमति हटा दी गई है। इसे फिर से दें और जारी रखने के लिए ऐप को पुनः प्रारंभ करें।</string>
+
+    <!-- ExceptionMessage-->
+    <string name="error_usb_connection">USB कनेक्शन विफल। कृपया जाँचें: BaudRate और SerialFormat।</string>
+    <string name="error_wifi_connection">Wi-Fi कनेक्शन विफल। कृपया डिवाइस और अनुमतियाँ जाँचें।</string>
+    <string name="error_generic">एक त्रुटि हुई। कृपया बाद में पुनः प्रयास करें।</string>
+    <string name="error_file_not_found">चयनित फ़ाइल नहीं मिली। कृपया पथ जाँचें और पुनः प्रयास करें।</string>
+    <string name="error_io_exception">फ़ाइल पढ़ने में समस्या हुई। पुनः प्रयास करें या कोई अन्य फ़ाइल चुनें।</string>
+    <string name="error_file_permission">ऐप को इस फ़ाइल तक पहुँचने की अनुमति नहीं है। कृपया सेटिंग्स जाँचें।</string>
+
+    <!-- Global-->
+    <string name="get_started_tool">शुरू करें</string>
+    <string name="get_started_subtitle">शुरू करने से पहले सुनिश्चित करें कि नीचे दी गई सभी आवश्यकताएँ पूरी हैं। कोई अलर्ट नहीं दिखाया जाएगा — सभी परिणाम Log सेक्शन में दिखाई देंगे।</string>
+    <string name="go_tool">आगे बढ़ें</string>
+    <string name="grant_permission_tool">अनुमति दें</string>
+</resources>

@@ -1,0 +1,57 @@
+<resources>
+
+    <string name="btn_connect">Conectar</string>
+
+    <!--  Tab Navigation Label-->
+    <string name="log_label">Log</string>
+    <string name="usb_label">Usb</string>
+    <string name="updater_label">Flash</string>
+    <string name="btn_copy">Copiar</string>
+    <string name="btn_clear">Limpiar</string>
+    <string name="wifi_label">Wi-Fi</string>
+
+    <!-- EntryScreen-->
+    <string name="internet_req_title">Estado de Internet</string>
+    <string name="internet_req_body">Asegúrate de estar conectado a Internet</string>
+    <string name="location_permission_req_title">Concede el permiso de ubicación</string>
+    <string name="location_req_title">Estado de la ubicación</string>
+    <string name="location_req_body">Activa la ubicación desde los ajustes</string>
+
+    <!-- USBConnectionScreen-->
+    <string name="usb_connection_info">Nota: si usas un Chromebook o un dispositivo con varios puertos USB, no puedes conectar más de un dispositivo ESP a la vez.</string>
+    <string name="usb_version">Versión</string>
+    <string name="usb_manufacturer">Fabricante</string>
+    <string name="usb_vendor_id">ID de proveedor</string>
+    <string name="usb_product_id">ID de producto</string>
+    <string name="usb_port">Puerto</string>
+    <string name="connection_successfully">El ESP se ha conectado correctamente al Wi-Fi</string>
+
+    <!-- USBFlashScreen-->
+    <string name="flash_in_progress_warning">Flasheo ya en curso</string>
+    <string name="flash_do_not_disconnect_usb">Detección del chip completada, NO desconectes el USB ni salgas de la pantalla</string>
+    <string name="flash_rst">¡PULSA AHORA EL BOTÓN RESET!</string>
+    <string name="invalid_file_detected">Archivo no válido detectado</string>
+    <string name="files_description">Selecciona uno o más archivos .bin para flashear y define su dirección. Si el flasheo falla, inténtalo de nuevo: algunos ESP requieren varios intentos.</string>
+
+    <!-- WIFIConnectionScreen-->
+    <string name="wifi_connection_title">Ten en cuenta que el ESP solo admite redes de 2.4GHz. Asegúrate de estar conectado a la banda correcta o configura tu router de doble banda para usar 2.4GHz.</string>
+    <string name="broadcast_warning">Iniciando el escaneo local, no toques tu ESP</string>
+    <string name="permission_required">Permiso requerido</string>
+    <string name="location_lost_title">Ubicación necesaria</string>
+    <string name="location_lost_desc">La ubicación se ha desactivado. Actívala de nuevo y reinicia la aplicación para continuar.</string>
+    <string name="permission_lost_desc">El permiso de ubicación se ha revocado. Concédelo de nuevo y reinicia la aplicación para continuar.</string>
+
+    <!-- ExceptionMessage-->
+    <string name="error_usb_connection">Error de conexión USB. Comprueba: BaudRate y SerialFormat.</string>
+    <string name="error_wifi_connection">Error de conexión Wi-Fi. Comprueba el dispositivo y los permisos.</string>
+    <string name="error_generic">Se ha producido un error. Inténtalo de nuevo más tarde.</string>
+    <string name="error_file_not_found">No se ha encontrado el archivo seleccionado. Comprueba la ruta e inténtalo de nuevo.</string>
+    <string name="error_io_exception">Ha habido un problema al leer el archivo. Inténtalo de nuevo o elige otro archivo.</string>
+    <string name="error_file_permission">La aplicación no tiene permiso para acceder a este archivo. Comprueba los ajustes.</string>
+
+    <!-- Global-->
+    <string name="get_started_tool">Empezar</string>
+    <string name="get_started_subtitle">Antes de empezar, asegúrate de que se cumplan todos los requisitos siguientes. No se mostrarán avisos — todos los resultados aparecerán en la sección Log.</string>
+    <string name="go_tool">Ir</string>
+    <string name="grant_permission_tool">Conceder permiso</string>
+</resources>

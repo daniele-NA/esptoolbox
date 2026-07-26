@@ -33,5 +33,4 @@ object Constants {
     val CARD_PADDING = 20.dp
 
     const val PICK_MIME_TYPE="application/octet-stream"
-    const val WIFI_ANIM="wifi_anim.json"
 }

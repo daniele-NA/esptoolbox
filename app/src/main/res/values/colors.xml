@@ -1,40 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="splash_bg_color">#181115</color>
+    <color name="background">#FFFFFF</color>
 
-    <!-- PRIMARY — neon lavender / vivid violet -->
-    <color name="md_theme_primary">#A366FF</color>
-    <color name="md_theme_onPrimary">#FFFFFF</color>
+    <!-- PRIMARY -->
+    <color name="primary">#00677C</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#B2EBF8</color>
+    <color name="onPrimaryContainer">#001F28</color>
+    <color name="inversePrimary">#4FD7F3</color>
+    <color name="primaryFixed">#B2EBF8</color>
+    <color name="primaryFixedDim">#4FD7F3</color>
+    <color name="onPrimaryFixed">#001F28</color>
+    <color name="onPrimaryFixedVariant">#004D5E</color>
 
-    <!-- SECONDARY — light neon lavender -->
-    <color name="md_theme_secondary">#D1B5FF</color>
-    <color name="md_theme_onSecondary">#2A005C</color>
+    <!-- SECONDARY (same cyan tonal family) -->
+    <color name="secondary">#00677C</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="secondaryContainer">#B2EBF8</color>
+    <color name="onSecondaryContainer">#001F28</color>
+    <color name="secondaryFixed">#B2EBF8</color>
+    <color name="secondaryFixedDim">#4FD7F3</color>
+    <color name="onSecondaryFixed">#001F28</color>
+    <color name="onSecondaryFixedVariant">#004D5E</color>
 
-    <!-- TERTIARY — orchid violet -->
-    <color name="md_theme_tertiary">#FF7AFB</color>
-    <color name="md_theme_onTertiary">#4E004B</color>
-    <color name="md_theme_tertiaryContainer">#8C1D78</color>
-    <color name="md_theme_onTertiaryContainer">#FFD7F3</color>
+    <!-- TERTIARY (same cyan tonal family) -->
+    <color name="tertiary">#00677C</color>
+    <color name="onTertiary">#FFFFFF</color>
+    <color name="tertiaryContainer">#B2EBF8</color>
+    <color name="onTertiaryContainer">#001F28</color>
+    <color name="tertiaryFixed">#B2EBF8</color>
+    <color name="tertiaryFixedDim">#4FD7F3</color>
+    <color name="onTertiaryFixed">#001F28</color>
+    <color name="onTertiaryFixedVariant">#004D5E</color>
 
     <!-- ERROR -->
-    <color name="md_theme_error">#FFB4AB</color>
-    <color name="md_theme_onError">#690005</color>
-
-    <!-- BACKGROUND / SURFACE — deep slate-violet -->
-    <color name="md_theme_background">#181115</color>
-    <color name="md_theme_onBackground">#F2EDFA</color>
-    <color name="md_theme_surface">#1F1626</color>
-    <color name="md_theme_onSurface">#F2EDFA</color>
-    <color name="md_theme_surfaceVariant">#34283F</color>
-    <color name="md_theme_onSurfaceVariant">#CDC3DE</color>
-
-    <!-- Lighter violet container surfaces (cards, menus, floating bar) -->
-    <color name="md_theme_surfaceContainer">#291E33</color>
-    <color name="md_theme_surfaceContainerHigh">#352842</color>
-    <color name="md_theme_surfaceContainerHighest">#423251</color>
-
-    <!-- OUTLINE -->
-    <color name="md_theme_outline">#978EB2</color>
+    <color name="error">#B3261E</color>
+    <color name="onError">#FFFFFF</color>
+    <color name="errorContainer">#F9DEDC</color>
+    <color name="onErrorContainer">#410E0B</color>
 
 </resources>

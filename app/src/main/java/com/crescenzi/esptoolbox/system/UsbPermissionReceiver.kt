@@ -7,7 +7,7 @@ import android.hardware.usb.UsbManager
 import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.core.values.Constants
 import com.crescenzi.esp32.usb.UsbPermission
-import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
+import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.USBConnectionViewModel
 import org.koin.java.KoinJavaComponent
 
 /**
@@ -16,8 +16,8 @@ import org.koin.java.KoinJavaComponent
 class UsbPermissionReceiver : BroadcastReceiver() {
 
 
-    private val usbViewModel: UsbConnectionViewModel by KoinJavaComponent.inject(
-        UsbConnectionViewModel::class.java)
+    private val usbViewModel: USBConnectionViewModel by KoinJavaComponent.inject(
+        USBConnectionViewModel::class.java)
 
 
     override fun onReceive(context: Context?, intent: Intent?) {

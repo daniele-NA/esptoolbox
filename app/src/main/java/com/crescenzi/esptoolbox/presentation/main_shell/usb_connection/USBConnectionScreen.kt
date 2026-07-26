@@ -1,0 +1,152 @@
+package com.crescenzi.esptoolbox.presentation.main_shell.usb_connection
+
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularWavyProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.crescenzi.esptoolbox.R
+import com.crescenzi.esp32.params.BaudRateFormat
+import com.crescenzi.esp32.params.SerialFormat
+import com.crescenzi.esp32.usb.model.UsbConnectionArgs
+import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.util.UsbConnectionActionsWidget
+import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.util.UsbConnectionCredentialsWidget
+import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.util.UsbConnectionSerialFormatWidget
+import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.util.UsbConnectionStatusWidget
+import com.crescenzi.esptoolbox.presentation.widget.AppScaffold
+import com.crescenzi.esptoolbox.presentation.widget.UsbBaudRateWidget
+import com.crescenzi.esptoolbox.theme.LATERAL_PADDING
+import com.crescenzi.esptoolbox.theme.NAV_PILL_CLEARANCE
+import com.crescenzi.esptoolbox.theme.SPACE_L
+
+/**
+ * There will always be only one device connected via USB
+ */
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
+@Composable
+fun USBConnectionScreen(
+    usbConnectionViewModel: USBConnectionViewModel,
+    onReqUsbPermission: () -> Unit
+) {
+    val context = LocalContext.current
+    val loading by usbConnectionViewModel.loading.collectAsStateWithLifecycle()
+
+    /**
+     * Only at startup
+     */
+    LaunchedEffect(Unit) {
+        usbConnectionViewModel.openObserver(context)
+    }
+
+
+    val deviceSnapshot by (usbConnectionViewModel.currentDeviceSnapshot.collectAsStateWithLifecycle())
+
+    val ssid = rememberSaveable { mutableStateOf(usbConnectionViewModel.ssidState.value) }
+    val pwd = rememberSaveable { mutableStateOf("") }
+    val baudRate = remember { mutableStateOf(BaudRateFormat.B115200) }
+    val format = remember { mutableStateOf<SerialFormat>(SerialFormat.Plain) }
+
+    var contentVisible by remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        contentVisible = true
+    }
+
+    Box(modifier = Modifier.fillMaxSize()) {
+
+        AppScaffold(
+            title = stringResource(R.string.usb_title),
+            reserveTopBarSpace = true,
+            contentPadding = PaddingValues(
+                start = LATERAL_PADDING,
+                end = LATERAL_PADDING,
+                top = SPACE_L,
+                bottom = NAV_PILL_CLEARANCE + SPACE_L
+            )
+        ) {
+
+            Text(
+                text = stringResource(R.string.usb_connection_info),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            AnimatedVisibility(
+                visible = contentVisible,
+                enter = fadeIn(
+                    animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
+                ) + slideInVertically(
+                    initialOffsetY = { it / 4 },
+                    animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
+                )
+            ) {
+                Column(verticalArrangement = Arrangement.spacedBy(SPACE_L)) {
+
+                    UsbConnectionStatusWidget(deviceSnapshot)
+
+                    HorizontalDivider()
+
+                    Text(
+                        text = stringResource(R.string.board_name),
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+
+                    UsbConnectionCredentialsWidget(ssid, pwd)
+
+                    UsbBaudRateWidget(
+                        selectedBaudRate = baudRate.value,
+                        onBaudRateSelected = { baudRate.value = it })
+
+                    UsbConnectionSerialFormatWidget(
+                        selectedFormat = format.value,
+                        onFormatSelected = { format.value = it })
+
+
+                    UsbConnectionActionsWidget(
+                        Modifier,
+                        usbConnectionViewModel,
+                    ) {
+                        /**
+                         * - Button onClick  -->  Send credentials or request permissions
+                         */
+                        usbConnectionViewModel.sendCredentials(
+                            UsbConnectionArgs(
+                                ssid.value,
+                                pwd.value,
+                                format.value,
+                                baudRate.value
+                            ), onReqUsbPermission
+                        )
+                    }
+
+                }
+            }
+        }
+
+        if (loading) {
+            CircularWavyProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
+    }
+}

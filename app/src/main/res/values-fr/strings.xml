@@ -1,0 +1,57 @@
+<resources>
+
+    <string name="btn_connect">Connecter</string>
+
+    <!--  Tab Navigation Label-->
+    <string name="log_label">Log</string>
+    <string name="usb_label">Usb</string>
+    <string name="updater_label">Flash</string>
+    <string name="btn_copy">Copier</string>
+    <string name="btn_clear">Effacer</string>
+    <string name="wifi_label">Wi-Fi</string>
+
+    <!-- EntryScreen-->
+    <string name="internet_req_title">État de la connexion</string>
+    <string name="internet_req_body">Assurez-vous d\'être connecté à Internet</string>
+    <string name="location_permission_req_title">Accordez l\'autorisation de localisation</string>
+    <string name="location_req_title">État de la localisation</string>
+    <string name="location_req_body">Activez la localisation dans les paramètres</string>
+
+    <!-- USBConnectionScreen-->
+    <string name="usb_connection_info">Remarque : si vous utilisez un Chromebook ou un appareil avec plusieurs ports USB, vous ne pouvez pas connecter plus d\'un appareil ESP à la fois.</string>
+    <string name="usb_version">Version</string>
+    <string name="usb_manufacturer">Fabricant</string>
+    <string name="usb_vendor_id">ID fournisseur</string>
+    <string name="usb_product_id">ID produit</string>
+    <string name="usb_port">Port</string>
+    <string name="connection_successfully">L\'ESP s\'est connecté au Wi-Fi avec succès</string>
+
+    <!-- USBFlashScreen-->
+    <string name="flash_in_progress_warning">Flash déjà en cours</string>
+    <string name="flash_do_not_disconnect_usb">Détection de la puce terminée, NE débranchez PAS l\'USB et ne quittez pas l\'écran</string>
+    <string name="flash_rst">APPUYEZ MAINTENANT SUR LE BOUTON RESET !</string>
+    <string name="invalid_file_detected">Fichier non valide détecté</string>
+    <string name="files_description">Sélectionnez un ou plusieurs fichiers .bin à flasher et définissez leur adresse. Si le flash échoue, réessayez — certains ESP nécessitent plusieurs tentatives.</string>
+
+    <!-- WIFIConnectionScreen-->
+    <string name="wifi_connection_title">Notez que l\'ESP ne prend en charge que les réseaux 2.4GHz. Vérifiez que vous êtes connecté à la bonne bande ou configurez votre routeur bi-bande pour utiliser le 2.4GHz.</string>
+    <string name="broadcast_warning">Démarrage du scan local, ne touchez pas votre ESP</string>
+    <string name="permission_required">Autorisation requise</string>
+    <string name="location_lost_title">Localisation requise</string>
+    <string name="location_lost_desc">La localisation a été désactivée. Réactivez-la et redémarrez l\'application pour continuer.</string>
+    <string name="permission_lost_desc">L\'autorisation de localisation a été révoquée. Accordez-la à nouveau et redémarrez l\'application pour continuer.</string>
+
+    <!-- ExceptionMessage-->
+    <string name="error_usb_connection">Échec de la connexion USB. Vérifiez : BaudRate et SerialFormat.</string>
+    <string name="error_wifi_connection">Échec de la connexion Wi-Fi. Vérifiez l\'appareil et les autorisations.</string>
+    <string name="error_generic">Une erreur s\'est produite. Réessayez plus tard.</string>
+    <string name="error_file_not_found">Le fichier sélectionné est introuvable. Vérifiez le chemin et réessayez.</string>
+    <string name="error_io_exception">Un problème est survenu lors de la lecture du fichier. Réessayez ou choisissez un autre fichier.</string>
+    <string name="error_file_permission">L\'application n\'a pas l\'autorisation d\'accéder à ce fichier. Vérifiez vos paramètres.</string>
+
+    <!-- Global-->
+    <string name="get_started_tool">Commencer</string>
+    <string name="get_started_subtitle">Avant de commencer, assurez-vous que toutes les conditions ci-dessous sont remplies. Aucune alerte ne sera affichée — tous les résultats apparaîtront dans la section Log.</string>
+    <string name="go_tool">Continuer</string>
+    <string name="grant_permission_tool">Accorder l\'autorisation</string>
+</resources>

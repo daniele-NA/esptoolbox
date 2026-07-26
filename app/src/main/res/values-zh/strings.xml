@@ -1,0 +1,57 @@
+<resources>
+
+    <string name="btn_connect">连接</string>
+
+    <!--  Tab Navigation Label-->
+    <string name="log_label">Log</string>
+    <string name="usb_label">Usb</string>
+    <string name="updater_label">Flash</string>
+    <string name="btn_copy">复制</string>
+    <string name="btn_clear">清空</string>
+    <string name="wifi_label">Wi-Fi</string>
+
+    <!-- EntryScreen-->
+    <string name="internet_req_title">网络状态</string>
+    <string name="internet_req_body">请确保已连接到互联网</string>
+    <string name="location_permission_req_title">请授予位置权限</string>
+    <string name="location_req_title">位置状态</string>
+    <string name="location_req_body">请在设置中开启位置信息</string>
+
+    <!-- USBConnectionScreen-->
+    <string name="usb_connection_info">注意：如果你使用 Chromebook 或带有多个 USB 接口的设备，一次只能连接一个 ESP 设备。</string>
+    <string name="usb_version">版本</string>
+    <string name="usb_manufacturer">制造商</string>
+    <string name="usb_vendor_id">供应商 ID</string>
+    <string name="usb_product_id">产品 ID</string>
+    <string name="usb_port">端口</string>
+    <string name="connection_successfully">ESP 已成功连接到 Wi-Fi</string>
+
+    <!-- USBFlashScreen-->
+    <string name="flash_in_progress_warning">烧录已在进行中</string>
+    <string name="flash_do_not_disconnect_usb">芯片检测完成，请勿断开 USB 或离开此页面</string>
+    <string name="flash_rst">现在请按下 RESET 按钮！！</string>
+    <string name="invalid_file_detected">检测到无效文件</string>
+    <string name="files_description">选择一个或多个要烧录的 .bin 文件并设置其地址。如果烧录失败，请重试——部分 ESP 需要多次尝试。</string>
+
+    <!-- WIFIConnectionScreen-->
+    <string name="wifi_connection_title">请注意，ESP 仅支持 2.4GHz 网络。请确保连接到正确的频段，或将双频路由器设置为 2.4GHz。</string>
+    <string name="broadcast_warning">正在开始本地扫描，请勿触碰你的 ESP</string>
+    <string name="permission_required">需要权限</string>
+    <string name="location_lost_title">需要位置信息</string>
+    <string name="location_lost_desc">位置信息已被关闭。请重新开启并重启应用以继续。</string>
+    <string name="permission_lost_desc">位置权限已被撤销。请重新授予并重启应用以继续。</string>
+
+    <!-- ExceptionMessage-->
+    <string name="error_usb_connection">USB 连接失败。请检查：BaudRate 和 SerialFormat。</string>
+    <string name="error_wifi_connection">Wi-Fi 连接失败。请检查设备和权限。</string>
+    <string name="error_generic">发生错误。请稍后重试。</string>
+    <string name="error_file_not_found">找不到所选文件。请检查路径后重试。</string>
+    <string name="error_io_exception">读取文件时出现问题。请重试或选择其他文件。</string>
+    <string name="error_file_permission">应用没有访问此文件的权限。请检查设置。</string>
+
+    <!-- Global-->
+    <string name="get_started_tool">开始使用</string>
+    <string name="get_started_subtitle">开始之前，请确保满足以下所有要求。应用不会显示任何提示——所有操作结果都会显示在 Log 页面。</string>
+    <string name="go_tool">继续</string>
+    <string name="grant_permission_tool">授予权限</string>
+</resources>

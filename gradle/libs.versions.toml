@@ -12,7 +12,6 @@ coreSplashscreen = "1.2.0"
 composeMaterial3 = "1.5.0-alpha23"
 usbSerial = "3.10.0"
 espTouch = "1.1.1"
-lottie = "6.7.1"
 appUpdate = "2.1.0"
 coroutines = "1.9.0"
 appcompat = "1.7.1"
@@ -36,7 +35,6 @@ compose-material3 = { group = "androidx.compose.material3", name = "material3", 
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 usb-serial = { module = "com.github.mik3y:usb-serial-for-android", version.ref = "usbSerial" }
 esp-touch = { module = "com.github.EspressifApp:lib-esptouch-android", version.ref = "espTouch" }
-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
 app-update = { module = "com.google.android.play:app-update", version.ref = "appUpdate" }
 app-update-ktx = { module = "com.google.android.play:app-update-ktx", version.ref = "appUpdate" }
 

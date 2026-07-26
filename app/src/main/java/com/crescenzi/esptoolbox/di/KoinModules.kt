@@ -5,11 +5,11 @@ import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esp32.firmware.EspRepo
 import com.crescenzi.esp32.wifi.EspTouchRepo
-import com.crescenzi.esptoolbox.presentation.navigation.home.HomeViewModel
-import com.crescenzi.esptoolbox.presentation.navigation.physical.log.LogViewModel
-import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.connection.UsbConnectionViewModel
-import com.crescenzi.esptoolbox.presentation.navigation.physical.usb.updater.UsbUpdaterViewModel
-import com.crescenzi.esptoolbox.presentation.navigation.physical.wifi.WifiViewModel
+import com.crescenzi.esptoolbox.presentation.entry.EntryViewModel
+import com.crescenzi.esptoolbox.presentation.main_shell.logs.LogViewModel
+import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.USBConnectionViewModel
+import com.crescenzi.esptoolbox.presentation.main_shell.usb_flash.USBFlashViewModel
+import com.crescenzi.esptoolbox.presentation.main_shell.wifi_connection.WIFIViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -22,9 +22,9 @@ val repositories = module {
 }
 
 val viewModels = module {
-    viewModel { HomeViewModel(get()) }
+    viewModel { EntryViewModel(get()) }
     viewModel { LogViewModel(get()) }
-    viewModel { UsbConnectionViewModel(get(), get(), get(), get()) }
-    viewModel { UsbUpdaterViewModel(get(), get(), get()) }
-    viewModel { WifiViewModel(application = get(), deviceRepo = get(), get(), get()) }
+    viewModel { USBConnectionViewModel(get(), get(), get(), get()) }
+    viewModel { USBFlashViewModel(get(), get(), get()) }
+    viewModel { WIFIViewModel(application = get(), deviceRepo = get(), get(), get()) }
 }

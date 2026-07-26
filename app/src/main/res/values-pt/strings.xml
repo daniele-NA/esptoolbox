@@ -1,0 +1,57 @@
+<resources>
+
+    <string name="btn_connect">Conectar</string>
+
+    <!--  Tab Navigation Label-->
+    <string name="log_label">Log</string>
+    <string name="usb_label">Usb</string>
+    <string name="updater_label">Flash</string>
+    <string name="btn_copy">Copiar</string>
+    <string name="btn_clear">Limpar</string>
+    <string name="wifi_label">Wi-Fi</string>
+
+    <!-- EntryScreen-->
+    <string name="internet_req_title">Status da Internet</string>
+    <string name="internet_req_body">Verifique se você está conectado à internet</string>
+    <string name="location_permission_req_title">Conceda a permissão de localização</string>
+    <string name="location_req_title">Status da localização</string>
+    <string name="location_req_body">Ative a localização nas configurações</string>
+
+    <!-- USBConnectionScreen-->
+    <string name="usb_connection_info">Observação: se você estiver usando um Chromebook ou um dispositivo com várias portas USB, não é possível conectar mais de um dispositivo ESP ao mesmo tempo.</string>
+    <string name="usb_version">Versão</string>
+    <string name="usb_manufacturer">Fabricante</string>
+    <string name="usb_vendor_id">ID do fornecedor</string>
+    <string name="usb_product_id">ID do produto</string>
+    <string name="usb_port">Porta</string>
+    <string name="connection_successfully">O ESP conectou-se ao Wi-Fi com sucesso</string>
+
+    <!-- USBFlashScreen-->
+    <string name="flash_in_progress_warning">Gravação já em andamento</string>
+    <string name="flash_do_not_disconnect_usb">Detecção do chip concluída, NÃO desconecte o USB nem saia da tela</string>
+    <string name="flash_rst">PRESSIONE AGORA O BOTÃO RESET!!</string>
+    <string name="invalid_file_detected">Arquivo inválido detectado</string>
+    <string name="files_description">Selecione um ou mais arquivos .bin para gravar e defina seus endereços. Se a gravação falhar, tente novamente — alguns ESPs precisam de várias tentativas.</string>
+
+    <!-- WIFIConnectionScreen-->
+    <string name="wifi_connection_title">Observe que o ESP só suporta redes de 2.4GHz. Verifique se você está conectado à banda correta ou configure seu roteador dual-band para usar 2.4GHz.</string>
+    <string name="broadcast_warning">Iniciando a varredura local, não toque no seu ESP</string>
+    <string name="permission_required">Permissão necessária</string>
+    <string name="location_lost_title">Localização necessária</string>
+    <string name="location_lost_desc">A localização foi desativada. Reative-a e reinicie o aplicativo para continuar.</string>
+    <string name="permission_lost_desc">A permissão de localização foi revogada. Conceda-a novamente e reinicie o aplicativo para continuar.</string>
+
+    <!-- ExceptionMessage-->
+    <string name="error_usb_connection">Falha na conexão USB. Verifique: BaudRate e SerialFormat.</string>
+    <string name="error_wifi_connection">Falha na conexão Wi-Fi. Verifique o dispositivo e as permissões.</string>
+    <string name="error_generic">Ocorreu um erro. Tente novamente mais tarde.</string>
+    <string name="error_file_not_found">O arquivo selecionado não foi encontrado. Verifique o caminho e tente novamente.</string>
+    <string name="error_io_exception">Houve um problema ao ler o arquivo. Tente novamente ou escolha outro arquivo.</string>
+    <string name="error_file_permission">O aplicativo não tem permissão para acessar este arquivo. Verifique as configurações.</string>
+
+    <!-- Global-->
+    <string name="get_started_tool">Começar</string>
+    <string name="get_started_subtitle">Antes de começar, verifique se todos os requisitos abaixo foram atendidos. Nenhum alerta será exibido — todos os resultados aparecerão na seção Log.</string>
+    <string name="go_tool">Avançar</string>
+    <string name="grant_permission_tool">Conceder permissão</string>
+</resources>

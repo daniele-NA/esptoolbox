@@ -24,11 +24,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.crescenzi.esptoolbox.core.device.checkStoreUpdate
 import com.crescenzi.esptoolbox.core.values.Constants.INTENT_ACTION_GRANT_USB
 import com.crescenzi.esptoolbox.core.values.Constants.permissions
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esp32.usb.UsbRepo
-import com.crescenzi.esptoolbox.presentation.MainNavigation
+import com.crescenzi.esptoolbox.presentation.main_shell.MainShell
 import com.crescenzi.esptoolbox.system.GenericReceiver
 import com.crescenzi.esptoolbox.system.SsidReceiver
 import com.crescenzi.esptoolbox.system.UsbPermissionReceiver
@@ -73,14 +74,19 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
 
         /**
-         * Force the app to dark at OS level (uiMode) + dark system bars
+         * Force the app to light at OS level (uiMode) + light system bars
          */
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(Color.TRANSPARENT),
-            navigationBarStyle = SystemBarStyle.dark(Color.TRANSPARENT)
+            statusBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT),
+            navigationBarStyle = SystemBarStyle.light(Color.TRANSPARENT, Color.TRANSPARENT)
         )
         super.onCreate(savedInstanceState)
+
+        /**
+         * Update check
+         */
+        checkStoreUpdate()
 
         ContextCompat.registerReceiver(
             this,
@@ -107,7 +113,7 @@ class MainActivity : ComponentActivity() {
         )
 
         setContent {
-            AppTheme(this) {
+            AppTheme {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -117,7 +123,7 @@ class MainActivity : ComponentActivity() {
                                 .padding(safePadding)
                                 .fillMaxSize()
                         ) {
-                            MainNavigation(
+                            MainShell(
                                 onReqUsbPermission = this@MainActivity::requestUsbPermission
                             )
                         }

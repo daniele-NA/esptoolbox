@@ -14,11 +14,11 @@ android {
         applicationId = "com.crescenzi.esptoolbox"
         minSdk = 27
         targetSdk = 37
-        versionCode = 4
-        versionName = "2.0.1"
+        versionCode = 5
+        versionName = "3.0.0"
 
         /* == To avoid resource contamination, supported languages: En, It == */
-        androidResources.localeFilters.add("it")
+        androidResources.localeFilters.addAll(listOf("it", "hi", "es", "fr", "de", "zh", "ja", "pt"))
 
     }
 
@@ -76,7 +76,6 @@ dependencies {
     implementation(libs.androidx.core.splashscreen)
     implementation(libs.io.insert.koin.koin.android) // == Dependency Injection == //
     implementation(libs.koin.androidx.compose)
-    implementation(libs.lottie)
     implementation(libs.app.update)
     implementation(libs.app.update.ktx)
 }
