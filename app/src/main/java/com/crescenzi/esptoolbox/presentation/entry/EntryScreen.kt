@@ -22,7 +22,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -71,14 +70,10 @@ fun EntryScreen(
         entryViewModel.deviceHardwareStatus.locationPermission.collectAsStateWithLifecycle().value
     val locationState = entryViewModel.deviceHardwareStatus.location.collectAsStateWithLifecycle().value
 
-    val navBtnStatus = rememberSaveable { mutableStateOf(true) }
-
     /**
-     * If PERMISSIONS ARE GRANTED, proceed
+     * If EVERY requirement is met, proceed
      */
-    LaunchedEffect(locationPermissionState, locationState) {
-        navBtnStatus.value = locationPermissionState && locationState
-    }
+    val allRequirementsMet = internetState && locationPermissionState && locationState
 
     var contentVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
@@ -94,11 +89,11 @@ fun EntryScreen(
                 txt = stringResource(
                     if (locationPermissionState) R.string.go_tool else R.string.grant_permission_tool
                 ),
-                enabled = !locationPermissionState || navBtnStatus.value,
+                enabled = !locationPermissionState || allRequirementsMet,
                 onTap = {
                     if (!locationPermissionState) {
                         entryViewModel.callReqPermission()
-                    } else if (navBtnStatus.value) {
+                    } else if (allRequirementsMet) {
                         navController.navigate(UsbPage)
                     }
                 }
