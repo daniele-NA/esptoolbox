@@ -82,7 +82,7 @@ fun USBConnectionScreen(
                 start = LATERAL_PADDING,
                 end = LATERAL_PADDING,
                 top = SPACE_L,
-                bottom = NAV_PILL_CLEARANCE + SPACE_L
+                bottom = NAV_PILL_CLEARANCE
             )
         ) {
 

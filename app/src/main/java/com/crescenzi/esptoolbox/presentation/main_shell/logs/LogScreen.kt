@@ -1,10 +1,5 @@
 package com.crescenzi.esptoolbox.presentation.main_shell.logs
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.CubicBezierEasing
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -24,9 +19,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -73,11 +65,6 @@ fun LogScreen(
         }
     }
 
-    var contentVisible by remember { mutableStateOf(false) }
-    LaunchedEffect(Unit) {
-        contentVisible = true
-    }
-
 
     AppScaffold(
         title = stringResource(R.string.log_title),
@@ -91,46 +78,34 @@ fun LogScreen(
                 .padding(top = SPACE_L, bottom = NAV_PILL_CLEARANCE + SPACE_L),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            AnimatedVisibility(
-                visible = contentVisible,
+            Box(
                 modifier = Modifier
                     .weight(1f)
-                    .fillMaxWidth(),
-                enter = fadeIn(
-                    animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
-                ) + slideInVertically(
-                    initialOffsetY = { it / 4 },
-                    animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
-                )
+                    .fillMaxWidth()
+                    .background(
+                        color = MaterialTheme.colorScheme.surfaceContainer,
+                        shape = RoundedCornerShape(CARD_RADIUS)
+                    )
+                    .border(
+                        width = 1.dp,
+                        color = MaterialTheme.colorScheme.outlineVariant,
+                        shape = RoundedCornerShape(CARD_RADIUS)
+                    )
             ) {
-                Box(
+                LazyColumn(
+                    state = listState,
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(
-                            color = MaterialTheme.colorScheme.surfaceContainer,
-                            shape = RoundedCornerShape(CARD_RADIUS)
-                        )
-                        .border(
-                            width = 1.dp,
-                            color = MaterialTheme.colorScheme.outlineVariant,
-                            shape = RoundedCornerShape(CARD_RADIUS)
-                        )
+                        .padding(SPACE_M)
                 ) {
-                    LazyColumn(
-                        state = listState,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(SPACE_M)
-                    ) {
-                        itemsIndexed(logs) { _, log ->
-                            SelectionContainer {
-                                Text(
-                                    text = log.line,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = getLogColor(log.logLevel),
-                                    modifier = Modifier.padding(vertical = 2.dp)
-                                )
-                            }
+                    itemsIndexed(logs) { _, log ->
+                        SelectionContainer {
+                            Text(
+                                text = log.line,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = getLogColor(log.logLevel),
+                                modifier = Modifier.padding(vertical = 2.dp)
+                            )
                         }
                     }
                 }
