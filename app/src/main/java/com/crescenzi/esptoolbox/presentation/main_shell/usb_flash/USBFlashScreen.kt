@@ -33,9 +33,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -44,6 +42,8 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.getFileNameWithoutBin
+import com.crescenzi.esptoolbox.core.AppConstants.BLUE_GLYPH
+import com.crescenzi.esptoolbox.core.AppConstants.ON_BLUE_GLYPH
 import com.crescenzi.esptoolbox.core.AppConstants.PICK_MIME_TYPE
 import com.crescenzi.esptoolbox.presentation.main_shell.usb_flash.util.UsbUpdaterButtonsWidget
 import com.crescenzi.esptoolbox.presentation.util.getMessage
@@ -53,13 +53,11 @@ import com.crescenzi.esptoolbox.presentation.widget.UsbBaudRateWidget
 import com.crescenzi.esptoolbox.theme.LATERAL_PADDING
 import com.crescenzi.esptoolbox.theme.NAV_PILL_CLEARANCE
 import com.crescenzi.esptoolbox.theme.SPACE_L
-import androidx.compose.ui.graphics.Color
+
 import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esp32.usb.model.LogLevel
 import org.koin.compose.koinInject
 
-private val BlueGlyph = Color(0xFF7CD0FF)
-private val OnBlueGlyph = Color(0xFF00344F)
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
@@ -79,7 +77,6 @@ fun USBFlashScreen(usbFlashViewModel: USBFlashViewModel) {
     val flashEnabled = flashFiles.any { it.uri != null } &&
             flashFiles.indices.all { flashFiles[it].uri == null || addressValid[it] }
 
-    val haptic = LocalHapticFeedback.current
 
     /**
      * 5 Launcher
@@ -133,12 +130,12 @@ fun USBFlashScreen(usbFlashViewModel: USBFlashViewModel) {
                         val iconBgColor = if (fileEntry.uri != null) {
                             MaterialTheme.colorScheme.errorContainer
                         } else {
-                            BlueGlyph
+                            BLUE_GLYPH
                         }
                         val iconTint = if (fileEntry.uri != null) {
                             MaterialTheme.colorScheme.onErrorContainer
                         } else {
-                            OnBlueGlyph
+                            ON_BLUE_GLYPH
                         }
 
                         val attachInteractionSource = remember { MutableInteractionSource() }
@@ -156,7 +153,6 @@ fun USBFlashScreen(usbFlashViewModel: USBFlashViewModel) {
                                     interactionSource = attachInteractionSource,
                                     indication = null
                                 ) {
-                                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                                     if (fileEntry.uri != null) {
                                         // remove file reference
                                         usbFlashViewModel.updateFlashFile(

@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.presentation.util.getMessage
 import com.crescenzi.esp32.LogRepo
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 import com.crescenzi.esp32.exception.WifiConnectionException
 import com.crescenzi.esp32.usb.model.LogLevel
 import com.crescenzi.esp32.wifi.EspTouchRepo
@@ -18,13 +18,13 @@ import kotlinx.coroutines.flow.asStateFlow
  */
 class WIFIViewModel(
     application: Application,
-    private val deviceRepo: DeviceRepo,
+    private val deviceHardwareStatus: DeviceHardwareStatus,
     val logRepo: LogRepo,
     private val espTouchRepo: EspTouchRepo
 ) : AndroidViewModel(application = application) {
 
-    val bssid = deviceRepo.bssid
-    val ssid = deviceRepo.ssid
+    val bssid = deviceHardwareStatus.bssid
+    val ssid = deviceHardwareStatus.ssid
 
     private val _loading = MutableStateFlow(false)
     val loading = _loading.asStateFlow()

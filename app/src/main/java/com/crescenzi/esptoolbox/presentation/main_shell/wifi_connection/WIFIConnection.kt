@@ -17,8 +17,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
@@ -40,7 +38,6 @@ fun WIFIConnectionScreen(
 
     val loading by wifiViewModel.loading.collectAsStateWithLifecycle()
     val pwdState = rememberSaveable { mutableStateOf("") }
-    val haptic = LocalHapticFeedback.current
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -55,7 +52,6 @@ fun WIFIConnectionScreen(
                     txt = stringResource(R.string.btn_connect),
                     enabled = !loading,
                     onTap = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         wifiViewModel.sendBroadcast(pwdState.value)
                     }
                 )

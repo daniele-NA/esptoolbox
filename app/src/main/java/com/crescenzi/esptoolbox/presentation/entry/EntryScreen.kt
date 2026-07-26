@@ -5,6 +5,7 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.core.CubicBezierEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
@@ -24,12 +25,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
+import com.crescenzi.esptoolbox.core.AppConstants.BLUE_GLYPH
+import com.crescenzi.esptoolbox.core.AppConstants.GREEN_GLYPH
+import com.crescenzi.esptoolbox.core.AppConstants.ON_BLUE_GLYPH
+import com.crescenzi.esptoolbox.core.AppConstants.ON_GREEN_GLYPH
+import com.crescenzi.esptoolbox.core.AppConstants.ON_ORANGE_GLYPH
+import com.crescenzi.esptoolbox.core.AppConstants.ORANGE_GLYPH
 import com.crescenzi.esptoolbox.presentation.main_shell.LocalNavController
 import com.crescenzi.esptoolbox.presentation.main_shell.UsbPage
 import com.crescenzi.esptoolbox.presentation.widget.AppButton
@@ -37,13 +41,6 @@ import com.crescenzi.esptoolbox.presentation.widget.AppScaffold
 import com.crescenzi.esptoolbox.presentation.widget.LeadingTile
 import com.crescenzi.esptoolbox.theme.LATERAL_PADDING
 import com.crescenzi.esptoolbox.theme.SPACE_L
-
-private val GreenGlyph = Color(0xFF6DD58C)
-private val OnGreenGlyph = Color(0xFF0A2E16)
-private val BlueGlyph = Color(0xFF7CD0FF)
-private val OnBlueGlyph = Color(0xFF00344F)
-private val OrangeGlyph = Color(0xFFFFB871)
-private val OnOrangeGlyph = Color(0xFF4A2800)
 
 
 /**
@@ -68,11 +65,11 @@ fun EntryScreen(
 
     val navController = LocalNavController.current
 
-    val internetState = entryViewModel.deviceRepo.internet.collectAsStateWithLifecycle().value
+    val internetState = entryViewModel.deviceHardwareStatus.internet.collectAsStateWithLifecycle().value
     //SSID and BSSID detection
     val locationPermissionState =
-        entryViewModel.deviceRepo.locationPermission.collectAsStateWithLifecycle().value
-    val locationState = entryViewModel.deviceRepo.location.collectAsStateWithLifecycle().value
+        entryViewModel.deviceHardwareStatus.locationPermission.collectAsStateWithLifecycle().value
+    val locationState = entryViewModel.deviceHardwareStatus.location.collectAsStateWithLifecycle().value
 
     val navBtnStatus = rememberSaveable { mutableStateOf(true) }
 
@@ -82,8 +79,6 @@ fun EntryScreen(
     LaunchedEffect(locationPermissionState, locationState) {
         navBtnStatus.value = locationPermissionState && locationState
     }
-
-    val haptic = LocalHapticFeedback.current
 
     var contentVisible by remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
@@ -101,7 +96,6 @@ fun EntryScreen(
                 ),
                 enabled = !locationPermissionState || navBtnStatus.value,
                 onTap = {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     if (!locationPermissionState) {
                         entryViewModel.callReqPermission()
                     } else if (navBtnStatus.value) {
@@ -114,11 +108,11 @@ fun EntryScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = LATERAL_PADDING)
                 .padding(top = SPACE_L)
         ) {
 
             Text(
+                modifier = Modifier.padding(horizontal = LATERAL_PADDING),
                 text = stringResource(R.string.get_started_subtitle),
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -126,38 +120,46 @@ fun EntryScreen(
 
             Spacer(Modifier.weight(1f))
 
-            AnimatedVisibility(
-                visible = contentVisible,
-                enter = fadeIn(
-                    animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
-                ) + slideInHorizontally(
-                    initialOffsetX = { it / 3 },
-                    animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
-                )
-            ) {
-                Column(verticalArrangement = Arrangement.spacedBy(SPACE_L)) {
+            Column(verticalArrangement = Arrangement.spacedBy(SPACE_L)) {
 
+                AnimatedVisibility(
+                    visible = contentVisible,
+                    enter = tileEnterTransition(fromLeft = true)
+                ) {
                     LeadingTile(
+                        modifier = Modifier.padding(horizontal = LATERAL_PADDING),
                         currentValue = internetState,
                         titleRes = R.string.internet_req_title,
                         subTitleRes = R.string.internet_req_body,
-                        glyphColor = GreenGlyph,
-                        glyphContentColor = OnGreenGlyph
+                        glyphColor = GREEN_GLYPH,
+                        glyphContentColor = ON_GREEN_GLYPH
                     )
+                }
 
+                AnimatedVisibility(
+                    visible = contentVisible,
+                    enter = tileEnterTransition(fromLeft = false)
+                ) {
                     LeadingTile(
+                        modifier = Modifier.padding(horizontal = LATERAL_PADDING),
                         currentValue = locationPermissionState,
                         titleRes = R.string.location_permission_req_title,
-                        glyphColor = BlueGlyph,
-                        glyphContentColor = OnBlueGlyph
+                        glyphColor = BLUE_GLYPH,
+                        glyphContentColor = ON_BLUE_GLYPH
                     )
+                }
 
+                AnimatedVisibility(
+                    visible = contentVisible,
+                    enter = tileEnterTransition(fromLeft = true)
+                ) {
                     LeadingTile(
+                        modifier = Modifier.padding(horizontal = LATERAL_PADDING),
                         currentValue = locationState,
                         titleRes = R.string.location_req_title,
                         subTitleRes = R.string.location_req_body,
-                        glyphColor = OrangeGlyph,
-                        glyphContentColor = OnOrangeGlyph
+                        glyphColor = ORANGE_GLYPH,
+                        glyphContentColor = ON_ORANGE_GLYPH
                     )
                 }
             }
@@ -166,3 +168,11 @@ fun EntryScreen(
         }
     }
 }
+
+private fun tileEnterTransition(fromLeft: Boolean): EnterTransition =
+    fadeIn(
+        animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
+    ) + slideInHorizontally(
+        initialOffsetX = { if (fromLeft) -it / 3 else it / 3 },
+        animationSpec = tween(durationMillis = 600, easing = CubicBezierEasing(0.2f, 0.0f, 0f, 1f))
+    )

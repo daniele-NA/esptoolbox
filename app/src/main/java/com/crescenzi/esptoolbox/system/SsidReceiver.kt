@@ -7,7 +7,7 @@ import android.location.LocationManager
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiManager.NETWORK_STATE_CHANGED_ACTION
 import androidx.core.location.LocationManagerCompat.isLocationEnabled
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 import org.koin.mp.KoinPlatform.getKoin
 
 /**
@@ -16,7 +16,7 @@ import org.koin.mp.KoinPlatform.getKoin
  */
 class SsidReceiver : BroadcastReceiver() {
 
-    private val deviceRepo = getKoin().get<DeviceRepo>()
+    private val deviceHardwareStatus = getKoin().get<DeviceHardwareStatus>()
 
 
     /**
@@ -31,7 +31,7 @@ class SsidReceiver : BroadcastReceiver() {
 
                 val rawSsid =
                     wifiInfo?.ssid?.takeIf { it != "<unknown ssid>" }.toString()
-                deviceRepo.changeNetworkInfo(rawSsid = rawSsid, bssid = wifiInfo?.bssid.toString())
+                deviceHardwareStatus.changeNetworkInfo(rawSsid = rawSsid, bssid = wifiInfo?.bssid.toString())
             }
         }
     }

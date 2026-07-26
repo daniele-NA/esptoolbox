@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalClipboard
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
@@ -24,7 +22,6 @@ fun LogScreenTopBarWidget(logViewModel: LogViewModel) {
     val localClipboard = LocalClipboard.current
     val logs by logViewModel.logRepo.logs.collectAsStateWithLifecycle()
     val hasLogs = logs.isNotEmpty()
-    val haptic = LocalHapticFeedback.current
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -39,7 +36,6 @@ fun LogScreenTopBarWidget(logViewModel: LogViewModel) {
             txt = stringResource(R.string.btn_copy),
             enabled = hasLogs,
             onTap = {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 localClipboard.nativeClipboard.setPrimaryClip(
                     ClipData.newPlainText("Log", logViewModel.logRepo.toString())
                 )
@@ -56,7 +52,6 @@ fun LogScreenTopBarWidget(logViewModel: LogViewModel) {
             type = AppButtonType.OUTLINED,
             destructive = true,
             onTap = {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 logViewModel.logRepo.cleanLog()
             }
         )

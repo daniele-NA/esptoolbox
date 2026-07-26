@@ -21,8 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.presentation.widget.EditText
 import com.crescenzi.esptoolbox.theme.CARD_RADIUS
@@ -40,7 +38,6 @@ fun UsbBaudRateWidget(
 ) {
 
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val haptic = LocalHapticFeedback.current
 
     val arrowRotation by animateFloatAsState(
         targetValue = if (expanded) 180f else 0f,
@@ -54,7 +51,6 @@ fun UsbBaudRateWidget(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(FIELD_RADIUS))
                 .clickable {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     expanded = true
                 }
         ) {
@@ -94,7 +90,6 @@ fun UsbBaudRateWidget(
                         )
                     },
                     onClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         onBaudRateSelected(rate)
                         expanded = false
                     }

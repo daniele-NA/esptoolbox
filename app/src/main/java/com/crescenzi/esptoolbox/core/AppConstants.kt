@@ -1,6 +1,7 @@
 package com.crescenzi.esptoolbox.core
 
 import android.Manifest
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.BuildConfig
 
@@ -26,10 +27,15 @@ object AppConstants {
     /**
      * Ui
      */
+    val GREEN_GLYPH = Color(0xFF6DD58C)
+    val ON_GREEN_GLYPH = Color(0xFF0A2E16)
+    val BLUE_GLYPH = Color(0xFF7CD0FF)
+    val ON_BLUE_GLYPH = Color(0xFF00344F)
+    val ORANGE_GLYPH = Color(0xFFFFB871)
+    val ON_ORANGE_GLYPH = Color(0xFF4A2800)
 
-    val HORIZONTAL_PADDING = 16.dp
-    val CARD_CORNER = 28.dp
-    val CARD_PADDING = 20.dp
+    val NAV_DOT_COLOR = Color(0xFFFF8A00)
+    val NAV_DOT_OFFSET = 2.dp
 
     const val PICK_MIME_TYPE="application/octet-stream"
 }

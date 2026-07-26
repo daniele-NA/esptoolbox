@@ -1,27 +1,26 @@
-package com.crescenzi.esptoolbox.data.phone.data
+package com.crescenzi.esptoolbox.presentation
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlin.text.removePrefix
 
 /**
  * Hardware, Permissions, Various states
  */
-class DeviceRepo() {
+class DeviceHardwareStatus {
 
-    private val _internet = MutableStateFlow<Boolean>(false)
+    private val _internet = MutableStateFlow(false)
     val internet = _internet.asStateFlow()
 
-    private val _location = MutableStateFlow<Boolean>(false)
+    private val _location = MutableStateFlow(false)
     val location = _location.asStateFlow()
 
-    private val _locationPermission = MutableStateFlow<Boolean>(false)
+    private val _locationPermission = MutableStateFlow(false)
     val locationPermission = _locationPermission.asStateFlow()
 
-    private val _ssid = MutableStateFlow<String>("")
+    private val _ssid = MutableStateFlow("")
     val ssid = _ssid.asStateFlow()
 
-    private val _bssid = MutableStateFlow<String>("")
+    private val _bssid = MutableStateFlow("")
     val bssid = _bssid.asStateFlow()
 
 

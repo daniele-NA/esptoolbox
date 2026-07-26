@@ -1,7 +1,7 @@
 package com.crescenzi.esptoolbox.di
 
 import com.crescenzi.esp32.LogRepo
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esp32.firmware.EspRepo
 import com.crescenzi.esp32.wifi.EspTouchRepo
@@ -15,7 +15,7 @@ import org.koin.dsl.module
 
 val repositories = module {
     single { LogRepo() }
-    single { DeviceRepo() }
+    single { DeviceHardwareStatus() }
     single { EspRepo(get()) }
     single { UsbRepo(get(), get()) }
     single { EspTouchRepo() }
@@ -26,5 +26,5 @@ val viewModels = module {
     viewModel { LogViewModel(get()) }
     viewModel { USBConnectionViewModel(get(), get(), get(), get()) }
     viewModel { USBFlashViewModel(get(), get(), get()) }
-    viewModel { WIFIViewModel(application = get(), deviceRepo = get(), get(), get()) }
+    viewModel { WIFIViewModel(application = get(), deviceHardwareStatus = get(), get(), get()) }
 }

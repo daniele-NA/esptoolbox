@@ -21,8 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.presentation.widget.EditText
 import com.crescenzi.esptoolbox.theme.CARD_RADIUS
@@ -39,7 +37,6 @@ fun UsbConnectionSerialFormatWidget(
     onFormatSelected: (SerialFormat) -> Unit
 ) {
     var expanded by rememberSaveable { mutableStateOf(false) }
-    val haptic = LocalHapticFeedback.current
 
     val serialFormats = listOf(
         SerialFormat.Plain,
@@ -62,7 +59,6 @@ fun UsbConnectionSerialFormatWidget(
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(FIELD_RADIUS))
                 .clickable {
-                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     expanded = true
                 }
         ) {
@@ -102,7 +98,6 @@ fun UsbConnectionSerialFormatWidget(
                         )
                     },
                     onClick = {
-                        haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                         onFormatSelected(format)
                         expanded = false
                     }

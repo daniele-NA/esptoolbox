@@ -10,7 +10,7 @@
 
 
     <application
-        android:name=".EsptoolboxApp"
+        android:name=".App"
         android:icon="@mipmap/mpm_icon"
         android:label="@string/application_name"
         android:launchMode="singleTop"

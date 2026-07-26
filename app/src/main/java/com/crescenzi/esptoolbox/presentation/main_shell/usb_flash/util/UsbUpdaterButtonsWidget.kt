@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.R
@@ -27,7 +25,6 @@ fun UsbUpdaterButtonsWidget(
     onFlash: () -> Unit
 ) {
 
-    val haptic = LocalHapticFeedback.current
 
     Row(
         modifier = Modifier
@@ -46,7 +43,6 @@ fun UsbUpdaterButtonsWidget(
             enabled = resetEnabled,
             fillWidth = false,
             onTap = {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 onReset()
             }
         )
@@ -60,7 +56,6 @@ fun UsbUpdaterButtonsWidget(
             enabled = flashEnabled,
             fillWidth = false,
             onTap = {
-                haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                 onFlash()
             }
         )

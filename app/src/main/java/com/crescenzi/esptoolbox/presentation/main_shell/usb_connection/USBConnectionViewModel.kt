@@ -10,7 +10,7 @@ import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.presentation.util.getMessage
 import com.crescenzi.esptoolbox.core.AppConstants
 import com.crescenzi.esp32.LogRepo
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esp32.usb.model.LogLevel
 import com.crescenzi.esp32.usb.model.UsbConnectionArgs
@@ -37,7 +37,7 @@ import kotlinx.coroutines.launch
 class USBConnectionViewModel(
     private val application: Application,
     private val usbRepo: UsbRepo,
-    private val deviceRepo: DeviceRepo,
+    private val deviceHardwareStatus: DeviceHardwareStatus,
     val logRepo: LogRepo
 ) : ViewModel() {
 
@@ -49,7 +49,7 @@ class USBConnectionViewModel(
             initialValue = UsbStatus.SnapshotUsb()
         )
 
-    val ssidState = deviceRepo.ssid
+    val ssidState = deviceHardwareStatus.ssid
 
     val currentDevice = usbRepo._currentDevice
         .asStateFlow()

@@ -1,13 +1,13 @@
 package com.crescenzi.esptoolbox.presentation.entry
 
 import androidx.lifecycle.ViewModel
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 
 
 /**
  * Holds device states and permissions
  */
-class EntryViewModel(val deviceRepo: DeviceRepo) : ViewModel() {
+class EntryViewModel(val deviceHardwareStatus: DeviceHardwareStatus) : ViewModel() {
 
 
     /**

@@ -3,6 +3,8 @@ package com.crescenzi.esptoolbox.core
 import android.content.Context
 import android.net.Uri
 import android.provider.OpenableColumns
+import android.util.Log
+import com.crescenzi.esptoolbox.BuildConfig
 
 
 /**
@@ -27,4 +29,13 @@ fun Uri.getFileNameWithoutBin(context: Context): String? {
     }
 
     return fileName?.removeSuffix(".bin")
+}
+
+/**
+ * Debug logging
+ */
+fun LOG(value: String) {
+    if (BuildConfig.DEBUG) {
+        Log.e("MY-LOG", value)
+    }
 }

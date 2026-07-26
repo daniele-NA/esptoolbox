@@ -27,7 +27,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.crescenzi.esptoolbox.core.checkStoreUpdate
 import com.crescenzi.esptoolbox.core.AppConstants.INTENT_ACTION_GRANT_USB
 import com.crescenzi.esptoolbox.core.AppConstants.permissions
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esptoolbox.presentation.main_shell.MainShell
 import com.crescenzi.esptoolbox.system.GenericReceiver
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
     private val usbPermissionReceiver = UsbPermissionReceiver()
     private val genericReceiver = GenericReceiver()
 
-    private val deviceRepo: DeviceRepo by inject()
+    private val deviceHardwareStatus: DeviceHardwareStatus by inject()
     private val usbRepo: UsbRepo by inject()
 
 
@@ -64,9 +64,9 @@ class MainActivity : ComponentActivity() {
                 ssidReceiver,
                 IntentFilter(NETWORK_STATE_CHANGED_ACTION)
             )
-            deviceRepo.changeLocationPermissionStatus(true)
+            deviceHardwareStatus.changeLocationPermissionStatus(true)
         } else
-            deviceRepo.changeLocationPermissionStatus(false)
+            deviceHardwareStatus.changeLocationPermissionStatus(false)
     }
 
 
@@ -106,7 +106,7 @@ class MainActivity : ComponentActivity() {
         /**
          * Location init (the first value is not received)
          */
-        deviceRepo.changeLocationStatus(
+        deviceHardwareStatus.changeLocationStatus(
             (getSystemService(LOCATION_SERVICE) as LocationManager).isProviderEnabled(
                 LocationManager.GPS_PROVIDER
             )
@@ -163,9 +163,9 @@ class MainActivity : ComponentActivity() {
         super.onResume()
 
         if (checkPermission(permissions[0]) && checkPermission(permissions[1])) {
-            deviceRepo.changeLocationPermissionStatus(true)
+            deviceHardwareStatus.changeLocationPermissionStatus(true)
         } else
-            deviceRepo.changeLocationPermissionStatus(false)
+            deviceHardwareStatus.changeLocationPermissionStatus(false)
     }
 
     override fun onDestroy() {

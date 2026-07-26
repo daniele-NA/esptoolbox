@@ -6,7 +6,7 @@ import android.content.Context.CONNECTIVITY_SERVICE
 import android.content.Intent
 import android.location.LocationManager
 import android.net.ConnectivityManager
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 import org.koin.mp.KoinPlatform.getKoin
 
 /**
@@ -14,14 +14,14 @@ import org.koin.mp.KoinPlatform.getKoin
  */
 class GenericReceiver : BroadcastReceiver() {
 
-    private val deviceRepo = getKoin().get<DeviceRepo>()
+    private val deviceHardwareStatus = getKoin().get<DeviceHardwareStatus>()
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == ConnectivityManager.CONNECTIVITY_ACTION) {
             val isConnected =
                 (context?.getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo?.isConnectedOrConnecting == true
 
-            deviceRepo.changeInternetStatus(isConnected)
+            deviceHardwareStatus.changeInternetStatus(isConnected)
         }
 
         if (intent?.action == LocationManager.PROVIDERS_CHANGED_ACTION) {
@@ -29,7 +29,7 @@ class GenericReceiver : BroadcastReceiver() {
             val isLocationEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                     locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
 
-            deviceRepo.changeLocationStatus(isLocationEnabled)
+            deviceHardwareStatus.changeLocationStatus(isLocationEnabled)
         }
     }
 

@@ -44,7 +44,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.painterResource
@@ -60,8 +59,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.crescenzi.esptoolbox.R
+import com.crescenzi.esptoolbox.core.AppConstants.NAV_DOT_COLOR
+import com.crescenzi.esptoolbox.core.AppConstants.NAV_DOT_OFFSET
 import com.crescenzi.esp32.LogRepo
-import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
+import com.crescenzi.esptoolbox.presentation.DeviceHardwareStatus
 import com.crescenzi.esptoolbox.presentation.entry.EntryScreen
 import com.crescenzi.esptoolbox.presentation.requirement.RequirementScreen
 import com.crescenzi.esptoolbox.presentation.main_shell.logs.LogScreen
@@ -148,12 +149,12 @@ fun MainShell(
     }
 
     val logRepo = koinInject<LogRepo>()
-    val deviceRepo = koinInject<DeviceRepo>()
+    val deviceHardwareStatus = koinInject<DeviceHardwareStatus>()
 
     val showBadge = rememberSaveable { mutableStateOf(false) }
     val logs by logRepo.logs.collectAsStateWithLifecycle()
-    val locationEnabled by deviceRepo.location.collectAsStateWithLifecycle()
-    val locationPermission by deviceRepo.locationPermission.collectAsStateWithLifecycle()
+    val locationEnabled by deviceHardwareStatus.location.collectAsStateWithLifecycle()
+    val locationPermission by deviceHardwareStatus.locationPermission.collectAsStateWithLifecycle()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val destination = backStackEntry?.destination
@@ -294,8 +295,6 @@ fun MainShell(
 }
 
 
-private val NAV_DOT_COLOR = Color(0xFFFF8A00)
-private val NAV_DOT_OFFSET = 2.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

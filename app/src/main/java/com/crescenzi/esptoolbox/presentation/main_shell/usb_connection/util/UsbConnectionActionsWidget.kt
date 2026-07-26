@@ -7,8 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.hapticfeedback.HapticFeedbackType
-import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
@@ -46,14 +44,12 @@ fun UsbConnectionActionsWidget(
     val usbPermission by usbConnectionViewModel.usbPermission.collectAsStateWithLifecycle()
     val loading by usbConnectionViewModel.loading.collectAsStateWithLifecycle()
     val btnText = if (usbPermission == UsbPermission.GRANTED) connectMessage else grantMessage
-    val haptic = LocalHapticFeedback.current
 
     AppButton(
         modifier = modifier.padding(top = SPACE_XL),
         txt = btnText,
         enabled = btnEnabled.value && !loading,
         onTap = {
-            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
             onClickConnect()
         }
     )
