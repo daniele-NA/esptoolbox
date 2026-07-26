@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.values.Constants.STATUS_DEF_CHAR
+import com.crescenzi.esptoolbox.core.AppConstants.STATUS_DEF_CHAR
 import com.crescenzi.esptoolbox.presentation.main_shell.wifi_connection.WIFIViewModel
 import com.crescenzi.esptoolbox.presentation.widget.EditText
 

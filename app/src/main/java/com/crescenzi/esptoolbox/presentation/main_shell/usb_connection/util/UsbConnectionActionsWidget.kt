@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.values.Constants.STATUS_DEF_CHAR
+import com.crescenzi.esptoolbox.core.AppConstants.STATUS_DEF_CHAR
 import com.crescenzi.esp32.usb.UsbPermission
 import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.USBConnectionViewModel
 import com.crescenzi.esptoolbox.presentation.widget.AppButton

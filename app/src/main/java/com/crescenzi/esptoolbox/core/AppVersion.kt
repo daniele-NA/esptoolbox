@@ -1,4 +1,4 @@
-package com.crescenzi.esptoolbox.core.device
+package com.crescenzi.esptoolbox.core
 
 import android.app.Activity
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory

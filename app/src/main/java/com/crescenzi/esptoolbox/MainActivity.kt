@@ -24,9 +24,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import com.crescenzi.esptoolbox.core.device.checkStoreUpdate
-import com.crescenzi.esptoolbox.core.values.Constants.INTENT_ACTION_GRANT_USB
-import com.crescenzi.esptoolbox.core.values.Constants.permissions
+import com.crescenzi.esptoolbox.core.checkStoreUpdate
+import com.crescenzi.esptoolbox.core.AppConstants.INTENT_ACTION_GRANT_USB
+import com.crescenzi.esptoolbox.core.AppConstants.permissions
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esp32.usb.UsbRepo
 import com.crescenzi.esptoolbox.presentation.main_shell.MainShell

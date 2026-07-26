@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.crescenzi.esptoolbox.R
 import com.crescenzi.esptoolbox.core.LOG
 import com.crescenzi.esptoolbox.presentation.util.getMessage
-import com.crescenzi.esptoolbox.core.values.Constants
+import com.crescenzi.esptoolbox.core.AppConstants
 import com.crescenzi.esp32.LogRepo
 import com.crescenzi.esptoolbox.data.phone.data.DeviceRepo
 import com.crescenzi.esp32.usb.UsbRepo
@@ -104,7 +104,7 @@ class USBConnectionViewModel(
                         updateUsbPermission(UsbPermission.NOT_GRANTED)
                         usbRepo._currentDevice.value = null
                     }
-                    delay(Constants.OBSERVE_STATUS_DELAY)
+                    delay(AppConstants.OBSERVE_STATUS_DELAY)
                 }
             } catch (e: Exception) {
                 LOG("Exception usb ${e.message.toString()}")

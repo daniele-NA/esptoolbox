@@ -43,8 +43,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.crescenzi.esptoolbox.R
-import com.crescenzi.esptoolbox.core.function.getFileNameWithoutBin
-import com.crescenzi.esptoolbox.core.values.Constants.PICK_MIME_TYPE
+import com.crescenzi.esptoolbox.core.getFileNameWithoutBin
+import com.crescenzi.esptoolbox.core.AppConstants.PICK_MIME_TYPE
 import com.crescenzi.esptoolbox.presentation.main_shell.usb_flash.util.UsbUpdaterButtonsWidget
 import com.crescenzi.esptoolbox.presentation.util.getMessage
 import com.crescenzi.esptoolbox.presentation.widget.AppScaffold

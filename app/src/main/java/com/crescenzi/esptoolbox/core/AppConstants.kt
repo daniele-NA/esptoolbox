@@ -1,14 +1,13 @@
-package com.crescenzi.esptoolbox.core.values
+package com.crescenzi.esptoolbox.core
 
 import android.Manifest
 import androidx.compose.ui.unit.dp
 import com.crescenzi.esptoolbox.BuildConfig
 
-
 /**
  * All app-wide variables
  */
-object Constants {
+object AppConstants {
 
     /**
      * Business

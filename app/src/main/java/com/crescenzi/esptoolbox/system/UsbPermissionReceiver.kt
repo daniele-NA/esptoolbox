@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.hardware.usb.UsbManager
 import com.crescenzi.esptoolbox.core.LOG
-import com.crescenzi.esptoolbox.core.values.Constants
+import com.crescenzi.esptoolbox.core.AppConstants
 import com.crescenzi.esp32.usb.UsbPermission
 import com.crescenzi.esptoolbox.presentation.main_shell.usb_connection.USBConnectionViewModel
 import org.koin.java.KoinJavaComponent
@@ -23,7 +23,7 @@ class UsbPermissionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         LOG("UsbPermissionReceiver : incoming intent")
         context?.let {
-            if (intent?.action == Constants.INTENT_ACTION_GRANT_USB) {
+            if (intent?.action == AppConstants.INTENT_ACTION_GRANT_USB) {
                 usbViewModel.updateUsbPermission(
                     if (intent.getBooleanExtra(UsbManager.EXTRA_PERMISSION_GRANTED, false))
                         UsbPermission.GRANTED else UsbPermission.NOT_GRANTED
