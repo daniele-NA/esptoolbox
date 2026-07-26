@@ -40,6 +40,8 @@
     <string name="location_lost_title">位置情報が必要です</string>
     <string name="location_lost_desc">位置情報がオフになりました。再度有効にして、アプリを再起動してください。</string>
     <string name="permission_lost_desc">位置情報の権限が取り消されました。再度許可して、アプリを再起動してください。</string>
+    <string name="internet_lost_title">インターネット接続が必要です</string>
+    <string name="internet_lost_desc">インターネット接続が切断されました。再接続して、アプリを再起動してください。</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">USB 接続に失敗しました。BaudRate と SerialFormat を確認してください。</string>

@@ -155,6 +155,7 @@ fun MainShell(
     val logs by logRepo.logs.collectAsStateWithLifecycle()
     val locationEnabled by deviceHardwareStatus.location.collectAsStateWithLifecycle()
     val locationPermission by deviceHardwareStatus.locationPermission.collectAsStateWithLifecycle()
+    val internetEnabled by deviceHardwareStatus.internet.collectAsStateWithLifecycle()
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val destination = backStackEntry?.destination
@@ -176,7 +177,7 @@ fun MainShell(
      * If a requirement gets lost anywhere past the entry checks, forward to the blocking
      * page and empty the back stack
      */
-    LaunchedEffect(locationEnabled, locationPermission, currentWorkspace) {
+    LaunchedEffect(locationEnabled, locationPermission, internetEnabled, currentWorkspace) {
         if (currentWorkspace != null) {
             val requirement = when {
                 !locationPermission -> RequirementPage(
@@ -187,6 +188,11 @@ fun MainShell(
                 !locationEnabled -> RequirementPage(
                     titleRes = R.string.location_lost_title,
                     subtitleRes = R.string.location_lost_desc
+                )
+
+                !internetEnabled -> RequirementPage(
+                    titleRes = R.string.internet_lost_title,
+                    subtitleRes = R.string.internet_lost_desc
                 )
 
                 else -> null

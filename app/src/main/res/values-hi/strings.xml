@@ -40,6 +40,8 @@
     <string name="location_lost_title">लोकेशन आवश्यक</string>
     <string name="location_lost_desc">लोकेशन बंद कर दी गई है। इसे फिर से चालू करें और जारी रखने के लिए ऐप को पुनः प्रारंभ करें।</string>
     <string name="permission_lost_desc">लोकेशन की अनुमति हटा दी गई है। इसे फिर से दें और जारी रखने के लिए ऐप को पुनः प्रारंभ करें।</string>
+    <string name="internet_lost_title">इंटरनेट आवश्यक</string>
+    <string name="internet_lost_desc">इंटरनेट कनेक्शन टूट गया है। फिर से कनेक्ट करें और जारी रखने के लिए ऐप को पुनः प्रारंभ करें।</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">USB कनेक्शन विफल। कृपया जाँचें: BaudRate और SerialFormat।</string>

@@ -47,6 +47,8 @@
     <string name="location_lost_title">Location required</string>
     <string name="location_lost_desc">Location has been turned off. Turn it back on and restart the app to continue.</string>
     <string name="permission_lost_desc">The location permission has been revoked. Grant it again and restart the app to continue.</string>
+    <string name="internet_lost_title">Internet required</string>
+    <string name="internet_lost_desc">The internet connection has been lost. Reconnect and restart the app to continue.</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">USB connection failed. Please check: BaudRate &amp; SerialFormat.</string>

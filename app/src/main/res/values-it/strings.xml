@@ -40,6 +40,8 @@
     <string name="location_lost_title">Posizione necessaria</string>
     <string name="location_lost_desc">La posizione è stata disattivata. Riattivala e riavvia l\'app per continuare.</string>
     <string name="permission_lost_desc">Il permesso di localizzazione è stato revocato. Concedilo di nuovo e riavvia l\'app per continuare.</string>
+    <string name="internet_lost_title">Connessione necessaria</string>
+    <string name="internet_lost_desc">La connessione a Internet è stata persa. Ricollegati e riavvia l\'app per continuare.</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">Connessione USB fallita. Controlla: BaudRate e SerialFormat.</string>

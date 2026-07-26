@@ -40,6 +40,8 @@
     <string name="location_lost_title">需要位置信息</string>
     <string name="location_lost_desc">位置信息已被关闭。请重新开启并重启应用以继续。</string>
     <string name="permission_lost_desc">位置权限已被撤销。请重新授予并重启应用以继续。</string>
+    <string name="internet_lost_title">需要网络连接</string>
+    <string name="internet_lost_desc">网络连接已断开。请重新连接并重启应用以继续。</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">USB 连接失败。请检查：BaudRate 和 SerialFormat。</string>

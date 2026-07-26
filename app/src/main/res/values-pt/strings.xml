@@ -40,6 +40,8 @@
     <string name="location_lost_title">Localização necessária</string>
     <string name="location_lost_desc">A localização foi desativada. Reative-a e reinicie o aplicativo para continuar.</string>
     <string name="permission_lost_desc">A permissão de localização foi revogada. Conceda-a novamente e reinicie o aplicativo para continuar.</string>
+    <string name="internet_lost_title">Conexão necessária</string>
+    <string name="internet_lost_desc">A conexão com a internet foi perdida. Reconecte-se e reinicie o aplicativo para continuar.</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">Falha na conexão USB. Verifique: BaudRate e SerialFormat.</string>

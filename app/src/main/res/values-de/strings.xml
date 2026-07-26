@@ -40,6 +40,8 @@
     <string name="location_lost_title">Standort erforderlich</string>
     <string name="location_lost_desc">Der Standort wurde deaktiviert. Aktiviere ihn wieder und starte die App neu, um fortzufahren.</string>
     <string name="permission_lost_desc">Die Standortberechtigung wurde widerrufen. Erteile sie erneut und starte die App neu, um fortzufahren.</string>
+    <string name="internet_lost_title">Internet erforderlich</string>
+    <string name="internet_lost_desc">Die Internetverbindung wurde unterbrochen. Stelle die Verbindung wieder her und starte die App neu, um fortzufahren.</string>
 
     <!-- ExceptionMessage-->
     <string name="error_usb_connection">USB-Verbindung fehlgeschlagen. Prüfe: BaudRate und SerialFormat.</string>
