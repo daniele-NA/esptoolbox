@@ -5,16 +5,9 @@
 
 
     <style name="Theme.App.Splash" parent="Theme.SplashScreen">
-        <!-- Splash background color -->
         <item name="windowSplashScreenBackground">@color/background</item>
-
-        <!-- Circle color behind the icon -->
         <item name="windowSplashScreenIconBackgroundColor">@color/background</item>
-
-        <!-- Icon to show in the center -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/splash_ic</item>
-
-        <!-- Theme that takes over after the splash -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_ic</item>
         <item name="postSplashScreenTheme">@style/Theme.App</item>
     </style>
 </resources>

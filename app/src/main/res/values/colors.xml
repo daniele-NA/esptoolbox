@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="app_background">#5B5858</color>
     <color name="background">#FFFFFF</color>
 
     <!-- PRIMARY -->
